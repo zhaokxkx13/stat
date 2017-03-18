@@ -6,7 +6,9 @@ import com.zhaokxkx13.dao.entity.Role;
 import com.zhaokxkx13.dao.entity.User;
 import com.zhaokxkx13.dao.inf.RoleMapper;
 import com.zhaokxkx13.dao.inf.UserMapper;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.Md5Hash;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,9 +62,12 @@ public class UserService {
 
     public void register(User user) {
         Date date = new Date();
+        String salt = new SecureRandomNumberGenerator().nextBytes().toHex();
+        user.setSalt(salt);
         user.setCreateDate(date);
-        String password = new Md5Hash(user.getPassword(), user.getCredentialsSalt(), 2).toString();
-        user.setPassword(password);
+        SimpleHash hash = new SimpleHash("md5", user.getPassword(), user.getCredentialsSalt(), 2);
+        String encodedPassword = hash.toHex();
+        user.setPassword(encodedPassword);
         userMapper.insert(user);
     }
 }

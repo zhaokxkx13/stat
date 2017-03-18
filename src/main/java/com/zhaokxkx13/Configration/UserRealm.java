@@ -35,7 +35,9 @@ public class UserRealm extends AuthorizingRealm {
         if (user == null) {
             throw new UnknownAccountException();
         }
-        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, user.getPassword(), ByteSource.Util.bytes(user.getCredentialsSalt()), getName());
+        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, user.getPassword(), getName());
+        String crednets = user.getCredentialsSalt();
+        info.setCredentialsSalt(ByteSource.Util.bytes(user.getCredentialsSalt()));
         return info;
     }
 }

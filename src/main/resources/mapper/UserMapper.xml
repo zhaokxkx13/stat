@@ -30,10 +30,10 @@
         where id = #{id,jdbcType=INTEGER}
     </delete>
     <insert id="insert" parameterType="com.zhaokxkx13.dao.entity.User">
-        insert into user (id, uid, username,
+        insert into user ( uid, username,
         password, salt, create_date
         )
-        values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
+        values ( #{uid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
         #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}
         )
     </insert>

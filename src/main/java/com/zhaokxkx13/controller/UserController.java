@@ -68,10 +68,6 @@ public class UserController {
         user.setUsername(username);
         user.setPassword(password);
         user.setUid(uid);
-        Random random = new SecureRandom();
-        byte[] salt = new byte[16];
-        random.nextBytes(salt);
-        user.setSalt(new String(salt, "utf-8"));
         userService.register(user);
         return "redirect:/login";
     }
