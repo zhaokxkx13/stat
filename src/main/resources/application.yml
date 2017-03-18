@@ -1,0 +1,35 @@
+#数据库访问设置
+
+spring:
+  datasource:
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://43.241.222.147:3306/stat
+      username: root
+      password: 3362486
+      initialSize: 5
+      minIdle: 5
+      maxActice: 20
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 600000
+      minEvictableIdleTimeMillis: 600000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      filters: stat,wall,log4j
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      useGlobalDataSourceStat: true
+
+mybatis:
+  mapperLocations: classpath:mapper/*Mapper.xml
+  configLocation: classpath:mybatis-config.xml
+  typeAliasesPackage: com.zhaokxkx13.dao.entity
+
+
+
+
+
+
