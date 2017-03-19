@@ -11,6 +11,8 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
+
 /**
  * Created by zhaokxkx13 on 2017/3/17.
  */
@@ -21,9 +23,11 @@ public class UserRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        String username = (String) principalCollection.getPrimaryPrincipal();
+        String username = ((User) principalCollection.getPrimaryPrincipal()).getUsername();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        info.setStringPermissions(userService.getUserPermissionByUserName(username));
+        Set<String> permissions = userService.getUserPermissionByUserName(username);
+        info.setStringPermissions(permissions);
+        info.setRoles(userService.getUserRoleByUsername(username));
         return info;
     }
 

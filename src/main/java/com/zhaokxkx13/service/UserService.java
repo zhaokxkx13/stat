@@ -60,6 +60,18 @@ public class UserService {
         }
     }
 
+    public Set<String> getUserRoleByUsername(String username) {
+        User user = userMapper.selectRoleByUserName(username);
+        List<Role> roleList = user.getRoleList();
+        Set<String> roles = new HashSet<>();
+        if(roleList !=null && roleList.size()>0){
+            for (Role role : roleList) {
+                roles.add(role.getName());
+            }
+        }
+        return roles;
+    }
+
     public void register(User user) {
         Date date = new Date();
         String salt = new SecureRandomNumberGenerator().nextBytes().toHex();

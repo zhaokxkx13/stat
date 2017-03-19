@@ -33,6 +33,14 @@ public class URLPermissionsFilter extends PermissionsAuthorizationFilter {
     @Override
     public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws IOException {
         String curUrl = getRequstUrl(request);
+        int pos1 = curUrl.indexOf(";");
+        int pos2 = curUrl.indexOf("?");
+        if (pos1 != -1) {
+            curUrl = curUrl.substring(0, pos1);
+        }
+        if (pos2 != -1) {
+            curUrl = curUrl.substring(0, pos2);
+        }
         Subject subject = SecurityUtils.getSubject();
         if (subject.getPrincipal() == null
                 || StringUtils.endsWithAny(curUrl, ".js", ".css", ".html")

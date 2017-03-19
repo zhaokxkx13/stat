@@ -117,7 +117,7 @@
         u.username,
         u.password,
         u.salt,
-        u.create_date as createDate,
+        u.create_date as create_date,
         r.name as roleName,
         r.id as roleId,
         r.description as roleDescription

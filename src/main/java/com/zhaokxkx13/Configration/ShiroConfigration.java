@@ -3,11 +3,14 @@ package com.zhaokxkx13.Configration;
 import com.google.common.collect.Maps;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
+import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.filter.authc.AnonymousFilter;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,8 +38,8 @@ public class ShiroConfigration {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         bean.setSecurityManager(securityManager());
         bean.setLoginUrl("/login");
+        bean.setSuccessUrl("/index");
         bean.setUnauthorizedUrl("/unauthor");
-
         Map<String, Filter> filters = Maps.newHashMap();
         filters.put("perms", urlPermissionsFilter());
         filters.put("anon", new AnonymousFilter());
@@ -44,12 +47,16 @@ public class ShiroConfigration {
 
         Map<String, String> chains = Maps.newHashMap();
         chains.put("/login", "anon");
+        chains.put("/register", "anon");
         chains.put("/unauthor", "anon");
         chains.put("/logout", "logout");
-        chains.put("/base/**", "anon");
         chains.put("/css/**", "anon");
-        chains.put("/layer/**", "anon");
+        chains.put("/fonts/**", "anon");
+        chains.put("/i/**", "anon");
+        chains.put("/img/**", "anon");
+        chains.put("/js/**", "anon");
         chains.put("/**", "perms");
+        chains.put("/**", "authc");
         bean.setFilterChainDefinitionMap(chains);
         return bean;
     }
@@ -107,5 +114,20 @@ public class ShiroConfigration {
         hashedCredentialsMatcher.setHashIterations(2);
         hashedCredentialsMatcher.setStoredCredentialsHexEncoded(true);
         return hashedCredentialsMatcher;
+    }
+
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor() {
+        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager());
+        return authorizationAttributeSourceAdvisor;
+    }
+
+    @Bean
+    @DependsOn("lifecycleBeanPostProcessor")
+    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+        DefaultAdvisorAutoProxyCreator proxyCreator = new DefaultAdvisorAutoProxyCreator();
+        proxyCreator.setProxyTargetClass(true); // this SETTING
+        return proxyCreator;
     }
 }

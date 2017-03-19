@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhaokxkx13.dao.inf.IncomeMapper">
+    <resultMap id="BaseResultMap" type="com.zhaokxkx13.dao.entity.Income">
+        <result column="id" property="id" jdbcType="BIGINT"/>
+        <result column="indus_all" property="indusAll" jdbcType="DOUBLE"/>
+        <result column="indus_sell_all" property="indusSellAll" jdbcType="DOUBLE"/>
+        <result column="income_all" property="incomeAll" jdbcType="DOUBLE"/>
+        <result column="main_service_income" property="mainServiceIncome" jdbcType="DOUBLE"/>
+        <result column="tech_income" property="techIncome" jdbcType="DOUBLE"/>
+        <result column="product_sell_income" property="productSellIncome" jdbcType="DOUBLE"/>
+        <result column="ht_product_sell_income" property="htProductSellIncome" jdbcType="DOUBLE"/>
+        <result column="goods_sell_income" property="goodsSellIncome" jdbcType="DOUBLE"/>
+        <result column="date" property="date" jdbcType="DATE"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="BaseResultMap" parameterType="long">
+        select * from income i where i.id = #{id}
+    </select>
+</mapper>
