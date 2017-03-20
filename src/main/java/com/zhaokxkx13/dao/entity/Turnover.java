@@ -17,6 +17,15 @@ public class Turnover {
     private double allowanceIncome;
     private double pureProfit;
     private Date date;
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public long getId() {
         return id;
@@ -106,6 +115,7 @@ public class Turnover {
         this.date = date;
     }
 
+
     @Override
     public String toString() {
         return "Turnover{" +
@@ -120,6 +130,7 @@ public class Turnover {
                 ", allowanceIncome=" + allowanceIncome +
                 ", pureProfit=" + pureProfit +
                 ", date=" + date +
+                ", type='" + type + '\'' +
                 '}';
     }
 }

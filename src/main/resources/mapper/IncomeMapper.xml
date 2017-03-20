@@ -12,9 +12,14 @@
         <result column="ht_product_sell_income" property="htProductSellIncome" jdbcType="DOUBLE"/>
         <result column="goods_sell_income" property="goodsSellIncome" jdbcType="DOUBLE"/>
         <result column="date" property="date" jdbcType="DATE"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id="selectById" resultMap="BaseResultMap" parameterType="long">
         select * from income i where i.id = #{id}
+    </select>
+
+    <select id="selectAllIncome" resultMap="BaseResultMap">
+        select * from income where income.type = "month"
     </select>
 </mapper>

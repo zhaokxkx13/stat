@@ -17,15 +17,19 @@ public class Income implements Serializable {
     private Double htProductSellIncome;
     private Double goodsSellIncome;
     private Date date;
+    private String type;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
     public Double getIndusAll() {
         return indusAll;
     }
@@ -98,6 +102,7 @@ public class Income implements Serializable {
         this.date = date;
     }
 
+
     @Override
     public String toString() {
         return "Income{" +
@@ -111,6 +116,7 @@ public class Income implements Serializable {
                 ", htProductSellIncome=" + htProductSellIncome +
                 ", goodsSellIncome=" + goodsSellIncome +
                 ", date=" + date +
+                ", type='" + type + '\'' +
                 '}';
     }
 }
