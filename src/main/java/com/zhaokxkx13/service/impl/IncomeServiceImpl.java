@@ -32,6 +32,55 @@ public class IncomeServiceImpl implements IncomeService, InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
+
+
+    }
+
+    public Income getAllIncome() {
+        Income income = new Income();
+        income.setType("all");
+
+        List<Income> incomeList = incomeMapper.selectAllIncome();
+        income = getSum(incomeList);
+        return income;
+    }
+
+    @Override
+    public Income getCurSumMonthIncome(int month, int year) {
+        List<Income> incomeList = getCurMonthIncome(month, year);
+        return getSum(incomeList);
+    }
+
+    @Override
+    public List<Income> getCurMonthIncome(int month, int year) {
+        List<Income> incomeList = incomeMapper.selectAllIncome();
+        List<Income> result = new ArrayList<>();
+        for (Income item : incomeList) {
+            Date date = item.getDate();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            if (calendar.get(Calendar.MONTH) == month && calendar.get(Calendar.YEAR) == year)
+                result.add(item);
+        }
+
+        return result;
+    }
+
+    public Income compareMonth(Income cur, Income pre) {
+        Income income = new Income();
+        income.setTechIncome(cur.getTechIncome() - pre.getTechIncome());
+        income.setProductSellIncome(cur.getProductSellIncome() - pre.getProductSellIncome());
+        income.setMainServiceIncome(cur.getMainServiceIncome() - pre.getMainServiceIncome());
+        income.setIndusSellAll(cur.getIndusSellAll() - pre.getIndusSellAll());
+        income.setGoodsSellIncome(cur.getGoodsSellIncome() - pre.getGoodsSellIncome());
+        income.setHtProductSellIncome(cur.getHtProductSellIncome() - pre.getHtProductSellIncome());
+        income.setIncomeAll(cur.getIncomeAll() - pre.getIncomeAll());
+        income.setIndusAll(cur.getIndusAll() - pre.getIndusAll());
+        income.setType(cur.getType());
+        return income;
+    }
+
+    private Income getSum(List<Income> incomeList) {
         indusAll = 0.0;
         indusSellAll = 0.0;
         incomeAll = 0.0;
@@ -41,13 +90,9 @@ public class IncomeServiceImpl implements IncomeService, InitializingBean {
         htProductSellIncome = 0.0;
         goodsSellIncome = 0.0;
 
-    }
-
-    public Income getAllIncome() {
         Income income = new Income();
         income.setType("all");
-
-        List<Income> incomeList = incomeMapper.selectAllIncome();
+        income.setDate(new Date());
         if (incomeList != null && incomeList.size() > 0)
             for (Income item : incomeList) {
                 this.indusAll += item.getIndusAll();
@@ -67,26 +112,7 @@ public class IncomeServiceImpl implements IncomeService, InitializingBean {
         income.setMainServiceIncome(this.mainServiceIncome);
         income.setProductSellIncome(this.productSellIncome);
         income.setTechIncome(this.techIncome);
+
         return income;
-    }
-
-    @Override
-    public Income getCurSumMonthIncome(int month, int year) {
-        return null;
-    }
-
-    @Override
-    public List<Income> getCurMonthIncome(int month, int year) {
-        List<Income> incomeList = incomeMapper.selectAllIncome();
-        List<Income> result = new ArrayList<>();
-        for (Income item : incomeList) {
-            Date date = item.getDate();
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
-            if (calendar.get(Calendar.MONTH) == month && calendar.get(Calendar.YEAR) == year)
-                result.add(item);
-        }
-
-        return result;
     }
 }

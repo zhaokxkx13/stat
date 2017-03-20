@@ -21,8 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.SecureRandom;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by zhaokxkx13 on 2017/3/15.
@@ -89,8 +88,27 @@ public class UserController {
     public String index(ModelMap modelMap) {
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getPrincipal();
-        Income income = incomeService.getAllIncome();
-        modelMap.addAttribute("income", income);
+        Income incomeTotal = incomeService.getAllIncome();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH) + 1;
+        calendar.add(Calendar.MONTH, -1);
+        int lastMonth = calendar.get(Calendar.MONTH) + 1;
+
+
+        Income incomeMonthTotal = incomeService.getCurSumMonthIncome(month, year);
+        List<Income> incomeList = incomeService.getCurMonthIncome(month, year);
+        Income incomeLastMonthTotal = incomeService.getCurSumMonthIncome(lastMonth, year);
+        Income incomeCompared = incomeService.compareMonth(incomeMonthTotal, incomeLastMonthTotal);
+
+        modelMap.addAttribute("comparedMonthTotal", incomeCompared);
+        modelMap.addAttribute("incomeTotal", incomeTotal);
+        modelMap.addAttribute("incomeMonthTotal", incomeMonthTotal);
+        modelMap.addAttribute("incomeList", incomeList);
+        modelMap.addAttribute("year", year);
+        modelMap.addAttribute("month", month);
         modelMap.addAttribute("username", user.getUsername());
         return "index";
     }

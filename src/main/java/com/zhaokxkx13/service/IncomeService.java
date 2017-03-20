@@ -13,4 +13,6 @@ public interface IncomeService {
     Income getCurSumMonthIncome(int month, int year);
 
     List<Income> getCurMonthIncome(int month, int year);
+
+    Income compareMonth(Income cur, Income pre);
 }

@@ -25,4 +25,10 @@ public class IncomeTest {
             System.out.println(item);
         }
     }
+
+    @Test
+    public void testSum() {
+        Income income = incomeService.getCurSumMonthIncome(8, 3);
+        System.out.println(income);
+    }
 }
