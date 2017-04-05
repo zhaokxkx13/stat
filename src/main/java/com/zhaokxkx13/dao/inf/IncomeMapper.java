@@ -3,6 +3,7 @@ package com.zhaokxkx13.dao.inf;
 import com.zhaokxkx13.dao.entity.Income;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,4 +14,6 @@ public interface IncomeMapper {
     Income selectById(long id);
 
     List<Income> selectAllIncome();
+
+    List<Income> selectByYear(Date date);
 }

@@ -7,6 +7,9 @@ spring:
       url: jdbc:mysql://43.241.222.147:3306/stat
       username: root
       password: 3362486
+#      url: jdbc:mysql://localhost:3306/test
+#      username: root
+#      password: 3362486
       initialSize: 5
       minIdle: 5
       maxActice: 20
@@ -24,10 +27,13 @@ spring:
       useGlobalDataSourceStat: true
   thymeleaf:
     cache: false
+    cache-period: 0
+  template:
+    cache: false
 
 mybatis:
   mapperLocations: classpath:mapper/*Mapper.xml
-  configLocation: classpath:mybatis-config.xml
+  configLocation: classpath:/mybatis-config.xml
   typeAliasesPackage: com.zhaokxkx13.dao.entity
 
 

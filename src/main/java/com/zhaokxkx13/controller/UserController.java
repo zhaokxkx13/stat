@@ -1,5 +1,7 @@
 package com.zhaokxkx13.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zhaokxkx13.dao.entity.Income;
 import com.zhaokxkx13.dao.entity.User;
 import com.zhaokxkx13.service.IncomeService;
@@ -12,10 +14,13 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -54,7 +59,6 @@ public class UserController {
 
     @RequestMapping(path = "/login", method = RequestMethod.GET)
     public ModelAndView loginGet() {
-        System.out.println("fuck");
         return new ModelAndView("login");
     }
 
@@ -93,7 +97,7 @@ public class UserController {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH) + 1;
+        int month = calendar.get(Calendar.MONTH) + 1;
         calendar.add(Calendar.MONTH, -1);
         int lastMonth = calendar.get(Calendar.MONTH) + 1;
 
@@ -111,5 +115,26 @@ public class UserController {
         modelMap.addAttribute("month", month);
         modelMap.addAttribute("username", user.getUsername());
         return "index";
+    }
+
+    @RequestMapping(path = "/chart", method = RequestMethod.GET)
+    public String chars() {
+        return "chart";
+    }
+
+    @RequestMapping(path = "/tables/{type}", method = RequestMethod.GET)
+    public String tables(@RequestParam(required = true) Integer page, @PathVariable String type, ModelMap modelMap) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        int year = calendar.get(Calendar.YEAR);
+        calendar.clear();
+        calendar.set(Calendar.YEAR, year);
+        Date date = calendar.getTime();
+        List<Income> incomeList = incomeService.getYearIncome(date,page,5);
+        PageInfo<Income> pageInfo = new PageInfo<Income>(incomeList);
+        int pageTotal = pageInfo.getPages();
+        modelMap.addAttribute("data", incomeList);
+        modelMap.addAttribute("pageTotal",pageTotal);
+        return "tables";
     }
 }

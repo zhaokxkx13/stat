@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,6 +25,21 @@ public class IncomeTest {
         List<Income> incomeList = incomeService.getCurMonthIncome(8, 2016);
         for (Income item : incomeList) {
             System.out.println(item);
+        }
+    }
+
+    @Test
+    public void testYeaer(){
+        Date date = new Date();
+        Calendar cld = Calendar.getInstance();
+        cld.setTime(date);
+        int year = cld.get(Calendar.YEAR);
+        cld.clear();
+        cld.set(Calendar.YEAR,year);
+        Date current = cld.getTime();
+        List<Income> incomeList = incomeService.getYearIncome(current,1,5);
+        for(Income income:incomeList){
+            System.out.println(income);
         }
     }
 

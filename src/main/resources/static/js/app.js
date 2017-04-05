@@ -47,6 +47,8 @@ var pageData = {
         // ==========================
 
         var echartsA = echarts.init(document.getElementById('tpl-echarts'));
+        var sourceData=[];
+        var sourceDate=[];
         option = {
             tooltip: {
                 trigger: 'axis'
@@ -61,7 +63,7 @@ var pageData = {
             xAxis: [{
                 type: 'category',
                 boundaryGap: false,
-                data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                data: sourceDate
             }],
             yAxis: [{
                 type: 'value'
@@ -70,11 +72,11 @@ var pageData = {
                 color: '#838FA1'
             },
             series: [{
-                name: '邮件营销',
+                name: '工业总产值',
                 type: 'line',
                 stack: '总量',
                 areaStyle: {normal: {}},
-                data: [120, 132, 101, 134, 90],
+                data: sourceData,
                 itemStyle: {
                     normal: {
                         color: '#1cabdb',
@@ -88,6 +90,23 @@ var pageData = {
             }]
         };
 
+        $.get("/indusAll/Year/distribute",function(data){
+            var str = JSON.parse(data);
+
+            for(i=0;i<str.length;i++){
+                sourceData.push(str[i].indusAll);
+                sourceDate.push(str[i].dateStr);
+            }
+            echartsA.setOption({
+                xAxis:{
+                    data:sourceDate
+                },
+                series:[{
+                    name: '工业总产值',
+                    data: sourceData
+                }]
+            })
+        })
         echartsA.setOption(option);
     },
     // ===============================================
@@ -302,6 +321,134 @@ var pageData = {
             ]
         };
         echartsA.setOption(option);
+    },
+    'table-income': function charDate() {
+        var echartsA = echarts.init(document.getElementById('charts-income'));
+
+        var sourceDate = [];
+        var mainServiceIncome = [];
+        var indusAll = [];
+        var techIncome = [];
+        var htechIncome = [];
+        var productIncome = [];
+        var goodsIncome = [];
+
+        option = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {type: 'cross'}
+            },
+            toolbox: {
+                feature: {
+                    dataView: {show: true, readOnly: false},
+                    magicType: {show: true, type: ['line', 'bar']},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
+            },
+            legend: {
+                data:['主营业务收入','技术收入','高新技术产品收入','产品销售收入','市场营销收入']
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: sourceDate
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '金额',
+                    axisLabel: {
+                        formatter: '{value} 万元'
+                    }
+                },
+                {
+                    type: 'value',
+                    name: '工业总产值',
+                    axisLabel: {
+                        formatter: '{value} 万元'
+                    }
+                }
+            ],
+            series: [
+                {
+                    name:'主营业务收入',
+                    type:'bar',
+                    data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
+                },
+                {
+                    name:'技术收入',
+                    type:'bar',
+                    data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+                },
+                {
+                    name:'高新技术产品收入',
+                    type:'bar',
+                    data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+                },
+                {
+                    name:'产品销售收入',
+                    type:'bar',
+                    data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+                },
+                {
+                    name:'商品销售收入',
+                    type:'bar',
+                    yAxisIndex: 1,
+                    data:[2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
+                },
+                {
+                    name:'工业总产值',
+                    type:'line',
+                    yAxisIndex: 1,
+                    data:[2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
+                }
+            ]
+
+
+        };
+
+        echartsA.setOption(option);
+        $.get("/indusAll/Year/distribute",function(data){
+            var str = JSON.parse(data);
+
+            for(i=0;i<str.length;i++){
+                sourceDate.push(str[i].dateStr);
+                mainServiceIncome.push(str[i].mainServiceIncome);
+                indusAll.push(str[i].indusAll);
+                techIncome.push(str[i].techIncome);
+                htechIncome.push(str[i].htProductSellIncome);
+                productIncome.push(str[i].productSellIncome);
+                goodsIncome.push(str[i].goodsSellIncome);
+            }
+            echartsA.setOption({
+                xAxis:{
+                    data:sourceDate
+                },
+                series:[{
+                        name: '工业总产值',
+                        data: indusAll
+                    },
+                    {
+                        name: '商品销售收入',
+                        data: goodsIncome
+                    },
+                    {
+                        name: '高新技术产品收入',
+                        data: htechIncome
+                    },
+                    {
+                        name: '技术收入'  ,
+                        data: techIncome
+                    },
+                    {
+                        name: '主营业务收入',
+                        data: mainServiceIncome
+                    }
+                ]
+            })
+        })
     }
 }
 

@@ -19,10 +19,10 @@
     <plugins>
         <plugin interceptor="com.github.pagehelper.PageHelper">
             <property name="dialect" value="mysql"/>
-            <property name="offsetAsPageNum" value="true"/>
-            <property name="rowBoundsWithCount" value="true"/>
-            <property name="pageSizeZero" value="true"/>
-            <property name="reasonable" value="true"/>
+            <!--<property name="offsetAsPageNum" value="true"/>-->
+            <!--<property name="rowBoundsWithCount" value="true"/>-->
+            <!--<property name="pageSizeZero" value="true"/>-->
+            <!--<property name="reasonable" value="true"/>-->
         </plugin>
     </plugins>
 </configuration>

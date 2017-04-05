@@ -2,6 +2,7 @@ package com.zhaokxkx13.service;
 
 import com.zhaokxkx13.dao.entity.Income;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,4 +16,8 @@ public interface IncomeService {
     List<Income> getCurMonthIncome(int month, int year);
 
     Income compareMonth(Income cur, Income pre);
+
+    List<Income> getCurYearIncome(int year);
+
+    List<Income> getYearIncome(Date date,int pageNum,int pageSize);
 }

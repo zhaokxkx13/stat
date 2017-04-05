@@ -22,4 +22,8 @@
     <select id="selectAllIncome" resultMap="BaseResultMap">
         select * from income where income.type = "month"
     </select>
+
+    <select id="selectByYear" resultMap="BaseResultMap" parameterType="Date">
+        SELECT  * FROM  income where income.date >= #{year} order by income.date DESC
+    </select>
 </mapper>
