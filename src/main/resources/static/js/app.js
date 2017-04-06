@@ -47,8 +47,8 @@ var pageData = {
         // ==========================
 
         var echartsA = echarts.init(document.getElementById('tpl-echarts'));
-        var sourceData=[];
-        var sourceDate=[];
+        var sourceData = [];
+        var sourceDate = [];
         option = {
             tooltip: {
                 trigger: 'axis'
@@ -90,24 +90,237 @@ var pageData = {
             }]
         };
 
-        $.get("/indusAll/Year/distribute",function(data){
+        $.get("/indusAll/Year/distribute", function (data) {
             var str = JSON.parse(data);
 
-            for(i=0;i<str.length;i++){
+            for (i = 0; i < str.length; i++) {
                 sourceData.push(str[i].indusAll);
                 sourceDate.push(str[i].dateStr);
             }
             echartsA.setOption({
-                xAxis:{
-                    data:sourceDate
+                xAxis: {
+                    data: sourceDate
                 },
-                series:[{
+                series: [{
                     name: '工业总产值',
                     data: sourceData
                 }]
             })
         })
         echartsA.setOption(option);
+
+
+        var chartKline = echarts.init(document.getElementById('charts-kline'));
+
+
+        $.getJSON('/kline', function (data) {
+            var klineCategory = [];
+            var klineValue = [];
+            $.each(data, function (i, item) {
+                klineCategory.push(item.date);
+                var temp=[];
+                temp.push(item.open);
+                temp.push(item.close);
+                temp.push(item.lowest);
+                temp.push(item.highest);
+                klineValue.push(temp);
+            })
+
+            function calculateMA(dayCount) {
+                var result = [];
+                for (var i = 0, len = klineValue.length; i < len; i++) {
+                    if (i < dayCount) {
+                        result.push('-');
+                        continue;
+                    }
+                    var sum = 0;
+                    for (var j = 0; j < dayCount; j++) {
+                        sum += klineValue[i - j][1];
+                    }
+                    result.push(sum / dayCount);
+                }
+                return result;
+            }
+
+            klineOption = {
+                title: {
+                    text: '上证指数',
+                    left: 0
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'line'
+                    }
+                },
+                legend: {
+                    data: ['日K', 'MA5', 'MA10', 'MA20', 'MA30']
+                },
+                grid: {
+                    left: '10%',
+                    right: '10%',
+                    bottom: '15%'
+                },
+                xAxis: {
+                    type: 'category',
+                    data: klineCategory,
+                    scale: true,
+                    boundaryGap: false,
+                    axisLine: {onZero: false},
+                    splitLine: {show: false},
+                    splitNumber: 20,
+                    min: 'dataMin',
+                    max: 'dataMax'
+                },
+                yAxis: {
+                    scale: true,
+                    splitArea: {
+                        show: true
+                    }
+                },
+                dataZoom: [
+                    {
+                        type: 'inside',
+                        start: 50,
+                        end: 100
+                    },
+                    {
+                        show: true,
+                        type: 'slider',
+                        y: '90%',
+                        start: 50,
+                        end: 100
+                    }
+                ],
+                series: [
+                    {
+                        name: '日K',
+                        type: 'candlestick',
+                        data: klineValue,
+                        markPoint: {
+                            label: {
+                                normal: {
+                                    formatter: function (param) {
+                                        return param != null ? Math.round(param.value) : '';
+                                    }
+                                }
+                            },
+                            data: [
+                                {
+                                    name: 'XX标点',
+                                    coord: ['2013/5/31', 2300],
+                                    value: 2300,
+                                    itemStyle: {
+                                        normal: {color: 'rgb(41,60,85)'}
+                                    }
+                                },
+                                {
+                                    name: 'highest value',
+                                    type: 'max',
+                                    valueDim: 'highest'
+                                },
+                                {
+                                    name: 'lowest value',
+                                    type: 'min',
+                                    valueDim: 'lowest'
+                                },
+                                {
+                                    name: 'average value on close',
+                                    type: 'average',
+                                    valueDim: 'close'
+                                }
+                            ],
+                            tooltip: {
+                                formatter: function (param) {
+                                    return param.name + '<br>' + (param.data.coord || '');
+                                }
+                            }
+                        },
+                        markLine: {
+                            symbol: ['none', 'none'],
+                            data: [
+                                // [
+                                //     {
+                                //         name: 'from lowest to highest',
+                                //         type: 'min',
+                                //         valueDim: 'lowest',
+                                //         symbol: 'circle',
+                                //         symbolSize: 10,
+                                //         label: {
+                                //             normal: {show: false},
+                                //             emphasis: {show: false}
+                                //         }
+                                //     },
+                                //     {
+                                //         type: 'max',
+                                //         valueDim: 'highest',
+                                //         symbol: 'circle',
+                                //         symbolSize: 10,
+                                //         label: {
+                                //             normal: {show: false},
+                                //             emphasis: {show: false}
+                                //         }
+                                //     }
+                                // ],
+                                {
+                                    name: 'min line on close',
+                                    type: 'min',
+                                    valueDim: 'close'
+                                },
+                                {
+                                    name: 'max line on close',
+                                    type: 'max',
+                                    valueDim: 'close'
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        name: 'MA5',
+                        type: 'line',
+                        data: calculateMA(5),
+                        smooth: true,
+                        lineStyle: {
+                            normal: {opacity: 0.5}
+                        }
+                    },
+                    {
+                        name: 'MA10',
+                        type: 'line',
+                        data: calculateMA(10),
+                        smooth: true,
+                        lineStyle: {
+                            normal: {opacity: 0.5}
+                        }
+                    },
+                    {
+                        name: 'MA20',
+                        type: 'line',
+                        data: calculateMA(20),
+                        smooth: true,
+                        lineStyle: {
+                            normal: {opacity: 0.5}
+                        }
+                    },
+                    {
+                        name: 'MA30',
+                        type: 'line',
+                        data: calculateMA(30),
+                        smooth: true,
+                        lineStyle: {
+                            normal: {opacity: 0.5}
+                        }
+                    },
+
+                ]
+            };
+
+            chartKline.setOption(klineOption);
+        })
+
+
+
+
     },
     // ===============================================
     // 图表页
@@ -347,7 +560,7 @@ var pageData = {
                 }
             },
             legend: {
-                data:['主营业务收入','技术收入','高新技术产品收入','产品销售收入','市场营销收入']
+                data: ['主营业务收入', '技术收入', '高新技术产品收入', '产品销售收入', '商品销售收入']
             },
             xAxis: [
                 {
@@ -373,36 +586,35 @@ var pageData = {
             ],
             series: [
                 {
-                    name:'主营业务收入',
-                    type:'bar',
-                    data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
+                    name: '主营业务收入',
+                    type: 'bar',
+                    data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
                 },
                 {
-                    name:'技术收入',
-                    type:'bar',
-                    data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+                    name: '技术收入',
+                    type: 'bar',
+                    data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
                 },
                 {
-                    name:'高新技术产品收入',
-                    type:'bar',
-                    data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+                    name: '高新技术产品收入',
+                    type: 'bar',
+                    data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
                 },
                 {
-                    name:'产品销售收入',
-                    type:'bar',
-                    data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+                    name: '产品销售收入',
+                    type: 'bar',
+                    data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
                 },
                 {
-                    name:'商品销售收入',
-                    type:'bar',
+                    name: '商品销售收入',
+                    type: 'bar',
+                    data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
+                },
+                {
+                    name: '工业总产值',
+                    type: 'line',
                     yAxisIndex: 1,
-                    data:[2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
-                },
-                {
-                    name:'工业总产值',
-                    type:'line',
-                    yAxisIndex: 1,
-                    data:[2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
+                    data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
                 }
             ]
 
@@ -410,10 +622,11 @@ var pageData = {
         };
 
         echartsA.setOption(option);
-        $.get("/indusAll/Year/distribute",function(data){
+        echartsA.showLoading();
+        $.get("/indusAll/Year/distribute", function (data) {
             var str = JSON.parse(data);
 
-            for(i=0;i<str.length;i++){
+            for (i = 0; i < str.length; i++) {
                 sourceDate.push(str[i].dateStr);
                 mainServiceIncome.push(str[i].mainServiceIncome);
                 indusAll.push(str[i].indusAll);
@@ -422,14 +635,15 @@ var pageData = {
                 productIncome.push(str[i].productSellIncome);
                 goodsIncome.push(str[i].goodsSellIncome);
             }
+            echartsA.hideLoading();
             echartsA.setOption({
-                xAxis:{
-                    data:sourceDate
+                xAxis: {
+                    data: sourceDate
                 },
-                series:[{
-                        name: '工业总产值',
-                        data: indusAll
-                    },
+                series: [{
+                    name: '工业总产值',
+                    data: indusAll
+                },
                     {
                         name: '商品销售收入',
                         data: goodsIncome
@@ -439,13 +653,18 @@ var pageData = {
                         data: htechIncome
                     },
                     {
-                        name: '技术收入'  ,
+                        name: '技术收入',
                         data: techIncome
                     },
                     {
                         name: '主营业务收入',
                         data: mainServiceIncome
+                    },
+                    {
+                        name: '产品销售收入',
+                        data: productIncome
                     }
+
                 ]
             })
         })
