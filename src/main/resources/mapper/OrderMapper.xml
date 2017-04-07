@@ -4,6 +4,10 @@
     <resultMap id="BaseResultMap" type="com.zhaokxkx13.dao.entity.Order">
         <result column="order_id" property="id" jdbcType="INTEGER"/>
         <result column="order_date" property="date" jdbcType="DATE"/>
+        <result column="receiver" property="receiver" jdbcType="VARCHAR"/>
+        <result column="sender" property="sender" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="freight" property="freight" jdbcType="DOUBLE"/>
         <association property="employee" column="employee_id" javaType="com.zhaokxkx13.dao.entity.Employee"
                      select="com.zhaokxkx13.dao.inf.EmployeeMapper.selectById"/>
         <association property="customer" column="customer_id" javaType="com.zhaokxkx13.dao.entity.Customer"
@@ -13,8 +17,14 @@
     <select id="selectById" parameterType="Integer" resultMap="BaseResultMap">
         SELECT
         o.id as order_id,
-        o.date as order_date
-        FROM ORDER o
+        o.date as order_date,
+        o.employee_id,
+        o.customer_id,
+        o.sender,
+        o.receiver,
+        o.freight,
+        o.address
+        FROM orders o
         WHERE
         o.id=#{id}
     </select>

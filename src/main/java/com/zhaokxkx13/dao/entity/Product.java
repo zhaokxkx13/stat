@@ -9,7 +9,7 @@ public class Product implements Serializable {
     private Integer id;
     private String name;
     private String typeBig;
-    private String tpeSmall;
+    private String typeSmall;
     private Double cost;
     private Double price;
     private Integer stock;
@@ -39,12 +39,12 @@ public class Product implements Serializable {
         this.typeBig = typeBig;
     }
 
-    public String getTpeSmall() {
-        return tpeSmall;
+    public String getTypeSmall() {
+        return typeSmall;
     }
 
-    public void setTpeSmall(String tpeSmall) {
-        this.tpeSmall = tpeSmall;
+    public void setTypeSmall(String typeSmall) {
+        this.typeSmall = typeSmall;
     }
 
     public Double getCost() {
@@ -77,5 +77,19 @@ public class Product implements Serializable {
 
     public void setSpec(String spec) {
         this.spec = spec;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", typeBig='" + typeBig + '\'' +
+                ", typeSmall='" + typeSmall + '\'' +
+                ", cost=" + cost +
+                ", price=" + price +
+                ", stock=" + stock +
+                ", spec='" + spec + '\'' +
+                '}';
     }
 }

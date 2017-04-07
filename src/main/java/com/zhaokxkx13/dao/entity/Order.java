@@ -12,7 +12,7 @@ public class Order implements Serializable {
     private String sender;
     private String receiver;
     private String address;
-    private Double freiget;
+    private Double freight;
     private Employee employee;
     private Customer customer;
 
@@ -48,12 +48,12 @@ public class Order implements Serializable {
         this.address = address;
     }
 
-    public Double getFreiget() {
-        return freiget;
+    public Double getFreight() {
+        return freight;
     }
 
-    public void setFreiget(Double freiget) {
-        this.freiget = freiget;
+    public void setFreight(Double freight) {
+        this.freight = freight;
     }
 
     public Date getDate() {
@@ -89,7 +89,7 @@ public class Order implements Serializable {
                 ", sender='" + sender + '\'' +
                 ", receiver='" + receiver + '\'' +
                 ", address='" + address + '\'' +
-                ", freiget=" + freiget +
+                ", freight=" + freight +
                 ", employee=" + employee +
                 ", customer=" + customer +
                 '}';

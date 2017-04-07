@@ -11,4 +11,14 @@
                      select="com.zhaokxkx13.dao.inf.OrderMapper.selectById"/>
     </resultMap>
 
+    <select id="selectById" parameterType="Integer" resultMap="BaseResultMap">
+        select
+        po.id as productOrder_id,
+        po.price as productOrder_price,
+        po.num as productOrder_num,
+        po.product_id,
+        po.order_id
+        FROM
+        ProductOrder po WHERE po.id=#{id}
+    </select>
 </mapper>

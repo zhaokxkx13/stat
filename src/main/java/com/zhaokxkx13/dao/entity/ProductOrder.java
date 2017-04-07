@@ -51,4 +51,15 @@ public class ProductOrder implements Serializable {
     public void setNum(Integer num) {
         this.num = num;
     }
+
+    @Override
+    public String toString() {
+        return "ProductOrder{" +
+                "id=" + id +
+                ", product=" + product +
+                ", order=" + order +
+                ", num=" + num +
+                ", price=" + price +
+                '}';
+    }
 }
