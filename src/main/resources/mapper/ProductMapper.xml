@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhaokxkx13.dao.inf.ProductMapper">
+    <resultMap id="BaseResultMap" type="com.zhaokxkx13.dao.entity.Product">
+        <result column="product_id" property="id" jdbcType="INTEGER"/>
+        <result column="product_name" property="name" jdbcType="VARCHAR"/>
+        <result column="product_type_big" property="typeBig" jdbcType="VARCHAR"/>
+        <result column="product_type_small" property="typeSmall" jdbcType="VARCHAR"/>
+        <result column="product_cost" property="cost" jdbcType="DOUBLE"/>
+        <result column="product_price" property="price" jdbcType="DOUBLE"/>
+        <result column="product_stock" property="stock" jdbcType="INTEGER"/>
+        <result column="product_spec" property="spec" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectById" parameterType="Integer" resultMap="BaseResultMap">
+        SELECT
+        p.id as product_id,
+        p.name as product_name,
+        p.type_big as product_type_big,
+        p.type_small as product_type_small,
+        p.cost as product_cost,
+        p.price as product_price,
+        p.stock as product_stock,
+        p.spec as product_spec
+        FROM
+        product p
+        WHERE
+        p.id=#{id}
+    </select>
+</mapper>

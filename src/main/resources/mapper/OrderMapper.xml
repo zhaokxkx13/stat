@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhaokxkx13.dao.inf.OrderMapper">
+    <resultMap id="BaseResultMap" type="com.zhaokxkx13.dao.entity.Order">
+        <result column="order_id" property="id" jdbcType="INTEGER"/>
+        <result column="order_date" property="date" jdbcType="DATE"/>
+        <association property="employee" column="employee_id" javaType="com.zhaokxkx13.dao.entity.Employee"
+                     select="com.zhaokxkx13.dao.inf.EmployeeMapper.selectById"/>
+        <association property="customer" column="customer_id" javaType="com.zhaokxkx13.dao.entity.Customer"
+                     select="com.zhaokxkx13.dao.inf.CustomerMapper.selectById"/>
+    </resultMap>
+
+    <select id="selectById" parameterType="Integer" resultMap="BaseResultMap">
+        SELECT
+        o.id as order_id,
+        o.date as order_date
+        FROM ORDER o
+        WHERE
+        o.id=#{id}
+    </select>
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhaokxkx13.dao.inf.CustomerMapper">
+    <resultMap id="BaseResultMap" type="com.zhaokxkx13.dao.entity.Customer">
+        <result column="customer_id" property="id" jdbcType="INTEGER"/>
+        <result column="customer_name" property="name" jdbcType="VARCHAR"/>
+        <result column="customer_tel" property="tel" jdbcType="VARCHAR"/>
+        <association property="company" column="company_id" javaType="com.zhaokxkx13.dao.entity.Company"
+                     select="com.zhaokxkx13.dao.inf.CompanyMapper.selectById"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="BaseResultMap" parameterType="Integer">
+        SELECT
+        c.id as customer_id,
+        c.name as customer_name,
+        c.tel as customer_tel,
+        c.company_id as company_id
+        FROM
+        customer c  WHERE c.id=#{id}
+    </select>
+</mapper>

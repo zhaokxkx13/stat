@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhaokxkx13.dao.inf.CompanyMapper">
+    <resultMap id="BaseResultMap" type="com.zhaokxkx13.dao.entity.Company">
+        <result column="company_id" property="id" jdbcType="INTEGER"/>
+        <result column="company_name" property="name" jdbcType="VARCHAR"/>
+        <result column="company_area" property="area" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectById" parameterType="Integer" resultMap="BaseResultMap">
+        SELECT
+        c.id as company_id,
+        c.name as company_name,
+        c.area as company_area
+        FROM
+        company c WHERE
+        c.id=#{id}
+    </select>
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhaokxkx13.dao.inf.ProductOrderMapper">
+    <resultMap id="BaseResultMap" type="com.zhaokxkx13.dao.entity.ProductOrder">
+        <result column="productOrder_id" property="id" jdbcType="INTEGER"/>
+        <result column="productOrder_price" property="price" jdbcType="DOUBLE"/>
+        <result column="productOrder_num" property="num" javaType="INTEGER"/>
+        <association property="product"  column="product_id" javaType="com.zhaokxkx13.dao.entity.Product"
+                     select="com.zhaokxkx13.dao.inf.ProductMapper.selectById"/>
+        <association property="order" column="order_id" javaType="com.zhaokxkx13.dao.entity.Order"
+                     select="com.zhaokxkx13.dao.inf.OrderMapper.selectById"/>
+    </resultMap>
+
+</mapper>
