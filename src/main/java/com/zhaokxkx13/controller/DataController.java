@@ -2,13 +2,17 @@ package com.zhaokxkx13.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.zhaokxkx13.Bean.CustomerConsume;
+import com.zhaokxkx13.Bean.DepartmentSellKpi;
 import com.zhaokxkx13.dao.entity.Income;
 import com.zhaokxkx13.dao.entity.Kline;
 import com.zhaokxkx13.dao.inf.IncomeMapper;
+import com.zhaokxkx13.service.CustomerService;
 import com.zhaokxkx13.service.IncomeService;
 import com.zhaokxkx13.service.KlineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +31,9 @@ public class DataController {
 
     @Autowired
     KlineService klineService;
+
+    @Autowired
+    CustomerService customerService;
 
     @RequestMapping("/indusAll/Year/distribute")
     public String getYearDistribute() {
@@ -58,4 +65,34 @@ public class DataController {
         String result = gson.toJson(KlineList);
         return result;
     }
+
+
+    @RequestMapping("/top/consumers")
+    public String getTopConsumers() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.MONTH, -1);
+
+        Date endDate = new Date();
+        Date startDate = calendar.getTime();
+
+        List<CustomerConsume> customerConsumeList = customerService.getTopNCustomerConsum(startDate, endDate, 10);
+        Gson gson = new Gson();
+        return gson.toJson(customerConsumeList);
+    }
+
+    @RequestMapping("/department/kpi")
+    public String getDepartmentSellKpi(ModelMap modelMap) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.MONTH, -1);
+
+        Date endDate = new Date();
+        Date startDate = calendar.getTime();
+        List<DepartmentSellKpi> sellKpis = customerService.getDepartmentSellKpi(startDate, endDate, 1);
+
+        Gson gson = new Gson();
+        return gson.toJson(sellKpis);
+    }
+
 }

@@ -18,7 +18,7 @@
     <link rel="stylesheet" th:href="@{css/amazeui.datatables.min.css}"/>
     <link rel="stylesheet" th:href="@{css/app.css}"/>
     <script th:src="@{js/jquery.min.js}"></script>
-
+    <script th:src="@{js/load-canvas.js}"></script>
 </head>
 
 <body data-type="index">
@@ -50,7 +50,7 @@
                 <ul>
                     <!-- 欢迎语 -->
                     <li class="am-text-sm tpl-header-navbar-welcome">
-                        <a href="javascript:;">欢迎你, <span th:text="${username}"> </span> </a>
+                        <a href="javascript:;">欢迎你, <span th:text="${session.username}"> </span> </a>
                     </li>
 
                     <!-- 退出 -->
@@ -320,7 +320,7 @@
 <script th:src="@{js/amazeui.datatables.min.js}"></script>
 <script th:src="@{js/dataTables.responsive.min.js}"></script>
 <script th:src="@{js/app.js?v=sdfsfs}"></script>
-
+<script th:src="@{js/canvas-particle.js}"></script>
 </body>
 
 </html>

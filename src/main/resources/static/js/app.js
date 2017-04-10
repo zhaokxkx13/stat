@@ -668,6 +668,134 @@ var pageData = {
                 ]
             })
         })
+    },
+    'sell-kpi' :function charDate() {
+        var consumerTop = echarts.init(document.getElementById('consumerSort'),"dark");
+        var departmentSellKpi = echarts.init(document.getElementById('departmentSellKpi'),"dark");
+        consumerTop.showLoading();
+        $.get('/top/consumers',function(data){
+            consumerTop.hideLoading();
+            var str = JSON.parse(data);
+            var companyName = [];
+            var sells = [];
+            for (i = 0; i < str.length; i++) {
+                companyName.push(str[i].customer.company.name);
+                sells.push(str[i].moneyAmount);
+            }
+            var topConsumeOption = {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    },
+                    formatter: "{c}"
+                },
+                legend: {
+                    data: ['2016年']
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'value',
+                    boundaryGap: [0, 0.01],
+                    "axisLabel": {
+                        "interval": 0,
+                        formatter: '{value}',
+                    }
+                },
+                yAxis: {
+                    type: 'category',
+                    data: companyName
+                },
+                series: [{
+                    name: '客户贡献',
+                    type: 'bar',
+                    data: sells
+                }]
+            };
+
+            consumerTop.setOption(topConsumeOption);
+        })
+
+        departmentSellKpi.showLoading();
+        $.get("/department/kpi",function(data){
+            departmentSellKpi.hideLoading();
+            var departmentName = [];
+            var planSell = [];
+            var actSell = [];
+            var persent = [];
+            var str = JSON.parse(data);
+
+            for(i=0;i<str.length;i++){
+                departmentName.push(str[i].departmentName);
+                planSell.push(str[i].planSell);
+                actSell.push(str[i].actSell);
+                persent.push(str[i].persent);
+            }
+            var option = {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {type: 'cross'}
+                },
+                toolbox: {
+                    feature: {
+                        dataView: {show: true, readOnly: false},
+                        magicType: {show: true, type: ['line', 'bar']},
+                        restore: {show: true},
+                        saveAsImage: {show: true}
+                    }
+                },
+                legend: {
+                    data:['计划额','销售额','完成率']
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: departmentName
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                        name: '计划额',
+                        axisLabel: {
+                            formatter: '{value} 元'
+                        }
+                    },
+                    {
+                        type: 'value',
+                        name: '销售额',
+                        axisLabel: {
+                            formatter: '{value} 元'
+                        }
+                    }
+                ],
+                series: [
+                    {
+                        name:'计划额',
+                        type:'bar',
+                        data:planSell
+                    },
+                    {
+                        name:'销售额',
+                        type:'bar',
+                        data:actSell
+                    },
+                    {
+                        name:'完成率',
+                        type:'line',
+                        yAxisIndex: 1,
+                        data:persent
+                    }
+                ]
+            };
+            departmentSellKpi.setOption(option);
+        })
+
     }
 }
 

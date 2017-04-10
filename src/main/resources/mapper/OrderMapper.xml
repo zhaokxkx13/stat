@@ -9,9 +9,9 @@
         <result column="address" property="address" jdbcType="VARCHAR"/>
         <result column="freight" property="freight" jdbcType="DOUBLE"/>
         <association property="employee" column="employee_id" javaType="com.zhaokxkx13.dao.entity.Employee"
-                     select="com.zhaokxkx13.dao.inf.EmployeeMapper.selectById"/>
+                     select="com.zhaokxkx13.dao.inf.EmployeeMapper.selectById" fetchType="eager"/>
         <association property="customer" column="customer_id" javaType="com.zhaokxkx13.dao.entity.Customer"
-                     select="com.zhaokxkx13.dao.inf.CustomerMapper.selectById"/>
+                     select="com.zhaokxkx13.dao.inf.CustomerMapper.selectById" fetchType="eager"/>
     </resultMap>
 
     <select id="selectById" parameterType="Integer" resultMap="BaseResultMap">

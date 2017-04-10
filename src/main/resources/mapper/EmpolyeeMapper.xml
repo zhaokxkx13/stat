@@ -12,9 +12,9 @@
         <result column="employee_salery" property="salery" jdbcType="DOUBLE"/>
         <result column="employee_tel" property="tel" jdbcType="VARCHAR"/>
         <association property="company" javaType="com.zhaokxkx13.dao.entity.Company" column="company_id"
-                     select="com.zhaokxkx13.dao.inf.CompanyMapper.selectById"/>
+                     select="com.zhaokxkx13.dao.inf.CompanyMapper.selectById" fetchType="eager"/>
         <association property="department" javaType="com.zhaokxkx13.dao.entity.Department" column="department_id"
-                     select="com.zhaokxkx13.dao.inf.DepartmentMapper.selectById"/>
+                     select="com.zhaokxkx13.dao.inf.DepartmentMapper.selectById" fetchType="eager"/>
     </resultMap>
 
     <select id="selectByName" resultMap="BaseResultMap" parameterType="String">

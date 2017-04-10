@@ -6,7 +6,7 @@
         <result column="customer_name" property="name" jdbcType="VARCHAR"/>
         <result column="customer_tel" property="tel" jdbcType="VARCHAR"/>
         <association property="company" column="company_id" javaType="com.zhaokxkx13.dao.entity.Company"
-                     select="com.zhaokxkx13.dao.inf.CompanyMapper.selectById"/>
+                     select="com.zhaokxkx13.dao.inf.CompanyMapper.selectById" fetchType="eager"/>
     </resultMap>
 
     <select id="selectById" resultMap="BaseResultMap" parameterType="Integer">

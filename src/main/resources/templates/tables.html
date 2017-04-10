@@ -51,7 +51,7 @@
                 <ul>
                     <!-- 欢迎语 -->
                     <li class="am-text-sm tpl-header-navbar-welcome">
-                        <a href="javascript:;">欢迎你, <span>Amaze UI</span> </a>
+                        <a href="javascript:;">欢迎你, <span th:text="${session.username}">Amaze UI</span> </a>
                     </li>
 
                     <!-- 退出 -->
@@ -89,7 +89,7 @@
                 </div>
                 <span class="user-panel-logged-in-text">
               <i class="am-icon-circle-o am-text-success tpl-user-panel-status-icon"></i>
-              禁言小张
+              <span th:text="${session.username}"></span>
           </span>
                 <a href="javascript:;" class="tpl-user-panel-action-link"> <span class="am-icon-pencil"></span> 账号设置</a>
             </div>
@@ -100,7 +100,7 @@
         <ul class="sidebar-nav">
             <li class="sidebar-nav-heading">Components <span class="sidebar-nav-heading-info"> 附加组件</span></li>
             <li class="sidebar-nav-link">
-                <a th:href="index.html">
+                <a th:href="@{/index}">
                     <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
                 </a>
             </li>

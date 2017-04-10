@@ -8,7 +8,27 @@
         <association property="product"  column="product_id" javaType="com.zhaokxkx13.dao.entity.Product"
                      select="com.zhaokxkx13.dao.inf.ProductMapper.selectById"/>
         <association property="order" column="order_id" javaType="com.zhaokxkx13.dao.entity.Order"
-                     select="com.zhaokxkx13.dao.inf.OrderMapper.selectById"/>
+                     select="com.zhaokxkx13.dao.inf.OrderMapper.selectById" fetchType="eager"/>
+    </resultMap>
+
+    <resultMap id="SearchTimeResutlMap" type="com.zhaokxkx13.dao.entity.ProductOrder">
+        <result column="productOrder_id" property="id" jdbcType="INTEGER"/>
+        <result column="productOrder_price" property="price" jdbcType="DOUBLE"/>
+        <result column="productOrder_num" property="num" javaType="INTEGER"/>
+        <association property="product"  column="product_id" javaType="com.zhaokxkx13.dao.entity.Product"
+                     select="com.zhaokxkx13.dao.inf.ProductMapper.selectById"/>
+        <association property="order"  javaType="com.zhaokxkx13.dao.entity.Order">
+            <result column="order_id" property="id" jdbcType="INTEGER"/>
+            <result column="order_date" property="date" jdbcType="DATE"/>
+            <result column="receiver" property="receiver" jdbcType="VARCHAR"/>
+            <result column="sender" property="sender" jdbcType="VARCHAR"/>
+            <result column="address" property="address" jdbcType="VARCHAR"/>
+            <result column="freight" property="freight" jdbcType="DOUBLE"/>
+            <association property="employee" column="employee_id" javaType="com.zhaokxkx13.dao.entity.Employee"
+                         select="com.zhaokxkx13.dao.inf.EmployeeMapper.selectById"/>
+            <association property="customer" column="customer_id" javaType="com.zhaokxkx13.dao.entity.Customer"
+                         select="com.zhaokxkx13.dao.inf.CustomerMapper.selectById"/>
+        </association>
     </resultMap>
 
     <select id="selectById" parameterType="Integer" resultMap="BaseResultMap">
@@ -20,5 +40,27 @@
         po.order_id
         FROM
         ProductOrder po WHERE po.id=#{id}
+    </select>
+
+    <select id="selectByDate" parameterType="Map" resultMap="SearchTimeResutlMap">
+        select
+        po.id as productOrder_id,
+        po.price as productOrder_price,
+        po.num as productOrder_num,
+        po.product_id,
+        o.id as order_id,
+        o.date as order_date,
+        o.receiver as receiver,
+        o.sender as sender,
+        o.address as address,
+        o.freight as freight,
+        o.employee_id,
+        o.customer_id
+        FROM
+        ProductOrder po LEFT JOIN orders o ON (po.order_id=o.id) WHERE
+        o.date >=#{startDate}
+        <if test="endDate != null">
+            and #{endDate}>=o.date
+        </if>
     </select>
 </mapper>

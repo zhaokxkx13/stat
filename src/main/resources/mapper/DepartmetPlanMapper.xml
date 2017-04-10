@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhaokxkx13.dao.inf.DepartmentPlanMapper">
+    <resultMap id="BaseResultMap" type="com.zhaokxkx13.dao.entity.DepartmentPlan">
+        <result column="department_id" property="id" jdbcType="INTEGER"/>
+        <result column="departmentPlan_planSell" property="planSell" jdbcType="DOUBLE"/>
+        <result column="departmentPlan_date" property="date" jdbcType="DATE"/>
+        <association property="department" fetchType="eager" column="department_id"
+                     select="com.zhaokxkx13.dao.inf.DepartmentMapper.selectById"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="BaseResultMap" parameterType="Integer">
+        SELECT
+        d.id as departmentPlan_id,
+        d.plan_sell as departmentPlan_planSell,
+        d.date as departmentPlan_date,
+        d.department_id
+        FROM
+        departmentPlan d  WHERE d.id=#{id}
+    </select>
+
+    <select id="selectByDate" resultMap="BaseResultMap" parameterType="Map">
+        SELECT
+        d.id as departmentPlan_id,
+        d.plan_sell as departmentPlan_planSell,
+        d.date as departmentPlan_date,
+        d.department_id
+        FROM
+        departmentPlan d WHERE d.date>=#{startDate} AND #{endDate}>= d.date
+    </select>
+</mapper>
