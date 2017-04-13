@@ -2,6 +2,7 @@ package com.zhaokxkx13.dao.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by zhaokxkx13 on 2017/4/7.
@@ -15,6 +16,30 @@ public class Order implements Serializable {
     private Double freight;
     private Employee employee;
     private Customer customer;
+    private List<ProductOrder> productOrderList;
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", date=" + date +
+                ", sender='" + sender + '\'' +
+                ", receiver='" + receiver + '\'' +
+                ", address='" + address + '\'' +
+                ", freight=" + freight +
+                ", employee=" + employee +
+                ", customer=" + customer +
+                ", productOrderList=" + productOrderList +
+                '}';
+    }
+
+    public List<ProductOrder> getProductOrderList() {
+        return productOrderList;
+    }
+
+    public void setProductOrderList(List<ProductOrder> productOrderList) {
+        this.productOrderList = productOrderList;
+    }
 
     public Integer getId() {
         return id;
@@ -81,17 +106,4 @@ public class Order implements Serializable {
     }
 
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", date=" + date +
-                ", sender='" + sender + '\'' +
-                ", receiver='" + receiver + '\'' +
-                ", address='" + address + '\'' +
-                ", freight=" + freight +
-                ", employee=" + employee +
-                ", customer=" + customer +
-                '}';
-    }
 }

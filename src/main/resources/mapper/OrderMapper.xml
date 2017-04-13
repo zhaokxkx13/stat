@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zhaokxkx13.dao.inf.OrderMapper">
+    <resultMap id="BaseOrder" type="com.zhaokxkx13.dao.entity.Order">
+        <result column="order_id" property="id" jdbcType="INTEGER"/>
+        <result column="order_date" property="date" jdbcType="DATE"/>
+        <result column="receiver" property="receiver" jdbcType="VARCHAR"/>
+        <result column="sender" property="sender" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="freight" property="freight" jdbcType="DOUBLE"/>
+    </resultMap>
     <resultMap id="BaseResultMap" type="com.zhaokxkx13.dao.entity.Order">
         <result column="order_id" property="id" jdbcType="INTEGER"/>
         <result column="order_date" property="date" jdbcType="DATE"/>
@@ -20,6 +28,19 @@
         o.date as order_date,
         o.employee_id,
         o.customer_id,
+        o.sender,
+        o.receiver,
+        o.freight,
+        o.address
+        FROM orders o
+        WHERE
+        o.id=#{id}
+    </select>
+
+    <select id="selectByIdRaw" parameterType="Integer" resultMap="BaseOrder">
+          SELECT
+        o.id as order_id,
+        o.date as order_date,
         o.sender,
         o.receiver,
         o.freight,

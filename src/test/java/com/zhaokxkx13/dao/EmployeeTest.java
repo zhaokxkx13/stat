@@ -20,7 +20,7 @@ public class EmployeeTest {
     @Autowired
     EmployeeMapper employeeMapper;
 
-    @Test
+//    @Test
     public void test1() {
         List<Employee> employeeList = employeeMapper.selectByName("zhaokxkx13");
         for (Employee item : employeeList) {

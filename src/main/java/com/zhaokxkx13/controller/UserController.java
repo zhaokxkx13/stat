@@ -155,4 +155,14 @@ public class UserController {
         modelMap.put("customerConsumeList", customerConsumeList);
         return "sell/kpi";
     }
+
+    @RequestMapping("/sell/order")
+    public String getOrderDetails() {
+        return "sell/orderDetails";
+    }
+
+    @RequestMapping("/sell/product")
+    public String getProductDetails() {
+        return "sell/productDetails";
+    }
 }

@@ -62,10 +62,10 @@ public class ShiroConfigration {
     }
 
     @Bean(name = "securityManager")
-    public DefaultWebSecurityManager securityManager() {
+    public SecurityManager securityManager() {
         DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
         manager.setRealm(userRealm());
-        manager.setCacheManager(cacheManager());
+        manager.setCacheManager(shiroCacheManager());
         manager.setSessionManager(defaultWebSessionManager());
         return manager;
     }
@@ -73,7 +73,6 @@ public class ShiroConfigration {
     @Bean(name = "sessionManager")
     public DefaultWebSessionManager defaultWebSessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-        sessionManager.setCacheManager(cacheManager());
         sessionManager.setGlobalSessionTimeout(1800000);
         sessionManager.setDeleteInvalidSessions(true);
         sessionManager.setSessionValidationSchedulerEnabled(true);
@@ -85,7 +84,6 @@ public class ShiroConfigration {
     @DependsOn(value = "lifecycleBeanPostProcessor")
     public UserRealm userRealm() {
         UserRealm userRealm = new UserRealm();
-        userRealm.setCacheManager(cacheManager());
         userRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         return userRealm;
     }
@@ -96,13 +94,14 @@ public class ShiroConfigration {
     }
 
     @Bean
-    public EhCacheManager cacheManager() {
+    @DependsOn("lifecycleBeanPostProcessor")
+    public EhCacheManager shiroCacheManager() {
         EhCacheManager cacheManager = new EhCacheManager();
         cacheManager.setCacheManagerConfigFile("classpath:ehcache.xml");
         return cacheManager;
     }
 
-    @Bean
+    @Bean(name = "lifecycleBeanPostProcessor")
     public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();
     }

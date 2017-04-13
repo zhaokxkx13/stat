@@ -1,17 +1,17 @@
 package com.zhaokxkx13.controller;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import com.google.gson.GsonBuilder;
 import com.zhaokxkx13.Bean.CustomerConsume;
 import com.zhaokxkx13.Bean.DepartmentSellKpi;
+import com.zhaokxkx13.Bean.OrderDetails;
+import com.zhaokxkx13.Bean.ProductDetails;
 import com.zhaokxkx13.dao.entity.Income;
 import com.zhaokxkx13.dao.entity.Kline;
-import com.zhaokxkx13.dao.inf.IncomeMapper;
 import com.zhaokxkx13.service.CustomerService;
 import com.zhaokxkx13.service.IncomeService;
 import com.zhaokxkx13.service.KlineService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -95,4 +95,21 @@ public class DataController {
         return gson.toJson(sellKpis);
     }
 
+    @RequestMapping("/order/details")
+    public String getOrderDetails() {
+        List<OrderDetails> detailsList = customerService.getOrderDetails("beef");
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(detailsList);
+        jsonStr = "{ \"data\":" + jsonStr + "}";
+        return jsonStr;
+    }
+
+    @RequestMapping("/product/details")
+    public String getProductDetails(){
+        List<ProductDetails> detailsList = customerService.getProductDetails("beef");
+        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        String jsonStr = gson.toJson(detailsList);
+        jsonStr = "{ \"data\":" + jsonStr + "}";
+        return jsonStr;
+    }
 }

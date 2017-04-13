@@ -21,7 +21,7 @@ public class DataDaoTest {
     @Autowired
     IncomeMapper incomeMapper;
 
-    @Test
+//    @Test
     public void test1() {
         PageHelper.startPage(1,10);
         List<Income> incomeList = incomeMapper.selectAllIncome();

@@ -1,6 +1,7 @@
 package com.zhaokxkx13.dao.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by zhaokxkx13 on 2017/4/7.
@@ -14,6 +15,30 @@ public class Product implements Serializable {
     private Double price;
     private Integer stock;
     private String spec;
+    private List<ProductOrder> productOrderList;
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", typeBig='" + typeBig + '\'' +
+                ", typeSmall='" + typeSmall + '\'' +
+                ", cost=" + cost +
+                ", price=" + price +
+                ", stock=" + stock +
+                ", spec='" + spec + '\'' +
+                ", productOrderList=" + productOrderList +
+                '}';
+    }
+
+    public List<ProductOrder> getProductOrderList() {
+        return productOrderList;
+    }
+
+    public void setProductOrderList(List<ProductOrder> productOrderList) {
+        this.productOrderList = productOrderList;
+    }
 
     public Integer getId() {
         return id;
@@ -79,17 +104,4 @@ public class Product implements Serializable {
         this.spec = spec;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", typeBig='" + typeBig + '\'' +
-                ", typeSmall='" + typeSmall + '\'' +
-                ", cost=" + cost +
-                ", price=" + price +
-                ", stock=" + stock +
-                ", spec='" + spec + '\'' +
-                '}';
-    }
 }

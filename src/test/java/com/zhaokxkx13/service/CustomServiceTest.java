@@ -1,7 +1,10 @@
 package com.zhaokxkx13.service;
 
+import com.google.gson.Gson;
 import com.zhaokxkx13.Bean.CustomerConsume;
 import com.zhaokxkx13.Bean.DepartmentSellKpi;
+import com.zhaokxkx13.Bean.OrderDetails;
+import com.zhaokxkx13.Bean.ProductDetails;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +25,7 @@ import java.util.List;
 public class CustomServiceTest {
     @Autowired
     CustomerService customerService;
-    @Test
+//    @Test
     public void test1() throws ParseException {
         DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
         Date date = df.parse("2016-12-03");
@@ -32,7 +35,7 @@ public class CustomServiceTest {
         }
     }
 
-    @Test
+//    @Test
     public void test2() throws ParseException {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date date = df.parse("2016-12-03");
@@ -41,5 +44,21 @@ public class CustomServiceTest {
         for(DepartmentSellKpi item:sellKpiList){
             System.out.print(item);
         }
+    }
+
+    @Test
+    public void test3(){
+        List<OrderDetails> detailss = customerService.getOrderDetails("beef");
+//        for(OrderDetails item :detailss){
+//            System.out.println(item);
+//        }
+        Gson gson = new Gson();
+        System.out.println(gson.toJson(detailss));
+    }
+
+
+    @Test
+    public void test4(){
+        List<ProductDetails> productDetailss = customerService.getProductDetails("beef");
     }
 }

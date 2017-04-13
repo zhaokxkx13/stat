@@ -21,7 +21,7 @@ public class UserDaoTest {
     @Autowired
     UserMapper userMapper;
 
-    @Test
+//    @Test
     public void testSelect() {
         User user = userMapper.selectRoleByUserName("zhao");
         List<Role> roleList = user.getRoleList();
