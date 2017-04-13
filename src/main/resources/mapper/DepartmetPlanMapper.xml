@@ -11,21 +11,23 @@
 
     <select id="selectById" resultMap="BaseResultMap" parameterType="Integer">
         SELECT
-        d.id as departmentPlan_id,
-        d.plan_sell as departmentPlan_planSell,
-        d.date as departmentPlan_date,
+        d.id AS departmentPlan_id,
+        d.plan_sell AS departmentPlan_planSell,
+        d.date AS departmentPlan_date,
         d.department_id
         FROM
-        departmentPlan d  WHERE d.id=#{id}
+        departmentPlan d
+        WHERE d.id = #{id}
     </select>
 
     <select id="selectByDate" resultMap="BaseResultMap" parameterType="Map">
         SELECT
-        d.id as departmentPlan_id,
-        d.plan_sell as departmentPlan_planSell,
-        d.date as departmentPlan_date,
+        d.id AS departmentPlan_id,
+        d.plan_sell AS departmentPlan_planSell,
+        d.date AS departmentPlan_date,
         d.department_id
         FROM
-        departmentPlan d WHERE d.date>=#{startDate} AND #{endDate}>= d.date
+        departmentPlan d
+        WHERE d.date >= #{startDate} AND #{endDate} >= d.date
     </select>
 </mapper>

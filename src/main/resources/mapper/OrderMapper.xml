@@ -24,6 +24,51 @@
 
     <select id="selectById" parameterType="Integer" resultMap="BaseResultMap">
         SELECT
+        o.id AS order_id,
+        o.date AS order_date,
+        o.employee_id,
+        o.customer_id,
+        o.sender,
+        o.receiver,
+        o.freight,
+        o.address
+        FROM orders o
+        WHERE
+        o.id = #{id}
+    </select>
+
+    <select id="selectByIdRaw" parameterType="Integer" resultMap="BaseOrder">
+        SELECT
+        o.id AS order_id,
+        o.date AS order_date,
+        o.sender,
+        o.receiver,
+        o.freight,
+        o.address
+        FROM orders o
+        WHERE
+        o.id = #{id}
+    </select>
+
+    <select id="selectByCustomerId" resultMap="BaseOrder">
+        SELECT
+        o.id as order_id,
+        o.date as order_date,
+        o.sender,
+        o.receiver,
+        o.freight,
+        o.address
+        FROM orders o
+        <where>
+            AND o.customer_id IN
+            <foreach collection="list" item="customerId" open="(" close=")" separator="," index="index">
+                #{customerId}
+            </foreach>
+        </where>
+    </select>
+
+    <select id="selectByDate" parameterType="Map" resultMap="BaseResultMap">
+        SELECT
         o.id as order_id,
         o.date as order_date,
         o.employee_id,
@@ -33,20 +78,13 @@
         o.freight,
         o.address
         FROM orders o
-        WHERE
-        o.id=#{id}
-    </select>
-
-    <select id="selectByIdRaw" parameterType="Integer" resultMap="BaseOrder">
-          SELECT
-        o.id as order_id,
-        o.date as order_date,
-        o.sender,
-        o.receiver,
-        o.freight,
-        o.address
-        FROM orders o
-        WHERE
-        o.id=#{id}
+        <where>
+            <if test="startDate!=null">
+                o.date >= #{startDate}
+            </if>
+            <if test="endDate!=null">
+                and #{endDate} >= o.date
+            </if>
+        </where>
     </select>
 </mapper>

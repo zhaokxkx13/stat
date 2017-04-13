@@ -9,13 +9,31 @@
                      select="com.zhaokxkx13.dao.inf.CompanyMapper.selectById" fetchType="eager"/>
     </resultMap>
 
+    <resultMap id="RawResultMap" type="com.zhaokxkx13.dao.entity.Customer">
+        <result column="customer_id" property="id" jdbcType="INTEGER"/>
+        <result column="customer_name" property="name" jdbcType="VARCHAR"/>
+        <result column="customer_tel" property="tel" jdbcType="VARCHAR"/>
+    </resultMap>
+
     <select id="selectById" resultMap="BaseResultMap" parameterType="Integer">
         SELECT
-        c.id as customer_id,
-        c.name as customer_name,
-        c.tel as customer_tel,
-        c.company_id as company_id
+        c.id AS customer_id,
+        c.name AS customer_name,
+        c.tel AS customer_tel,
+        c.company_id AS company_id
         FROM
-        customer c  WHERE c.id=#{id}
+        customer c
+        WHERE c.id = #{id}
+    </select>
+
+    <select id="selectByCompanyId" resultMap="RawResultMap" parameterType="Integer">
+        SELECT
+        c.id AS customer_id,
+        c.name AS customer_name,
+        c.tel AS customer_tel,
+        c.company_id AS company_id
+        FROM
+        customer c
+        WHERE c.company_id = #{companyId}
     </select>
 </mapper>

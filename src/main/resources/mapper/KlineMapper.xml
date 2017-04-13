@@ -12,7 +12,10 @@
 
 
     <select id="selectDateAfter" resultMap="BaseResultMap" parameterType="Date">
-       SELECT  * from kline where kline.date >= #{date} order by date
+        SELECT *
+        FROM kline
+        WHERE kline.date >= #{date}
+        ORDER BY date
     </select>
 
 </mapper>

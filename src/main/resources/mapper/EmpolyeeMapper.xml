@@ -19,39 +19,39 @@
 
     <select id="selectByName" resultMap="BaseResultMap" parameterType="String">
         SELECT
-        e.id as employee_id,
-        e.name as employee_name,
-        e.sex as employee_sex,
-        e.birth as employee_birth,
-        e.rank as employee_rank,
-        e.education as employee_education,
-        e.type as employee_type,
-        e.salery as employee_salery,
-        e.tel as employee_tel,
+        e.id AS employee_id,
+        e.name AS employee_name,
+        e.sex AS employee_sex,
+        e.birth AS employee_birth,
+        e.rank AS employee_rank,
+        e.education AS employee_education,
+        e.type AS employee_type,
+        e.salery AS employee_salery,
+        e.tel AS employee_tel,
         e.company_id,
         e.department_id
         FROM
         employee e
         WHERE
-        e.name=#{name}
+        e.name = #{name}
     </select>
 
     <select id="selectById" parameterType="Integer" resultMap="BaseResultMap">
         SELECT
-        e.id as employee_id,
-        e.name as employee_name,
-        e.sex as employee_sex,
-        e.birth as employee_birth,
-        e.rank as employee_rank,
-        e.education as employee_education,
-        e.type as employee_type,
-        e.salery as employee_salery,
-        e.tel as employee_tel,
+        e.id AS employee_id,
+        e.name AS employee_name,
+        e.sex AS employee_sex,
+        e.birth AS employee_birth,
+        e.rank AS employee_rank,
+        e.education AS employee_education,
+        e.type AS employee_type,
+        e.salery AS employee_salery,
+        e.tel AS employee_tel,
         e.company_id,
         e.department_id
         FROM
         employee e
         WHERE
-        e.id=#{id}
+        e.id = #{id}
     </select>
 </mapper>

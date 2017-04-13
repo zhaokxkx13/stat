@@ -25,13 +25,13 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-        delete from role
-        where id = #{id,jdbcType=INTEGER}
+        DELETE FROM role
+        WHERE id = #{id,jdbcType=INTEGER}
     </delete>
     <insert id="insert" parameterType="com.zhaokxkx13.dao.entity.Role">
-        insert into role (id, name, description
+        INSERT INTO role (id, name, description
         )
-        values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}
+        VALUES (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}
         )
     </insert>
     <insert id="insertSelective" parameterType="com.zhaokxkx13.dao.entity.Role">
@@ -72,35 +72,39 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.zhaokxkx13.dao.entity.Role">
-        update role
-        set name = #{name,jdbcType=VARCHAR},
+        UPDATE role
+        SET name = #{name,jdbcType=VARCHAR},
         description = #{description,jdbcType=VARCHAR}
-        where id = #{id,jdbcType=INTEGER}
+        WHERE id = #{id,jdbcType=INTEGER}
     </update>
     <select id="selectRolePermissionById" parameterType="Integer" resultMap="RoleMapper">
-        select
+        SELECT
         r.id,
         r.name,
         r.description,
-        p.id as pId,
-        p.token as pToken,
-        p.url as pUrl,
-        p.roleid as pRoleId,
-        p.description as pDescribe
-        from role r JOIN permission p ON p.roleid = r.id where r.id = #{id}
+        p.id AS pId,
+        p.token AS pToken,
+        p.url AS pUrl,
+        p.roleid AS pRoleId,
+        p.description AS pDescribe
+        FROM role r
+        JOIN permission p ON p.roleid = r.id
+        WHERE r.id = #{id}
     </select>
 
     <select id="selectRolePermissionByName" parameterType="Integer" resultMap="RoleMapper">
-        select
+        SELECT
         r.id,
         r.name,
         r.description,
-        p.id as pId,
-        p.token as pToken,
-        p.url as pUrl,
-        p.roleid as pRoleId,
-        p.description as pDescribe
-        from role r JOIN permission p ON p.roleid = r.id where r.name = #{name}
+        p.id AS pId,
+        p.token AS pToken,
+        p.url AS pUrl,
+        p.roleid AS pRoleId,
+        p.description AS pDescribe
+        FROM role r
+        JOIN permission p ON p.roleid = r.id
+        WHERE r.name = #{name}
     </select>
     <cache/>
 </mapper>

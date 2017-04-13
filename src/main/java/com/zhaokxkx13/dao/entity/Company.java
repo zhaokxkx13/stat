@@ -9,6 +9,25 @@ public class Company implements Serializable {
     private Integer id;
     private String name;
     private String area;
+    private String city;
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", area='" + area + '\'' +
+                ", city='" + city + '\'' +
+                '}';
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 
     public Integer getId() {
         return id;
@@ -34,12 +53,4 @@ public class Company implements Serializable {
         this.area = area;
     }
 
-    @Override
-    public String toString() {
-        return "Company{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", area='" + area + '\'' +
-                '}';
-    }
 }

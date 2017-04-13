@@ -5,11 +5,15 @@
         <result column="productOrder_id" property="id" jdbcType="INTEGER"/>
         <result column="productOrder_price" property="price" jdbcType="DOUBLE"/>
         <result column="productOrder_num" property="num" javaType="INTEGER"/>
+        <result column="productOrder_receivable" property="receivable" jdbcType="DOUBLE"/>
+        <result column="productOrder_collected" property="collected" jdbcType="DOUBLE"/>
     </resultMap>
     <resultMap id="BaseResultMapLazy" type="com.zhaokxkx13.dao.entity.ProductOrder">
         <result column="productOrder_id" property="id" jdbcType="INTEGER"/>
         <result column="productOrder_price" property="price" jdbcType="DOUBLE"/>
         <result column="productOrder_num" property="num" javaType="INTEGER"/>
+        <result column="productOrder_receivable" property="receivable" jdbcType="DOUBLE"/>
+        <result column="productOrder_collected" property="collected" jdbcType="DOUBLE"/>
         <association property="product"  column="product_id" javaType="com.zhaokxkx13.dao.entity.Product"
                      select="com.zhaokxkx13.dao.inf.ProductMapper.selectById"/>
         <association property="order" column="order_id" javaType="com.zhaokxkx13.dao.entity.Order"
@@ -19,6 +23,8 @@
         <result column="productOrder_id" property="id" jdbcType="INTEGER"/>
         <result column="productOrder_price" property="price" jdbcType="DOUBLE"/>
         <result column="productOrder_num" property="num" javaType="INTEGER"/>
+        <result column="productOrder_receival" property="receival" jdbcType="DOUBLE"/>
+        <result column="productOrder_collected" property="collected" jdbcType="DOUBLE"/>
         <association property="product"  column="product_id" javaType="com.zhaokxkx13.dao.entity.Product"
                      select="com.zhaokxkx13.dao.inf.ProductMapper.selectById"/>
         <association property="order" column="order_id" javaType="com.zhaokxkx13.dao.entity.Order"
@@ -50,6 +56,8 @@
         po.id as productOrder_id,
         po.price as productOrder_price,
         po.num as productOrder_num,
+        po.receivable as productOrder_receivable,
+        po.collected as productOrder_collected,
         po.product_id,
         po.order_id
         FROM
@@ -61,6 +69,8 @@
         po.id as productOrder_id,
         po.price as productOrder_price,
         po.num as productOrder_num,
+        po.receivable as productOrder_receivable,
+        po.collected as productOrder_collected,
         po.product_id,
         po.order_id
         FROM
@@ -79,6 +89,8 @@
         o.sender as sender,
         o.address as address,
         o.freight as freight,
+        po.receivable as productOrder_receivable,
+        po.collected as productOrder_collected,
         o.employee_id,
         o.customer_id
         FROM
@@ -94,9 +106,29 @@
         po.id as productOrder_id,
         po.price as productOrder_price,
         po.num as productOrder_num,
+        po.receivable as productOrder_receivable,
+        po.collected as productOrder_collected,
         po.product_id,
         po.order_id
         FROM
         ProductOrder po WHERE po.product_id=#{id}
+    </select>
+
+    <select id="selectByOrderId" resultMap="BaseResultMapLazy">
+        select
+        po.id as productOrder_id,
+        po.price as productOrder_price,
+        po.num as productOrder_num,
+        po.receivable as productOrder_receivable,
+        po.collected as productOrder_collected,
+        po.product_id
+        FROM
+        ProductOrder po
+        <where>
+            po.order_id IN
+            <foreach collection="list" index="index" open="(" separator="," close=")" item="orderId">
+                #{orderId}
+            </foreach>
+        </where>
     </select>
 </mapper>

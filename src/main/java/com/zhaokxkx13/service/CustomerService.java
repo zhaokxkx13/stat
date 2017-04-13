@@ -1,9 +1,6 @@
 package com.zhaokxkx13.service;
 
-import com.zhaokxkx13.Bean.CustomerConsume;
-import com.zhaokxkx13.Bean.DepartmentSellKpi;
-import com.zhaokxkx13.Bean.OrderDetails;
-import com.zhaokxkx13.Bean.ProductDetails;
+import com.zhaokxkx13.Bean.*;
 
 import java.util.Date;
 import java.util.List;
@@ -19,4 +16,8 @@ public interface CustomerService {
     List<OrderDetails> getOrderDetails(String name);
 
     List<ProductDetails> getProductDetails(String name);
+
+    CustomerPurchase getCustomerPurchase(String companyName);
+
+    AreaSellDetails getAreaSellDetails(Date startDate, Date endDate);
 }

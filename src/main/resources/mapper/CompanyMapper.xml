@@ -5,15 +5,30 @@
         <result column="company_id" property="id" jdbcType="INTEGER"/>
         <result column="company_name" property="name" jdbcType="VARCHAR"/>
         <result column="company_area" property="area" jdbcType="VARCHAR"/>
+        <result column="company_city" property="city" jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id="selectById" parameterType="Integer" resultMap="BaseResultMap">
         SELECT
-        c.id as company_id,
-        c.name as company_name,
-        c.area as company_area
+        c.id AS company_id,
+        c.name AS company_name,
+        c.area AS company_area,
+        c.city AS company_city
         FROM
-        company c WHERE
-        c.id=#{id}
+        company c
+        WHERE
+        c.id = #{id}
+    </select>
+
+    <select id="selectByName" parameterType="string" resultMap="BaseResultMap">
+        SELECT
+            c.id   AS company_id,
+            c.name AS company_name,
+            c.area AS company_area,
+            c.city AS company_city
+        FROM
+            company c
+        WHERE
+            c.name = #{name}
     </select>
 </mapper>

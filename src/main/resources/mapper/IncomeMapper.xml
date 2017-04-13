@@ -16,14 +16,21 @@
     </resultMap>
 
     <select id="selectById" resultMap="BaseResultMap" parameterType="long">
-        select * from income i where i.id = #{id}
+        SELECT *
+        FROM income i
+        WHERE i.id = #{id}
     </select>
 
     <select id="selectAllIncome" resultMap="BaseResultMap">
-        select * from income where income.type = "month"
+        SELECT *
+        FROM income
+        WHERE income.type = "month"
     </select>
 
     <select id="selectByYear" resultMap="BaseResultMap" parameterType="Date">
-        SELECT  * FROM  income where income.date >= #{year} order by income.date DESC
+        SELECT *
+        FROM income
+        WHERE income.date >= #{year}
+        ORDER BY income.date DESC
     </select>
 </mapper>

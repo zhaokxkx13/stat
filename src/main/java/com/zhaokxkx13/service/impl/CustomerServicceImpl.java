@@ -1,13 +1,8 @@
 package com.zhaokxkx13.service.impl;
 
-import com.zhaokxkx13.Bean.CustomerConsume;
-import com.zhaokxkx13.Bean.DepartmentSellKpi;
-import com.zhaokxkx13.Bean.OrderDetails;
-import com.zhaokxkx13.Bean.ProductDetails;
+import com.zhaokxkx13.Bean.*;
 import com.zhaokxkx13.dao.entity.*;
-import com.zhaokxkx13.dao.inf.DepartmentPlanMapper;
-import com.zhaokxkx13.dao.inf.ProductMapper;
-import com.zhaokxkx13.dao.inf.ProductOrderMapper;
+import com.zhaokxkx13.dao.inf.*;
 import com.zhaokxkx13.service.CustomerService;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,18 +17,22 @@ import java.util.*;
  */
 @Service
 public class CustomerServicceImpl implements CustomerService {
+    private static final String ORDER_CACHE_NAME = "mybatisCache";
+    private static final String PRODUCT_CACHE_NAME = "productCache";
+    private static final String RECEIVABLE = "receivable";
+    private static final String COLLECTED = "collected";
     @Autowired
     ProductMapper productMapper;
-
     @Autowired
     ProductOrderMapper productOrderMapper;
-
     @Autowired
     DepartmentPlanMapper departmentPlanMapper;
-
-    private static final String ORDER_CACHE_NAME = "mybatisCache";
-
-    private static final String PRODUCT_CACHE_NAME = "productCache";
+    @Autowired
+    CustomerMapper customerMapper;
+    @Autowired
+    CompanyMapper companyMapper;
+    @Autowired
+    OrderMapper orderMapper;
 
     @Override
     public List<CustomerConsume> getTopNCustomerConsum(Date startDate, Date endDate, int n) {
@@ -291,5 +290,96 @@ public class CustomerServicceImpl implements CustomerService {
         return result;
     }
 
+    @Override
+    public CustomerPurchase getCustomerPurchase(String companyName) {
+        CustomerPurchase purchase = new CustomerPurchase();
+        List<Company> companyList = companyMapper.selectByName(companyName);
+        if (companyList == null || companyList.size() == 0)
+            return purchase;
+        List<Customer> customerList = customerMapper.selectByCompanyId(companyList.get(0).getId());
+        List<Integer> customerIdList = new ArrayList<>();
+        if (customerList == null || customerList.size() == 0)
+            return purchase;
+        for (Customer customer : customerList) {
+            customerIdList.add(customer.getId());
+        }
+        List<Order> orderList = orderMapper.selectByCustomerId(customerIdList);
+
+        List<Integer> orderIdList = new ArrayList<>();
+        if (orderList == null || orderList.size() == 0)
+            return purchase;
+        for (Order order : orderList) {
+            orderIdList.add(order.getId());
+        }
+        List<ProductOrder> productOrderList = productOrderMapper.selectByOrderId(orderIdList);
+
+        Map<String, Double> bigTypeMap = new HashMap<>();
+        Map<String, Double> smallTypeMap = new HashMap<>();
+        Map<String, Double> typeSum = new HashMap<>();
+        for (ProductOrder productOrder : productOrderList) {
+            String bigType = productOrder.getProduct().getTypeBig();
+            String smallType = productOrder.getProduct().getTypeSmall();
+            Double sellSum = productOrder.getPrice() * productOrder.getNum();
+            Double receivable = productOrder.getReceivable();
+            Double collected = productOrder.getCollected();
+            if (bigTypeMap.containsKey(bigType)) {
+                bigTypeMap.put(bigType, bigTypeMap.get(bigType) + sellSum);
+            } else {
+                bigTypeMap.put(bigType, sellSum);
+            }
+            if (smallTypeMap.containsKey(smallType)) {
+                smallTypeMap.put(smallType, smallTypeMap.get(smallType) + sellSum);
+            } else {
+                smallTypeMap.put(smallType, sellSum);
+            }
+            if (typeSum.containsKey(RECEIVABLE)) {
+                typeSum.put(RECEIVABLE, typeSum.get(RECEIVABLE) + receivable);
+            } else {
+                typeSum.put(RECEIVABLE, receivable);
+            }
+            if (typeSum.containsKey(COLLECTED)) {
+                typeSum.put(COLLECTED, typeSum.get(COLLECTED) + collected);
+            } else {
+                typeSum.put(COLLECTED, collected);
+            }
+        }
+        purchase.setBigTypeSum(bigTypeMap);
+        purchase.setSmallTypeSum(smallTypeMap);
+        purchase.setPayType(typeSum);
+        return purchase;
+    }
+
+    @Override
+    public AreaSellDetails getAreaSellDetails(Date startDate, Date endDate) {
+        Map<String, Date> parameter = new HashMap<>();
+        parameter.put("startDate", startDate);
+        parameter.put("endDate", endDate);
+        List<Order> orderList = orderMapper.selectByDate(parameter);
+        Map<String, Double> areaMap = new HashMap<>();
+        Map<String, Double> cityMap = new HashMap<>();
+        for (Order order : orderList) {
+            String city = order.getCustomer().getCompany().getCity();
+            String area = order.getCustomer().getCompany().getArea();
+            List<ProductOrder> productOrderList = productOrderMapper.selectByOrderId(Collections.singletonList(order.getId()));
+            double sum = 0.0;
+            for (ProductOrder productOrder : productOrderList) {
+                sum += productOrder.getNum() * productOrder.getPrice();
+            }
+            if (cityMap.containsKey(city)) {
+                cityMap.put(city, cityMap.get(city) + sum);
+            } else {
+                cityMap.put(city, sum);
+            }
+            if (areaMap.containsKey(area)) {
+                areaMap.put(area, areaMap.get(area) + sum);
+            } else {
+                areaMap.put(area, sum);
+            }
+        }
+        AreaSellDetails result = new AreaSellDetails();
+        result.setAreaSells(areaMap);
+        result.setCitySells(cityMap);
+        return result;
+    }
 
 }

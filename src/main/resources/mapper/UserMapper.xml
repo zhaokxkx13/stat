@@ -26,14 +26,14 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-        delete from user
-        where id = #{id,jdbcType=INTEGER}
+        DELETE FROM user
+        WHERE id = #{id,jdbcType=INTEGER}
     </delete>
     <insert id="insert" parameterType="com.zhaokxkx13.dao.entity.User">
-        insert into user ( uid, username,
+        INSERT INTO user (uid, username,
         password, salt, create_date
         )
-        values ( #{uid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
+        VALUES (#{uid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
         #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}
         )
     </insert>
@@ -102,27 +102,29 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.zhaokxkx13.dao.entity.User">
-        update user
-        set uid = #{uid,jdbcType=VARCHAR},
+        UPDATE user
+        SET uid = #{uid,jdbcType=VARCHAR},
         username = #{username,jdbcType=VARCHAR},
         password = #{password,jdbcType=VARCHAR},
         salt = #{salt,jdbcType=VARCHAR},
         create_date = #{createDate,jdbcType=DATE}
-        where id = #{id,jdbcType=INTEGER}
+        WHERE id = #{id,jdbcType=INTEGER}
     </update>
     <select id="selectRoleByUserName" parameterType="String" resultMap="UserRoleMap">
-        select
+        SELECT
         u.id,
         u.uid,
         u.username,
         u.password,
         u.salt,
-        u.create_date as create_date,
-        r.name as roleName,
-        r.id as roleId,
-        r.description as roleDescription
-        from user u left JOIN user_role ur ON u.id = ur.userid LEFT
-        JOIN role r ON ur.roleid = r.id WHERE u.username = #{username}
+        u.create_date AS create_date,
+        r.name AS roleName,
+        r.id AS roleId,
+        r.description AS roleDescription
+        FROM user u LEFT JOIN user_role ur ON u.id = ur.userid
+        LEFT
+        JOIN role r ON ur.roleid = r.id
+        WHERE u.username = #{username}
     </select>
     <cache/>
 </mapper>

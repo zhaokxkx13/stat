@@ -11,4 +11,6 @@ import java.util.List;
 @Mapper
 public interface CustomerMapper {
     List<Customer> selectById(Integer id);
+
+    List<Customer> selectByCompanyId(Integer companyId);
 }

@@ -9,10 +9,11 @@
 
     <select id="selectById" resultMap="BaseResultMap" parameterType="Integer">
         SELECT
-        d.id as department_id,
-        d.name as department_name,
-        d.type as department_type
+        d.id AS department_id,
+        d.name AS department_name,
+        d.type AS department_type
         FROM
-        department d  WHERE d.id=#{id}
+        department d
+        WHERE d.id = #{id}
     </select>
 </mapper>

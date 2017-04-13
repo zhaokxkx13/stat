@@ -1,10 +1,7 @@
 package com.zhaokxkx13.service;
 
 import com.google.gson.Gson;
-import com.zhaokxkx13.Bean.CustomerConsume;
-import com.zhaokxkx13.Bean.DepartmentSellKpi;
-import com.zhaokxkx13.Bean.OrderDetails;
-import com.zhaokxkx13.Bean.ProductDetails;
+import com.zhaokxkx13.Bean.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,29 +22,30 @@ import java.util.List;
 public class CustomServiceTest {
     @Autowired
     CustomerService customerService;
-//    @Test
+
+    //    @Test
     public void test1() throws ParseException {
         DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
         Date date = df.parse("2016-12-03");
-        List<CustomerConsume> list = customerService.getTopNCustomerConsum(date,null,10);
-        for(CustomerConsume item:list){
+        List<CustomerConsume> list = customerService.getTopNCustomerConsum(date, null, 10);
+        for (CustomerConsume item : list) {
             System.out.println(item);
         }
     }
 
-//    @Test
+    //    @Test
     public void test2() throws ParseException {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date date = df.parse("2016-12-03");
-        Date date1= df.parse("2017-04-10");
-        List<DepartmentSellKpi> sellKpiList= customerService.getDepartmentSellKpi(date,date1,1);
-        for(DepartmentSellKpi item:sellKpiList){
+        Date date1 = df.parse("2017-04-10");
+        List<DepartmentSellKpi> sellKpiList = customerService.getDepartmentSellKpi(date, date1, 1);
+        for (DepartmentSellKpi item : sellKpiList) {
             System.out.print(item);
         }
     }
 
     @Test
-    public void test3(){
+    public void test3() {
         List<OrderDetails> detailss = customerService.getOrderDetails("beef");
 //        for(OrderDetails item :detailss){
 //            System.out.println(item);
@@ -58,7 +56,21 @@ public class CustomServiceTest {
 
 
     @Test
-    public void test4(){
+    public void test4() {
         List<ProductDetails> productDetailss = customerService.getProductDetails("beef");
+    }
+
+    @Test
+    public void test5() {
+        CustomerPurchase purchase = customerService.getCustomerPurchase("IBM");
+        System.out.println(purchase);
+    }
+
+    @Test
+    public void test6() throws ParseException {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date old = df.parse("2016-11-01");
+        AreaSellDetails details = customerService.getAreaSellDetails(old, new Date());
+        System.out.println(details);
     }
 }

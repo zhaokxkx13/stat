@@ -2,10 +2,7 @@ package com.zhaokxkx13.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.zhaokxkx13.Bean.CustomerConsume;
-import com.zhaokxkx13.Bean.DepartmentSellKpi;
-import com.zhaokxkx13.Bean.OrderDetails;
-import com.zhaokxkx13.Bean.ProductDetails;
+import com.zhaokxkx13.Bean.*;
 import com.zhaokxkx13.dao.entity.Income;
 import com.zhaokxkx13.dao.entity.Kline;
 import com.zhaokxkx13.service.CustomerService;
@@ -105,11 +102,32 @@ public class DataController {
     }
 
     @RequestMapping("/product/details")
-    public String getProductDetails(){
+    public String getProductDetails() {
         List<ProductDetails> detailsList = customerService.getProductDetails("beef");
         Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
         String jsonStr = gson.toJson(detailsList);
         jsonStr = "{ \"data\":" + jsonStr + "}";
+        return jsonStr;
+    }
+
+    @RequestMapping("/customer/details")
+    public String getCustomerDetails() {
+        CustomerPurchase purchase = customerService.getCustomerPurchase("IBM");
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(purchase);
+        return jsonStr;
+    }
+
+    @RequestMapping("/area/details")
+    public String getAreaDetails() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.MONTH, -6);
+        Date startDate = calendar.getTime();
+        Date endDate = new Date();
+        AreaSellDetails areaSellDetails = customerService.getAreaSellDetails(startDate, endDate);
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(areaSellDetails);
         return jsonStr;
     }
 }

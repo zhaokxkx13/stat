@@ -165,4 +165,15 @@ public class UserController {
     public String getProductDetails() {
         return "sell/productDetails";
     }
+
+    @RequestMapping("/sell/customer")
+    public String getCustomer() {
+        return "sell/customerDetails";
+    }
+
+    @RequestMapping("sell/net")
+    public String getAearDetails() {
+        return "sell/net";
+    }
+
 }
