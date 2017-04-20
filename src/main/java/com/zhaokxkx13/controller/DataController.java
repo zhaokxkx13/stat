@@ -6,6 +6,7 @@ import com.zhaokxkx13.Bean.*;
 import com.zhaokxkx13.dao.entity.Income;
 import com.zhaokxkx13.dao.entity.Kline;
 import com.zhaokxkx13.service.CustomerService;
+import com.zhaokxkx13.service.FinanceService;
 import com.zhaokxkx13.service.IncomeService;
 import com.zhaokxkx13.service.KlineService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zhaokxkx13 on 2017/3/20.
@@ -31,6 +33,9 @@ public class DataController {
 
     @Autowired
     CustomerService customerService;
+
+    @Autowired
+    FinanceService financeService;
 
     @RequestMapping("/indusAll/Year/distribute")
     public String getYearDistribute() {
@@ -128,6 +133,26 @@ public class DataController {
         AreaSellDetails areaSellDetails = customerService.getAreaSellDetails(startDate, endDate);
         Gson gson = new Gson();
         String jsonStr = gson.toJson(areaSellDetails);
+        return jsonStr;
+    }
+
+    @RequestMapping("/month/predict")
+    public String getMonthPredict() {
+        List<MonthPredict> monthPredict = customerService.getMonthPredict();
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(monthPredict);
+        return jsonStr;
+    }
+
+    @RequestMapping("/finance/kpiData")
+    public String getFinanceKpi() {
+        Date endDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        Date startDate = calendar.getTime();
+        Map<String, String> resultMap = financeService.getKpiDetails(startDate, endDate);
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(resultMap);
         return jsonStr;
     }
 }

@@ -5,6 +5,7 @@ import com.zhaokxkx13.Bean.CustomerConsume;
 import com.zhaokxkx13.dao.entity.Income;
 import com.zhaokxkx13.dao.entity.User;
 import com.zhaokxkx13.service.CustomerService;
+import com.zhaokxkx13.service.FinanceService;
 import com.zhaokxkx13.service.IncomeService;
 import com.zhaokxkx13.service.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zhaokxkx13 on 2017/3/15.
@@ -43,6 +45,9 @@ public class UserController {
 
     @Autowired
     CustomerService customerService;
+
+    @Autowired
+    FinanceService financeService;
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public String login(HttpServletRequest request, RedirectAttributes redirect, HttpSession session) throws Exception {
@@ -176,4 +181,32 @@ public class UserController {
         return "sell/net";
     }
 
+    @RequestMapping("/finance/kpi")
+    public String getFinanceKpi(ModelMap modelMap) {
+        Date endDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        Date startDate = calendar.getTime();
+        Map<String, String> resultMap = financeService.getKpiDetails(startDate, endDate);
+        modelMap.put("mainServiceIncome", resultMap.get("主营业务收入"));
+        modelMap.put("mainServiceCost", resultMap.get("主营业务成本"));
+        modelMap.put("mainServiceProfit", resultMap.get("主营业务利润"));
+        modelMap.put("cashRate", resultMap.get("现金比率"));
+        modelMap.put("assetsRate", resultMap.get("资产负债率"));
+        modelMap.put("profitRate", resultMap.get("营业利润率"));
+        modelMap.put("profitIncreaseRate", resultMap.get("营业利润增长率"));
+        modelMap.put("powerRate", resultMap.get("权益净利率"));
+        return "finance/kpi";
+    }
+
+    @RequestMapping("/finance/dupont")
+    public String getDupont(ModelMap modelMap) {
+        Date endDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        Date startDate = calendar.getTime();
+        Map<String, String> resultMap = financeService.getDupontDetails(startDate, endDate);
+        modelMap.put("resultMap", resultMap);
+        return "finance/dupont";
+    }
 }

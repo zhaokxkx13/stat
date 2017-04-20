@@ -1,0 +1,40 @@
+.theme-white .widget-green {
+    padding: 12px 17px;
+    border: 1px solid rgba(76, 226, 66, 0.89);
+    border-top: 2px solid rgba(91, 246, 101, 0.93);
+    background: #75ee60;
+    color: #ffffff;
+    min-height: 174px;
+}
+
+.theme-white .widget-green .widget-statistic-icon {
+    color: #45b530;
+}
+
+.theme-white .widget-green .widget-statistic-header {
+    color: #ded5e7;
+}
+
+.theme-white .widget-green .widget-statistic-description {
+    color: #ded5e7;
+}
+
+.theme-black .widget-green {
+    padding: 12px 17px;
+    border: 1px solid #547848;
+    border-top: 2px solid #22751e;
+    background: #5e995f;
+    color: #ffffff;
+}
+
+.theme-black .widget-green .widget-statistic-icon {
+    color: #85aa80;
+}
+
+.theme-black .widget-green .widget-statistic-header {
+    color: #ded5e7;
+}
+
+.theme-black .widget-green .widget-statistic-description {
+    color: #ded5e7;
+}

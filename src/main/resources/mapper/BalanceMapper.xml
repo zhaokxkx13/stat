@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhaokxkx13.dao.inf.BalanceMapper">
+    <resultMap id="BaseResultMap" type="com.zhaokxkx13.dao.entity.Balance">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="current_assets" property="currentAssets" jdbcType="DOUBLE"/>
+        <result column="fix_assets" property="fixAssets" jdbcType="DOUBLE"/>
+        <result column="current_liabilities" property="currentLiabilities" jdbcType="DOUBLE"/>
+        <result column="fix_liabilities" property="fixLiabilities" jdbcType="DOUBLE"/>
+        <result column="date" property="date" jdbcType="DATE"/>
+        <result column="shareholders" property="shareholders" jdbcType="DOUBLE"/>
+        <result column="securities" property="securities" jdbcType="DOUBLE"/>
+        <result column="receivable" property="receivable" jdbcType="DOUBLE"/>
+        <result column="stock" property="stock" jdbcType="DOUBLE"/>
+    </resultMap>
+
+    <select id="selectById" parameterType="Integer" resultMap="BaseResultMap">
+        SELECT *
+        FROM balance_sheet;
+    </select>
+
+    <select id="selectByDate" parameterType="Map" resultMap="BaseResultMap">
+        SELECT * from balance_sheet
+        <where>
+            <if test="#{startDate}!=null">
+                date >=#{startDate}
+            </if>
+            <if test="#{endDate}!=null">
+                and #{endDate} >= date
+            </if>
+        </where>
+    </select>
+</mapper>

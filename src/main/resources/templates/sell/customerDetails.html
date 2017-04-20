@@ -98,7 +98,7 @@
         <ul class="sidebar-nav">
             <li class="sidebar-nav-heading">Components <span class="sidebar-nav-heading-info"> 附加组件</span></li>
             <li class="sidebar-nav-link">
-                <a th:href="@{index.html}" class="active">
+                <a th:href="@{/index}" class="active">
                     <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
                 </a>
             </li>
@@ -144,23 +144,26 @@
                     </li>
                 </ul>
             </li>
-            <li class="sidebar-nav-link">
-                <a th:href="@{sign-up.html}">
-                    <i class="am-icon-clone sidebar-nav-link-logo"></i> 注册
-                    <span class="am-badge am-badge-secondary sidebar-nav-link-logo-ico am-round am-fr am-margin-right-sm">6</span>
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a th:href="@{login.html}">
-                    <i class="am-icon-key sidebar-nav-link-logo"></i> 登录
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a th:href="@{404.html}">
-                    <i class="am-icon-tv sidebar-nav-link-logo"></i> 404错误
-                </a>
-            </li>
 
+            <li class="sidebar-nav-link">
+                <a href="javascript:;" class="sidebar-nav-sub-title">
+                    <i class="am-icon-bank sidebar-nav-link-logo"></i> 财务分析
+                    <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                </a>
+                <ul class="sidebar-nav sidebar-nav-sub">
+                    <li class="sidebar-nav-link">
+                        <a th:href="@{/finance/kpi}">
+                            <span class="am-icon-sellsy sidebar-nav-link-logo"></span> kpi分析
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-link">
+                        <a th:href="@{/sell/order}">
+                            <span class="am-icon-coffee sidebar-nav-link-logo"></span> 杜邦分析
+                        </a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </div>
 
@@ -185,32 +188,35 @@
                 </div>
             </div>
 
-            <div class="row  am-cf">
-                <div class="widget am-cf">
-                    <div class="widget-head am-cf">
-                        <div class="widget-title am-fl">商品销售小类</div>
-                        <div class="widget-function am-fr">
-                            <a href="javascript:;" class="am-icon-cog"></a>
+            <div class="row-content am-cf">
+                <div class="row  am-cf">
+                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title am-fl">商品销售小类</div>
+                                <div class="widget-function am-fr">
+                                    <a href="javascript:;" class="am-icon-cog"></a>
+                                </div>
+                            </div>
+                            <div class="widget-body  widget-body-lg am-fr">
+                                <div style="height: 600px" id="charts-customer-small-type"></div>
+
+                            </div>
                         </div>
                     </div>
-                    <div class="widget-body  widget-body-lg am-fr">
-                        <div style="height: 600px" id="charts-customer-small-type"></div>
+                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title am-fl">商品销售小类</div>
+                                <div class="widget-function am-fr">
+                                    <a href="javascript:;" class="am-icon-cog"></a>
+                                </div>
+                            </div>
+                            <div class="widget-body  widget-body-lg am-fr">
+                                <div style="height: 600px" id="charts-customer-pay-type"></div>
 
-                    </div>
-                </div>
-            </div>
-
-            <div class="row  am-cf">
-                <div class="widget am-cf">
-                    <div class="widget-head am-cf">
-                        <div class="widget-title am-fl">商品销售小类</div>
-                        <div class="widget-function am-fr">
-                            <a href="javascript:;" class="am-icon-cog"></a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="widget-body  widget-body-lg am-fr">
-                        <div style="height: 600px" id="charts-customer-pay-type"></div>
-
                     </div>
                 </div>
             </div>

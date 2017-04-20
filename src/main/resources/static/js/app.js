@@ -1241,7 +1241,7 @@ var pageData = {
             ];
 
 
-            option = {
+            var geoOption = {
                 backgroundColor: '#404a59',
                 animation: true,
                 animationDuration: 1000,
@@ -1409,7 +1409,7 @@ var pageData = {
 
             geoChart.on('brushselected', renderBrushed);
 
-            geoChart.setOption(option);
+            geoChart.setOption(geoOption);
 
             setTimeout(function () {
                 geoChart.dispatchAction({
@@ -1473,6 +1473,141 @@ var pageData = {
                 });
             }
         })
+
+        var predictChart = echarts.init(document.getElementById('charts-month-predict'));
+
+        predictChart.showLoading();
+
+        $.get("/month/predict", function (jsonStr) {
+            predictChart.hideLoading();
+            var data = [];
+            var json = JSON.parse(jsonStr);
+            for (var item in json) {
+                var month = json[item].month;
+                var value = json[item].sells;
+                var temp = [];
+                temp.push(month);
+                temp.push(value);
+                data.push(temp);
+            }
+
+            var myRegression = ecStat.regression('exponential', data);
+
+            myRegression.points.sort(function (a, b) {
+                return a[0] - b[0];
+            });
+
+            predictChart.setOption({
+                title: {
+                    left: 'center',
+                    top: 21
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross'
+                    }
+                },
+                xAxis: {
+                    type: 'value',
+                    splitLine: {
+                        lineStyle: {
+                            type: 'dashed'
+                        }
+                    },
+                    splitNumber: 20
+                },
+                yAxis: {
+                    type: 'value',
+                    splitLine: {
+                        lineStyle: {
+                            type: 'dashed'
+                        }
+                    }
+                },
+                series: [{
+                    name: 'scatter',
+                    type: 'scatter',
+                    label: {
+                        emphasis: {
+                            show: true
+                        }
+                    },
+                    data: data
+                }, {
+                    name: 'line',
+                    type: 'line',
+                    showSymbol: false,
+                    smooth: true,
+                    data: myRegression.points,
+                    markPoint: {
+                        itemStyle: {
+                            normal: {
+                                color: 'transparent'
+                            }
+                        },
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'left',
+                                formatter: myRegression.expression,
+                                textStyle: {
+                                    color: '#333',
+                                    fontSize: 14
+                                }
+                            }
+                        },
+                        data: [{
+                            coord: myRegression.points[myRegression.points.length - 1]
+                        }]
+                    }
+                }]
+            });
+        })
+    },
+    'finance-kpi': function () {
+        var radarChart = echarts.init(document.getElementById('finance-kpi-radar'));
+        radarChart.showLoading();
+        $.get('/finance/kpiData', function (data) {
+            radarChart.hideLoading();
+            var json = JSON.parse(data);
+            var cashRate = json['现金比率'];
+            var ciChanFuZhai = json['资产负债率'];
+            var yinyezengzhang = json['营业利润增长率'];
+            var quanyijinglv = json['权益净利率'];
+            var yingyelirun = json['营业利润率'];
+            var radarOption = {
+                title: {
+                    text: '基础雷达图'
+                },
+                tooltip: {},
+                legend: {
+                    data: ['预算分配（Allocated Budget）', '实际开销（Actual Spending）']
+                },
+                radar: {
+                    // shape: 'circle',
+                    indicator: [
+                        {name: '现金比率（sales）', max: 300},
+                        {name: '资产负债率（Administration）', max: 300},
+                        {name: '营业利润增长率（Information Techology）', max: 1000},
+                        {name: '权益净利率（Customer Support）', max: 300},
+                        {name: '营业利润率（Development）', max: 300}
+                    ]
+                },
+                series: [{
+                    name: '关键财务指标',
+                    type: 'radar',
+                    // areaStyle: {normal: {}},
+                    data: [
+                        {
+                            value: [cashRate, ciChanFuZhai, yinyezengzhang, quanyijinglv, yingyelirun],
+                            name: '关键财务指标'
+                        }
+                    ]
+                }]
+            };
+            radarChart.setOption(radarOption);
+        })
     }
 }
 
@@ -1527,3 +1662,7 @@ $('.sidebar-nav-sub-title').on('click', function () {
         .end()
         .find('.sidebar-nav-sub-ico').toggleClass('sidebar-nav-sub-ico-rotate');
 })
+
+function show(value) {
+    console.log(value)
+}

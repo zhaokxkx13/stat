@@ -382,4 +382,45 @@ public class CustomerServicceImpl implements CustomerService {
         return result;
     }
 
+    @Override
+    public List<MonthPredict> getMonthPredict() {
+        Calendar calendar = Calendar.getInstance();
+        Date date = new Date();
+        calendar.setTime(date);
+        calendar.set(Calendar.DAY_OF_YEAR, 1);
+        Date startDate = calendar.getTime();
+        Map<String, Date> parameterMap = new HashMap<>();
+        parameterMap.put("startDate", startDate);
+        parameterMap.put("endDate", date);
+        List<Order> orderList = orderMapper.selectByDate(parameterMap);
+        List<Integer> orderIdList = new ArrayList<>();
+        Map<Integer, Integer> orderMonthMap = new HashMap<>();
+        Map<Integer, Double> resultMap = new HashMap<>();
+        for (Order order : orderList) {
+            orderIdList.add(order.getId());
+            calendar.setTime(order.getDate());
+            int month = calendar.get(Calendar.MONTH) + 1;
+            orderMonthMap.put(order.getId(), month);
+        }
+        List<ProductOrder> productOrderList = productOrderMapper.selectByOrderId(orderIdList);
+        for (ProductOrder productOrder : productOrderList) {
+            int orderId = productOrder.getOrderId();
+            int month = orderMonthMap.get(orderId);
+            Double sells = productOrder.getPrice() * productOrder.getNum();
+            if (resultMap.containsKey(month)) {
+                resultMap.put(month, resultMap.get(month) + sells);
+            } else {
+                resultMap.put(month, sells);
+            }
+        }
+        List<MonthPredict> predictList = new ArrayList<>();
+        for (Map.Entry<Integer, Double> entry : resultMap.entrySet()) {
+            MonthPredict monthPredict = new MonthPredict();
+            monthPredict.setMonth(entry.getKey());
+            monthPredict.setSells(entry.getValue());
+            predictList.add(monthPredict);
+        }
+        return predictList;
+    }
+
 }

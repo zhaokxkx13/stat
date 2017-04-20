@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Amaze UI Admin index Examples</title>
+    <meta name="description" content="这是一个 index 页面"/>
+    <meta name="keywords" content="index"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" th:href="@{/i/favicon.png}"/>
+    <link rel="apple-touch-icon-precomposed" th:href="@{/i/app-icon72x72@2x.png}"/>
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <script th:src="@{/js/echarts.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/amazeui.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/amazeui.datatables.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/app.css}"/>
+    <link rel="stylesheet" th:href="@{/css/widget.css}"/>
+    <link th:href="@{/css/axure/jquery-ui-themes.css}" rel="stylesheet"/>
+    <link th:href="@{/css/axure/axure_rp_page.css}" rel="stylesheet"/>
+    <link th:href="@{/css/axure/styles.css}" rel="stylesheet"/>
+    <link th:href="@{/css/axure/styles1.css}" rel="stylesheet"/>
+    <script th:src="@{/js/jquery.min.js}"></script>
+
+</head>
+
+<body data-type="finance-dopont">
+<script th:src="@{/js/theme.js}"></script>
+<div class="am-g tpl-g">
+    <!-- 头部 -->
+    <header>
+        <!-- logo -->
+        <div class="am-fl tpl-header-logo">
+            <a href="javascript:;"><img th:src="@{/img/logo.png}" alt=""/></a>
+        </div>
+        <!-- 右侧内容 -->
+        <div class="tpl-header-fluid">
+            <!-- 侧边切换 -->
+            <div class="am-fl tpl-header-switch-button am-icon-list">
+                    <span>
+
+                </span>
+            </div>
+            <!-- 搜索 -->
+            <div class="am-fl tpl-header-search">
+                <form class="tpl-header-search-form" action="javascript:;">
+                    <button class="tpl-header-search-btn am-icon-search"></button>
+                    <input class="tpl-header-search-box" type="text" placeholder="搜索内容..."/>
+                </form>
+            </div>
+            <!-- 其它功能-->
+            <div class="am-fr tpl-header-navbar">
+                <ul>
+                    <!-- 欢迎语 -->
+                    <li class="am-text-sm tpl-header-navbar-welcome">
+                        <a href="javascript:;">欢迎你, <span th:text="${session.username}"> </span> </a>
+                    </li>
+
+                    <!-- 退出 -->
+                    <li class="am-text-sm">
+                        <a href="/logout">
+                            <span class="am-icon-sign-out"></span> 退出
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </header>
+    <!-- 风格切换 -->
+    <div class="tpl-skiner">
+        <div class="tpl-skiner-toggle am-icon-cog">
+        </div>
+        <div class="tpl-skiner-content">
+            <div class="tpl-skiner-content-title">
+                选择主题
+            </div>
+            <div class="tpl-skiner-content-bar">
+                <span class="skiner-color skiner-white" data-color="theme-white"></span>
+                <span class="skiner-color skiner-black" data-color="theme-black"></span>
+            </div>
+        </div>
+    </div>
+    <!-- 侧边导航栏 -->
+    <div class="left-sidebar">
+        <!-- 用户信息 -->
+        <div class="tpl-sidebar-user-panel">
+            <div class="tpl-user-panel-slide-toggleable">
+                <div class="tpl-user-panel-profile-picture">
+                    <img th:src="@{/img/user04.png}" alt=""/>
+                </div>
+                <span class="user-panel-logged-in-text">
+              <i class="am-icon-circle-o am-text-success tpl-user-panel-status-icon"></i>
+              <span th:text="${session.username}"></span>
+          </span>
+                <a href="javascript:;" class="tpl-user-panel-action-link"> <span class="am-icon-pencil"></span> 账号设置</a>
+            </div>
+        </div>
+
+        <!-- 菜单 -->
+        <ul class="sidebar-nav">
+            <li class="sidebar-nav-heading">Components <span class="sidebar-nav-heading-info"> 附加组件</span></li>
+            <li class="sidebar-nav-link">
+                <a th:href="@{/index}" class="active">
+                    <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a th:href="@{/tables/industrial?page=1}">
+                    <i class="am-icon-table sidebar-nav-link-logo"></i> 收入数据查看
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="javascript:;" class="sidebar-nav-sub-title">
+                    <i class="am-icon-money sidebar-nav-link-logo"></i> 销售分析
+                    <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                </a>
+                <ul class="sidebar-nav sidebar-nav-sub">
+                    <li class="sidebar-nav-link">
+                        <a th:href="@{/sell/kpi}">
+                            <span class="am-icon-line-chart sidebar-nav-link-logo"></span> kpi分析
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-link">
+                        <a th:href="@{/sell/order}">
+                            <span class="am-icon-gavel sidebar-nav-link-logo"></span> 订单明细
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-link">
+                        <a th:href="@{/sell/product}">
+                            <span class="am-icon-cubes sidebar-nav-link-logo"></span> 产品分析
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-link">
+                        <a th:href="@{/sell/customer}">
+                            <span class="am-icon-suitcase sidebar-nav-link-logo"></span> 客户分析
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-link">
+                        <a th:href="@{/sell/net}">
+                            <span class="am-icon-area-chart sidebar-nav-link-logo"></span> 网络分析
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="sidebar-nav-link">
+                <a href="javascript:;" class="sidebar-nav-sub-title">
+                    <i class="am-icon-bank sidebar-nav-link-logo"></i> 财务分析
+                    <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                </a>
+                <ul class="sidebar-nav sidebar-nav-sub">
+                    <li class="sidebar-nav-link">
+                        <a th:href="@{/finance/kpi}">
+                            <span class="am-icon-sellsy sidebar-nav-link-logo"></span> kpi分析
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-link">
+                        <a th:href="@{/sell/order}">
+                            <span class="am-icon-coffee sidebar-nav-link-logo"></span> 杜邦分析
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+
+    <!-- 内容区域 -->
+    <div class="tpl-content-wrapper">
+
+        <div class="row-content am-cf">
+            <div class="row  am-cf">
+
+                <div id="base" class="">
+
+                    <!-- Unnamed (组合) -->
+                    <div id="u0" class="ax_default" data-left="28" data-top="728" data-width="93" data-height="95">
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u1" class="ax_default box_1">
+                            <div id="u1_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u2" class="text" style="display:none; visibility: hidden">
+                                <p><span></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u3" class="ax_default _三级标题">
+                            <div id="u3_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u4" class="text">
+                                <p><span>营业成本</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (占位符) -->
+                        <div id="u5" class="ax_default placeholder" th:text="${resultMap[operationCost]}">
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (组合) -->
+                    <div id="u7" class="ax_default" data-left="138" data-top="728" data-width="93" data-height="95">
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u8" class="ax_default box_1">
+                            <div id="u8_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u9" class="text" style="display:none; visibility: hidden">
+                                <p><span></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u10" class="ax_default _三级标题">
+                            <div id="u10_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u11" class="text">
+                                <p><span>销售费用</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (占位符) -->
+                        <div id="u12" class="ax_default placeholder" th:text="${resultMap[sellCost]}">
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (组合) -->
+                    <div id="u14" class="ax_default" data-left="247" data-top="728" data-width="93" data-height="95">
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u15" class="ax_default box_1">
+                            <div id="u15_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u16" class="text" style="display:none; visibility: hidden">
+                                <p><span></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u17" class="ax_default _三级标题">
+                            <div id="u17_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u18" class="text">
+                                <p><span>管理费用</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (占位符) -->
+                        <div id="u19" class="ax_default placeholder" th:text="${resultMap[mangementCost]}">
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (组合) -->
+                    <div id="u21" class="ax_default" data-left="354" data-top="728" data-width="93" data-height="95">
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u22" class="ax_default box_1">
+                            <div id="u22_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u23" class="text" style="display:none; visibility: hidden">
+                                <p><span></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u24" class="ax_default _三级标题">
+                            <div id="u24_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u25" class="text">
+                                <p><span>其他费用</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (占位符) -->
+                        <div id="u26" class="ax_default placeholder" th:text="${resultMap[otherCost]}">
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (组合) -->
+                    <div id="u28" class="ax_default" data-left="184" data-top="539" data-width="93" data-height="95">
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u29" class="ax_default box_1">
+                            <div id="u29_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u30" class="text" style="display:none; visibility: hidden">
+                                <p><span></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u31" class="ax_default _三级标题">
+                            <div id="u31_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u32" class="text">
+                                <p><span>全部成本</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (占位符) -->
+                        <div id="u33" class="ax_default placeholder" th:text="${resultMap[costSum]}">
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (矩形) -->
+                    <div id="u35" class="ax_default _一级标题">
+                        <div id="u35_div" class=""></div>
+                        <!-- Unnamed () -->
+                        <div id="u36" class="text">
+                            <p><span>+</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (矩形) -->
+                    <div id="u37" class="ax_default _一级标题">
+                        <div id="u37_div" class=""></div>
+                        <!-- Unnamed () -->
+                        <div id="u38" class="text">
+                            <p><span>+</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (矩形) -->
+                    <div id="u39" class="ax_default _一级标题">
+                        <div id="u39_div" class=""></div>
+                        <!-- Unnamed () -->
+                        <div id="u40" class="text">
+                            <p><span>+</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (组合) -->
+                    <div id="u41" class="ax_default" data-left="65" data-top="539" data-width="93" data-height="95">
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u42" class="ax_default box_1">
+                            <div id="u42_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u43" class="text" style="display:none; visibility: hidden">
+                                <p><span></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u44" class="ax_default _三级标题">
+                            <div id="u44_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u45" class="text">
+                                <p><span>销售收入</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (占位符) -->
+                        <div id="u46" class="ax_default placeholder" th:text="${resultMap[sellIncome]}">
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (组合) -->
+                    <div id="u48" class="ax_default" data-left="296" data-top="539" data-width="93" data-height="95">
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u49" class="ax_default box_1">
+                            <div id="u49_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u50" class="text" style="display:none; visibility: hidden">
+                                <p><span></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u51" class="ax_default _三级标题">
+                            <div id="u51_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u52" class="text">
+                                <p><span>其他利润</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (占位符) -->
+                        <div id="u53" class="ax_default placeholder" th:text="${resultMap[otherProfit]}">
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (组合) -->
+                    <div id="u55" class="ax_default" data-left="412" data-top="539" data-width="93" data-height="95">
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u56" class="ax_default box_1">
+                            <div id="u56_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u57" class="text" style="display:none; visibility: hidden">
+                                <p><span></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u58" class="ax_default _三级标题">
+                            <div id="u58_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u59" class="text">
+                                <p><span>所得税</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (占位符) -->
+                        <div id="u60" class="ax_default placeholder" th:text="${resultMap[tax]}">
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (矩形) -->
+                    <div id="u62" class="ax_default _一级标题">
+                        <div id="u62_div" class=""></div>
+                        <!-- Unnamed () -->
+                        <div id="u63" class="text">
+                            <p><span>+</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (矩形) -->
+                    <div id="u64" class="ax_default _一级标题">
+                        <div id="u64_div" class=""></div>
+                        <!-- Unnamed () -->
+                        <div id="u65" class="text">
+                            <p><span>-</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (矩形) -->
+                    <div id="u66" class="ax_default _一级标题">
+                        <div id="u66_div" class=""></div>
+                        <!-- Unnamed () -->
+                        <div id="u67" class="text">
+                            <p><span>-</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (组合) -->
+                    <div id="u68" class="ax_default" data-left="195" data-top="388" data-width="93" data-height="95">
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u69" class="ax_default box_1">
+                            <div id="u69_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u70" class="text" style="display:none; visibility: hidden">
+                                <p><span></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u71" class="ax_default _三级标题">
+                            <div id="u71_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u72" class="text">
+                                <p><span>净利润</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (占位符) -->
+                        <div id="u73" class="ax_default placeholder" th:text="${resultMap[pureProfit]}">
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (连接线) -->
+                    <div id="u75" class="ax_default _连接线">
+                        <img id="u75_seg0" class="img " th:src="@{/img/axure/u75_seg0.png}" alt="u75_seg0"/>
+                        <img id="u75_seg1" class="img " th:src="@{/img/axure/u75_seg1.png}" alt="u75_seg1"/>
+                        <img id="u75_seg2" class="img " th:src="@{/img/axure/u75_seg2.png}" alt="u75_seg2"/>
+                        <!-- Unnamed () -->
+                        <div id="u76" class="text" style="display:none; visibility: hidden">
+                            <p><span></span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (连接线) -->
+                    <div id="u77" class="ax_default _连接线">
+                        <img id="u77_seg0" class="img " th:src="@{/img/axure/u75_seg0.png}" alt="u77_seg0"/>
+                        <img id="u77_seg1" class="img " th:src="@{/img/axure/u77_seg1.png}" alt="u77_seg1"/>
+                        <img id="u77_seg2" class="img " th:src="@{/img/axure/u75_seg2.png}" alt="u77_seg2"/>
+                        <!-- Unnamed () -->
+                        <div id="u78" class="text" style="display:none; visibility: hidden">
+                            <p><span></span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (连接线) -->
+                    <div id="u79" class="ax_default _连接线">
+                        <img id="u79_seg0" class="img " th:src="@{/img/axure/u79_seg0.png}" alt="u79_seg0"/>
+                        <img id="u79_seg1" class="img " th:src="@{/img/axure/u79_seg1.png}" alt="u79_seg1"/>
+                        <img id="u79_seg2" class="img " th:src="@{/img/axure/u79_seg2.png}" alt="u79_seg2"/>
+                        <!-- Unnamed () -->
+                        <div id="u80" class="text" style="display:none; visibility: hidden">
+                            <p><span></span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (连接线) -->
+                    <div id="u81" class="ax_default _连接线">
+                        <img id="u81_seg0" class="img " th:src="@{/img/axure/u79_seg0.png}" alt="u81_seg0"/>
+                        <img id="u81_seg1" class="img " th:src="@{/img/axure/u81_seg1.png}" alt="u81_seg1"/>
+                        <img id="u81_seg2" class="img " th:src="@{/img/axure/u79_seg2.png}" alt="u81_seg2"/>
+                        <!-- Unnamed () -->
+                        <div id="u82" class="text" style="display:none; visibility: hidden">
+                            <p><span></span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (组合) -->
+                    <div id="u83" class="ax_default" data-left="382" data-top="384" data-width="93" data-height="95">
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u84" class="ax_default box_1">
+                            <div id="u84_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u85" class="text" style="display:none; visibility: hidden">
+                                <p><span></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u86" class="ax_default _三级标题">
+                            <div id="u86_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u87" class="text">
+                                <p><span>销售收入</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (占位符) -->
+                        <div id="u88" class="ax_default placeholder" th:text="${resultMap[sellIncome]}">
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (组合) -->
+                    <div id="u90" class="ax_default" data-left="295" data-top="244" data-width="102" data-height="95">
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u91" class="ax_default box_1">
+                            <div id="u91_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u92" class="text" style="display:none; visibility: hidden">
+                                <p><span></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u93" class="ax_default _三级标题">
+                            <div id="u93_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u94" class="text">
+                                <p><span>销售净利率</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (占位符) -->
+                        <div id="u95" class="ax_default placeholder" th:text="${resultMap[sellPureProfitRate]}">
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (矩形) -->
+                    <div id="u97" class="ax_default _一级标题">
+                        <div id="u97_div" class=""></div>
+                        <!-- Unnamed () -->
+                        <div id="u98" class="text">
+                            <p><span>÷</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (连接线) -->
+                    <div id="u99" class="ax_default _连接线">
+                        <img id="u99_seg0" class="img " th:src="@{/img/axure/u99_seg0.png}" alt="u99_seg0"/>
+                        <img id="u99_seg1" class="img " th:src="@{/img/axure/u99_seg1.png}" alt="u99_seg1"/>
+                        <img id="u99_seg2" class="img " th:src="@{/img/axure/u99_seg2.png}" alt="u99_seg2"/>
+                        <!-- Unnamed () -->
+                        <div id="u100" class="text" style="display:none; visibility: hidden">
+                            <p><span></span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (连接线) -->
+                    <div id="u101" class="ax_default _连接线">
+                        <img id="u101_seg0" class="img " th:src="@{/img/axure/u101_seg0.png}" alt="u101_seg0"/>
+                        <img id="u101_seg1" class="img " th:src="@{/img/axure/u101_seg1.png}" alt="u101_seg1"/>
+                        <img id="u101_seg2" class="img " th:src="@{/img/axure/u101_seg2.png}" alt="u101_seg2"/>
+                        <!-- Unnamed () -->
+                        <div id="u102" class="text" style="display:none; visibility: hidden">
+                            <p><span></span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (组合) -->
+                    <div id="u103" class="ax_default" data-left="297" data-top="126" data-width="98" data-height="95">
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u104" class="ax_default box_1">
+                            <div id="u104_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u105" class="text" style="display:none; visibility: hidden">
+                                <p><span></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u106" class="ax_default _三级标题">
+                            <div id="u106_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u107" class="text">
+                                <p><span>资产净利率</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (占位符) -->
+                        <div id="u108" class="ax_default placeholder" th:text="${resultMap[assetsPureProfitRate]}">
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (组合) -->
+                    <div id="u110" class="ax_default" data-left="458" data-top="0" data-width="102" data-height="95">
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u111" class="ax_default box_1">
+                            <div id="u111_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u112" class="text" style="display:none; visibility: hidden">
+                                <p><span></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u113" class="ax_default _三级标题">
+                            <div id="u113_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u114" class="text">
+                                <p><span>权益净利率</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (占位符) -->
+                        <div id="u115" class="ax_default placeholder" th:text="${resultMap[powerPureRate]}">
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (连接线) -->
+                    <div id="u117" class="ax_default _连接线">
+                        <img id="u117_seg0" class="img " th:src="@{/img/axure/u117_seg0.png}" alt="u117_seg0"/>
+                        <!-- Unnamed () -->
+                        <div id="u118" class="text" style="display:none; visibility: hidden">
+                            <p><span></span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (连接线) -->
+                    <div id="u119" class="ax_default _连接线">
+                        <img id="u119_seg0" class="img " th:src="@{/img/axure/u119_seg0.png}" alt="u119_seg0"/>
+                        <img id="u119_seg1" class="img " th:src="@{/img/axure/u119_seg1.png}" alt="u119_seg1"/>
+                        <img id="u119_seg2" class="img " th:src="@{/img/axure/u119_seg2.png}" alt="u119_seg2"/>
+                        <!-- Unnamed () -->
+                        <div id="u120" class="text" style="display:none; visibility: hidden">
+                            <p><span></span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (组合) -->
+                    <div id="u121" class="ax_default" data-left="488" data-top="728" data-width="150" data-height="95">
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u122" class="ax_default box_1">
+                            <div id="u122_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u123" class="text" style="display:none; visibility: hidden">
+                                <p><span></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u124" class="ax_default _三级标题">
+                            <div id="u124_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u125" class="text">
+                                <p><span>现金有价证券</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (占位符) -->
+                        <div id="u126" class="ax_default placeholder" th:text="${resultMap[securitiesSum]}">
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (组合) -->
+                    <div id="u128" class="ax_default" data-left="687" data-top="728" data-width="93" data-height="95">
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u129" class="ax_default box_1">
+                            <div id="u129_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u130" class="text" style="display:none; visibility: hidden">
+                                <p><span></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u131" class="ax_default _三级标题">
+                            <div id="u131_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u132" class="text">
+                                <p><span>应收账款</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (占位符) -->
+                        <div id="u133" class="ax_default placeholder" th:text="${resultMap[receivableSum]}">
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (组合) -->
+                    <div id="u135" class="ax_default" data-left="807" data-top="728" data-width="93" data-height="95">
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u136" class="ax_default box_1">
+                            <div id="u136_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u137" class="text" style="display:none; visibility: hidden">
+                                <p><span></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u138" class="ax_default _三级标题">
+                            <div id="u138_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u139" class="text">
+                                <p><span>存货</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (占位符) -->
+                        <div id="u140" class="ax_default placeholder" th:text="${resultMap[stockSum]}">
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (组合) -->
+                    <div id="u142" class="ax_default" data-left="945" data-top="728" data-width="142" data-height="95">
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u143" class="ax_default box_1">
+                            <div id="u143_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u144" class="text" style="display:none; visibility: hidden">
+                                <p><span></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u145" class="ax_default _三级标题">
+                            <div id="u145_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u146" class="text">
+                                <p><span>其他流动资产</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (占位符) -->
+                        <div id="u147" class="ax_default placeholder" th:text="${resultMap[otherAssets]}">
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (矩形) -->
+                    <div id="u149" class="ax_default _一级标题">
+                        <div id="u149_div" class=""></div>
+                        <!-- Unnamed () -->
+                        <div id="u150" class="text">
+                            <p><span>+</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (矩形) -->
+                    <div id="u151" class="ax_default _一级标题">
+                        <div id="u151_div" class=""></div>
+                        <!-- Unnamed () -->
+                        <div id="u152" class="text">
+                            <p><span>+</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (矩形) -->
+                    <div id="u153" class="ax_default _一级标题">
+                        <div id="u153_div" class=""></div>
+                        <!-- Unnamed () -->
+                        <div id="u154" class="text">
+                            <p><span>+</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (组合) -->
+                    <div id="u155" class="ax_default" data-left="847" data-top="539" data-width="93" data-height="95">
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u156" class="ax_default box_1">
+                            <div id="u156_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u157" class="text" style="display:none; visibility: hidden">
+                                <p><span></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u158" class="ax_default _三级标题">
+                            <div id="u158_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u159" class="text">
+                                <p><span>流动资产</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (占位符) -->
+                        <div id="u160" class="ax_default placeholder" th:text="${resultMap[flowSum]}">
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (组合) -->
+                    <div id="u162" class="ax_default" data-left="614" data-top="539" data-width="93" data-height="95">
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u163" class="ax_default box_1">
+                            <div id="u163_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u164" class="text" style="display:none; visibility: hidden">
+                                <p><span></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u165" class="ax_default _三级标题">
+                            <div id="u165_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u166" class="text">
+                                <p><span>长期资产</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (占位符) -->
+                        <div id="u167" class="ax_default placeholder" th:text="${resultMap[fixSum]}">
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (连接线) -->
+                    <div id="u169" class="ax_default _连接线">
+                        <img id="u169_seg0" class="img " th:src="@{/img/axure/u169_seg0.png}" alt="u169_seg0"/>
+                        <img id="u169_seg1" class="img " th:src="@{/img/axure/u169_seg1.png}" alt="u169_seg1"/>
+                        <img id="u169_seg2" class="img " th:src="@{/img/axure/u169_seg2.png}" alt="u169_seg2"/>
+                        <!-- Unnamed () -->
+                        <div id="u170" class="text" style="display:none; visibility: hidden">
+                            <p><span></span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (连接线) -->
+                    <div id="u171" class="ax_default _连接线">
+                        <img id="u171_seg0" class="img " th:src="@{/img/axure/u169_seg0.png}" alt="u171_seg0"/>
+                        <img id="u171_seg1" class="img " th:src="@{/img/axure/u171_seg1.png}" alt="u171_seg1"/>
+                        <img id="u171_seg2" class="img " th:src="@{/img/axure/u169_seg2.png}" alt="u171_seg2"/>
+                        <!-- Unnamed () -->
+                        <div id="u172" class="text" style="display:none; visibility: hidden">
+                            <p><span></span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (连接线) -->
+                    <div id="u173" class="ax_default _连接线">
+                        <img id="u173_seg0" class="img " th:src="@{/img/axure/u173_seg0.png}" alt="u173_seg0"/>
+                        <img id="u173_seg1" class="img " th:src="@{/img/axure/u173_seg1.png}" alt="u173_seg1"/>
+                        <img id="u173_seg2" class="img " th:src="@{/img/axure/u173_seg2.png}" alt="u173_seg2"/>
+                        <!-- Unnamed () -->
+                        <div id="u174" class="text" style="display:none; visibility: hidden">
+                            <p><span></span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (矩形) -->
+                    <div id="u175" class="ax_default _一级标题">
+                        <div id="u175_div" class=""></div>
+                        <!-- Unnamed () -->
+                        <div id="u176" class="text">
+                            <p><span>+</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (组合) -->
+                    <div id="u177" class="ax_default" data-left="735" data-top="371" data-width="93" data-height="95">
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u178" class="ax_default box_1">
+                            <div id="u178_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u179" class="text" style="display:none; visibility: hidden">
+                                <p><span></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u180" class="ax_default _三级标题">
+                            <div id="u180_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u181" class="text">
+                                <p><span>资产总额</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (占位符) -->
+                        <div id="u182" class="ax_default placeholder" th:text="${resultMap[assetsSum]}">
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (连接线) -->
+                    <div id="u184" class="ax_default _连接线">
+                        <img id="u184_seg0" class="img " th:src="@{/img/axure/u184_seg0.png}" alt="u184_seg0"/>
+                        <img id="u184_seg1" class="img " th:src="@{/img/axure/u184_seg1.png}" alt="u184_seg1"/>
+                        <img id="u184_seg2" class="img " th:src="@{/img/axure/u184_seg2.png}" alt="u184_seg2"/>
+                        <!-- Unnamed () -->
+                        <div id="u185" class="text" style="display:none; visibility: hidden">
+                            <p><span></span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (连接线) -->
+                    <div id="u186" class="ax_default _连接线">
+                        <img id="u186_seg0" class="img " th:src="@{/img/axure/u186_seg0.png}" alt="u186_seg0"/>
+                        <img id="u186_seg1" class="img " th:src="@{/img/axure/u186_seg1.png}" alt="u186_seg1"/>
+                        <img id="u186_seg2" class="img " th:src="@{/img/axure/u186_seg2.png}" alt="u186_seg2"/>
+                        <!-- Unnamed () -->
+                        <div id="u187" class="text" style="display:none; visibility: hidden">
+                            <p><span></span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (组合) -->
+                    <div id="u188" class="ax_default" data-left="564" data-top="371" data-width="93" data-height="95">
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u189" class="ax_default box_1">
+                            <div id="u189_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u190" class="text" style="display:none; visibility: hidden">
+                                <p><span></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u191" class="ax_default _三级标题">
+                            <div id="u191_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u192" class="text">
+                                <p><span>销售收入</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (占位符) -->
+                        <div id="u193" class="ax_default placeholder" th:text="${resultMap[sellIncome]}">
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (矩形) -->
+                    <div id="u195" class="ax_default _一级标题">
+                        <div id="u195_div" class=""></div>
+                        <!-- Unnamed () -->
+                        <div id="u196" class="text">
+                            <p><span>÷</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (组合) -->
+                    <div id="u197" class="ax_default" data-left="648" data-top="244" data-width="119" data-height="95">
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u198" class="ax_default box_1">
+                            <div id="u198_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u199" class="text" style="display:none; visibility: hidden">
+                                <p><span></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u200" class="ax_default _三级标题">
+                            <div id="u200_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u201" class="text">
+                                <p><span>资产周转率</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (占位符) -->
+                        <div id="u202" class="ax_default placeholder" th:text="${resultMap[assetsRolarRate]}">
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (连接线) -->
+                    <div id="u204" class="ax_default _连接线">
+                        <img id="u204_seg0" class="img " th:src="@{/img/axure/u204_seg0.png}" alt="u204_seg0"/>
+                        <img id="u204_seg1" class="img " th:src="@{/img/axure/u204_seg1.png}" alt="u204_seg1"/>
+                        <img id="u204_seg2" class="img " th:src="@{/img/axure/u99_seg2.png}" alt="u204_seg2"/>
+                        <!-- Unnamed () -->
+                        <div id="u205" class="text" style="display:none; visibility: hidden">
+                            <p><span></span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (连接线) -->
+                    <div id="u206" class="ax_default _连接线">
+                        <img id="u206_seg0" class="img " th:src="@{/img/axure/u206_seg0.png}" alt="u206_seg0"/>
+                        <img id="u206_seg1" class="img " th:src="@{/img/axure/u206_seg1.png}" alt="u206_seg1"/>
+                        <img id="u206_seg2" class="img " th:src="@{/img/axure/u101_seg2.png}" alt="u206_seg2"/>
+                        <!-- Unnamed () -->
+                        <div id="u207" class="text" style="display:none; visibility: hidden">
+                            <p><span></span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (组合) -->
+                    <div id="u208" class="ax_default" data-left="661" data-top="132" data-width="93" data-height="95">
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u209" class="ax_default box_1">
+                            <div id="u209_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u210" class="text" style="display:none; visibility: hidden">
+                                <p><span></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (矩形) -->
+                        <div id="u211" class="ax_default _三级标题">
+                            <div id="u211_div" class=""></div>
+                            <!-- Unnamed () -->
+                            <div id="u212" class="text">
+                                <p><span>权益乘数</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Unnamed (占位符) -->
+                        <div id="u213" class="ax_default" th:text="${resultMap[powerItem]}">
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (矩形) -->
+                    <div id="u215" class="ax_default _一级标题">
+                        <div id="u215_div" class=""></div>
+                        <!-- Unnamed () -->
+                        <div id="u216" class="text">
+                            <p><span>*</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (矩形) -->
+                    <div id="u217" class="ax_default _一级标题">
+                        <div id="u217_div" class=""></div>
+                        <!-- Unnamed () -->
+                        <div id="u218" class="text">
+                            <p><span>*</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (连接线) -->
+                    <div id="u219" class="ax_default _连接线">
+                        <img id="u219_seg0" class="img " th:src="@{/img/axure/u219_seg0.png}" alt="u219_seg0"/>
+                        <img id="u219_seg1" class="img " th:src="@{/img/axure/u219_seg1.png}" alt="u219_seg1"/>
+                        <img id="u219_seg2" class="img " th:src="@{/img/axure/u219_seg2.png}" alt="u219_seg2"/>
+                        <!-- Unnamed () -->
+                        <div id="u220" class="text" style="display:none; visibility: hidden">
+                            <p><span></span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (连接线) -->
+                    <div id="u221" class="ax_default _连接线">
+                        <img id="u221_seg0" class="img " th:src="@{/img/axure/u221_seg0.png}" alt="u221_seg0"/>
+                        <!-- Unnamed () -->
+                        <div id="u222" class="text" style="display:none; visibility: hidden">
+                            <p><span></span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (矩形) -->
+                    <div id="u223" class="ax_default _二级标题">
+                        <div id="u223_div" class=""></div>
+                        <!-- Unnamed () -->
+                        <div id="u224" class="text">
+                            <p><span>盈利能力</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (矩形) -->
+                    <div id="u225" class="ax_default _二级标题">
+                        <div id="u225_div" class=""></div>
+                        <!-- Unnamed () -->
+                        <div id="u226" class="text">
+                            <p><span>运营能力</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (矩形) -->
+                    <div id="u227" class="ax_default _二级标题">
+                        <div id="u227_div" class=""></div>
+                        <!-- Unnamed () -->
+                        <div id="u228" class="text">
+                            <p><span>偿债能力</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (连接线) -->
+                    <div id="u229" class="ax_default _连接线">
+                        <img id="u229_seg0" class="img " th:src="@{/img/axure/u229_seg0.png}" alt="u229_seg0"/>
+                        <img id="u229_seg1" class="img " th:src="@{/img/axure/u229_seg1.png}" alt="u229_seg1"/>
+                        <img id="u229_seg2" class="img " th:src="@{/img/axure/u229_seg2.png}" alt="u229_seg2"/>
+                        <!-- Unnamed () -->
+                        <div id="u230" class="text" style="display:none; visibility: hidden">
+                            <p><span></span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (连接线) -->
+                    <div id="u231" class="ax_default _连接线">
+                        <img id="u231_seg0" class="img " th:src="@{/img/axure/u229_seg0.png}" alt="u231_seg0"/>
+                        <img id="u231_seg1" class="img " th:src="@{/img/axure/u231_seg1.png}" alt="u231_seg1"/>
+                        <img id="u231_seg2" class="img " th:src="@{/img/axure/u229_seg2.png}" alt="u231_seg2"/>
+                        <!-- Unnamed () -->
+                        <div id="u232" class="text" style="display:none; visibility: hidden">
+                            <p><span></span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (连接线) -->
+                    <div id="u233" class="ax_default _连接线">
+                        <img id="u233_seg0" class="img " th:src="@{/img/axure/u233_seg0.png}" alt="u233_seg0"/>
+                        <img id="u233_seg1" class="img " th:src="@{/img/axure/u233_seg1.png}" alt="u233_seg1"/>
+                        <img id="u233_seg2" class="img " th:src="@{/img/axure/u233_seg2.png}" alt="u233_seg2"/>
+                        <!-- Unnamed () -->
+                        <div id="u234" class="text" style="display:none; visibility: hidden">
+                            <p><span></span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (连接线) -->
+                    <div id="u235" class="ax_default _连接线">
+                        <img id="u235_seg0" class="img " th:src="@{/img/axure/u233_seg0.png}" alt="u235_seg0"/>
+                        <img id="u235_seg1" class="img " th:src="@{/img/axure/u235_seg1.png}" alt="u235_seg1"/>
+                        <img id="u235_seg2" class="img " th:src="@{/img/axure/u233_seg2.png}" alt="u235_seg2"/>
+                        <!-- Unnamed () -->
+                        <div id="u236" class="text" style="display:none; visibility: hidden">
+                            <p><span></span></p>
+                        </div>
+                    </div>
+
+                    <!-- Unnamed (连接线) -->
+                    <div id="u237" class="ax_default _连接线">
+                        <img id="u237_seg0" class="img " th:src="@{/img/axure/u169_seg0.png}" alt="u237_seg0"/>
+                        <img id="u237_seg1" class="img " th:src="@{/img/axure/u237_seg1.png}" alt="u237_seg1"/>
+                        <img id="u237_seg2" class="img " th:src="@{/img/axure/u169_seg2.png}" alt="u237_seg2"/>
+                        <!-- Unnamed () -->
+                        <div id="u238" class="text" style="display:none; visibility: hidden">
+                            <p><span></span></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<script th:src="@{/js/amazeui.min.js}"></script>
+<script th:src="@{/js/amazeui.datatables.min.js}"></script>
+<script th:src="@{/js/dataTables.responsive.min.js}"></script>
+<script th:src="@{/js/app.js?v=sdfsfs}"></script>
+<script th:src="@{/js/dark.js}"></script>
+<script th:src="@{/js/jquery-ui-1.8.10.custom.min.js}"></script>
+<script th:src="@{/js/axure/prototypePre.js}"></script>
+<script th:src="@{/js/axure/document.js}"></script>
+<script th:src="@{/js/axure/prototypePost.js}"></script>
+<script th:src="@{/js/axure/data.js}"></script>
+</body>
+
+</html>

@@ -13,7 +13,7 @@ public class ProductOrder implements Serializable {
     private Double price;
     private Double receivable;
     private Double collected;
-
+    private Integer orderId;
 
     @Override
     public String toString() {
@@ -25,7 +25,16 @@ public class ProductOrder implements Serializable {
                 ", price=" + price +
                 ", receivable=" + receivable +
                 ", collected=" + collected +
+                ", orderId=" + orderId +
                 '}';
+    }
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
 
     /**

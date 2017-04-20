@@ -20,4 +20,6 @@ public interface CustomerService {
     CustomerPurchase getCustomerPurchase(String companyName);
 
     AreaSellDetails getAreaSellDetails(Date startDate, Date endDate);
+
+    List<MonthPredict> getMonthPredict();
 }

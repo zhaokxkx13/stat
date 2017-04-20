@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhaokxkx13.dao.inf.CashFlowMapper">
+    <resultMap id="BaseResultMap" type="com.zhaokxkx13.dao.entity.CashFlow">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="operate_cash" property="operateCash" jdbcType="DOUBLE"/>
+        <result column="investment_cash" property="investmentCash" jdbcType="DOUBLE"/>
+        <result column="finance_cash" property="financeCash" jdbcType="DOUBLE"/>
+        <result column="exchange_cash" property="exchangeCash" jdbcType="DOUBLE"/>
+        <result column="cash_increase" property="cashIncrease" jdbcType="DOUBLE"/>
+        <result column="date" property="date" jdbcType="DATE"/>
+    </resultMap>
+
+    <select id="selectById" parameterType="Integer" resultMap="BaseResultMap">
+        SELECT *
+        FROM cash_flow_sheet;
+    </select>
+
+    <select id="selectByDate" parameterType="Map" resultMap="BaseResultMap">
+        SELECT * from cash_flow_sheet
+        <where>
+            <if test="#{startDate}!=null">
+                date >=#{startDate}
+            </if>
+            <if test="#{endDate}!=null">
+                and #{endDate} >= date
+            </if>
+        </where>
+    </select>
+</mapper>

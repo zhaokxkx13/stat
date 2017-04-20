@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhaokxkx13.dao.inf.ProfitMapper">
+    <resultMap id="BaseResultMap" type="com.zhaokxkx13.dao.entity.Profit">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="income" property="income" jdbcType="DOUBLE"/>
+        <result column="cost" property="cost" jdbcType="DOUBLE"/>
+        <result column="sells_tax" property="sellTax" jdbcType="DOUBLE"/>
+        <result column="expenses" property="expenses" jdbcType="DOUBLE"/>
+        <result column="profit" property="profit" jdbcType="DOUBLE"/>
+        <result column="income_tax" property="incomeTax" jdbcType="DOUBLE"/>
+        <result column="pure_profit" property="pureProfit" jdbcType="DOUBLE"/>
+        <result column="date" property="date" jdbcType="DATE"/>
+    </resultMap>
+
+    <select id="selectById" parameterType="Integer" resultMap="BaseResultMap">
+        SELECT *
+        FROM profit_sheet;
+    </select>
+
+    <select id="selectByDate" parameterType="Map" resultMap="BaseResultMap">
+        SELECT * from profit_sheet
+        <where>
+            <if test="#{startDate}!=null">
+                date >=#{startDate}
+            </if>
+            <if test="#{endDate}!=null">
+                and #{endDate} >= date
+            </if>
+        </where>
+    </select>
+</mapper>

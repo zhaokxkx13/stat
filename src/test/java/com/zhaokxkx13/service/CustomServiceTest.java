@@ -73,4 +73,8 @@ public class CustomServiceTest {
         AreaSellDetails details = customerService.getAreaSellDetails(old, new Date());
         System.out.println(details);
     }
+
+    @Test
+    public void test7() {
+    }
 }
