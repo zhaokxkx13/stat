@@ -17,6 +17,23 @@
                      select="com.zhaokxkx13.dao.inf.DepartmentMapper.selectById" fetchType="eager"/>
     </resultMap>
 
+    <resultMap id="RawResultMap" type="com.zhaokxkx13.dao.entity.Employee">
+        <result column="employee_id" property="id" jdbcType="INTEGER"/>
+        <result column="employee_name" property="name" jdbcType="VARCHAR"/>
+        <result column="employee_sex" property="sex" jdbcType="VARCHAR"/>
+        <result column="employee_birth" property="birth" jdbcType="DATE"/>
+        <result column="employee_rank" property="rank" jdbcType="VARCHAR"/>
+        <result column="employee_education" property="education" jdbcType="VARCHAR"/>
+        <result column="employee_type" property="type" jdbcType="VARCHAR"/>
+        <result column="employee_salery" property="salery" jdbcType="DOUBLE"/>
+        <result column="employee_tel" property="tel" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="mapedResultMap" type="java.util.HashMap">
+        <result column="id" property="id" javaType="java.lang.Integer"/>
+        <result column="month(hire_date)" property="month(hire_date)" javaType="java.lang.Integer"/>
+        <result column="month(leave_date)" property="month(leave_date)" javaType="java.lang.Integer"/>
+    </resultMap>
     <select id="selectByName" resultMap="BaseResultMap" parameterType="String">
         SELECT
         e.id AS employee_id,
@@ -53,5 +70,27 @@
         employee e
         WHERE
         e.id = #{id}
+    </select>
+
+    <select id="selectCompanyEmployeeCount" resultType="java.util.HashMap">
+        SELECT
+            company_id,
+            count(id)
+        FROM employee
+        WHERE type = 'contract' AND leave_date IS NULL
+        GROUP BY company_id
+    </select>
+
+    <select id="selectEmployeeFlow" resultMap="mapedResultMap" parameterType="map">
+        SELECT
+            id,
+            month(hire_date),
+            month(leave_date)
+        FROM employee
+        WHERE type = 'contract'
+              AND hire_date >= #{startDate}
+              AND leave_date >= #{startDate}
+              AND now() >= hire_date
+              AND now() >= leave_date
     </select>
 </mapper>

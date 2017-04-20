@@ -5,10 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.zhaokxkx13.Bean.*;
 import com.zhaokxkx13.dao.entity.Income;
 import com.zhaokxkx13.dao.entity.Kline;
-import com.zhaokxkx13.service.CustomerService;
-import com.zhaokxkx13.service.FinanceService;
-import com.zhaokxkx13.service.IncomeService;
-import com.zhaokxkx13.service.KlineService;
+import com.zhaokxkx13.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +33,9 @@ public class DataController {
 
     @Autowired
     FinanceService financeService;
+
+    @Autowired
+    HumanResourceService humanResourceService;
 
     @RequestMapping("/indusAll/Year/distribute")
     public String getYearDistribute() {
@@ -153,6 +153,22 @@ public class DataController {
         Map<String, String> resultMap = financeService.getKpiDetails(startDate, endDate);
         Gson gson = new Gson();
         String jsonStr = gson.toJson(resultMap);
+        return jsonStr;
+    }
+
+    @RequestMapping("/humanResource/kpi/employeeNum")
+    public String gethumanResourceKpiEmployeeNum() {
+        Map<String, Long> resultMap = humanResourceService.getEachCompanyEmployeeNum();
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(resultMap);
+        return jsonStr;
+    }
+
+    @RequestMapping("/humanResource/kpi/employeeFlow")
+    public String getEmployeeFlow() {
+        EmployeeFlow result = humanResourceService.getEmployeeFlow();
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(result);
         return jsonStr;
     }
 }

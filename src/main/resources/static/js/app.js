@@ -850,7 +850,7 @@ var pageData = {
                         color: function (params) {
                             // build a color map as your need.
                             var colorList = [
-                                '#B02724', '#B5C334', '#FCCE10', '#E87C25', '#27727B',
+                                '#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B',
                                 '#FE8463', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD',
                                 '#D7504B', '#C6E579', '#F4E001', '#F0805A', '#26C0C0'
                             ];
@@ -1607,6 +1607,202 @@ var pageData = {
                 }]
             };
             radarChart.setOption(radarOption);
+        })
+    },
+    'humanresouce-kpi': function () {
+        var employeeNumChart = echarts.init(document.getElementById('employeeNums-chart'));
+        var employeeFlowChart = echarts.init(document.getElementById('employeeFlow-chart'));
+        $.get('/humanResource/kpi/employeeNum', function (data) {
+            var json = JSON.parse(data);
+            var companyNames = Object.keys(json);
+            var values = [];
+            for (var item in json) {
+                values.push(json[item])
+            }
+            var option = {
+                title: {
+                    text: '各公司员工人数'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: ['公司人数']
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: {show: true},
+                        dataView: {show: true, readOnly: false},
+                        magicType: {show: true, type: ['line', 'bar']},
+                        restore: {show: true},
+                        saveAsImage: {show: true}
+                    }
+                },
+                calculable: true,
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: companyNames
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value'
+                    }
+                ],
+                series: [
+                    {
+                        name: '人数',
+                        type: 'bar',
+                        data: values,
+                        itemStyle: {
+                            normal: {
+                                color: function (params) {
+                                    // build a color map as your need.
+                                    var colorList = [
+                                        '#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B',
+                                        '#FE8463', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD',
+                                        '#D7504B', '#C6E579', '#F4E001', '#F0805A', '#26C0C0'
+                                    ];
+                                    return colorList[params.dataIndex]
+                                }
+                            }
+                        }
+                    }
+                ]
+            };
+            employeeNumChart.setOption(option);
+        })
+        $.get('/humanResource/kpi/employeeFlow', function (data) {
+            var json = JSON.parse(data);
+            var increase = json['increase'];
+            var decrease = json['decrease'];
+            var pureIncrease = json['pureIncrease'];
+            var time = Object.keys(increase);
+            var increaseData = [];
+            var decreaseData = [];
+            var pureIncreaseData = [];
+            for (var item in increase) {
+                increaseData.push(increase[item]);
+            }
+            for (var item in decrease) {
+                decreaseData.push(decrease[item]);
+            }
+            for (var item in pureIncrease) {
+                pureIncreaseData.push(pureIncrease[item]);
+            }
+
+            var option = {
+                title: {
+                    text: '全年人员变动趋势分析'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                toolbox: {
+                    feature: {
+                        dataView: {
+                            show: true,
+                            readOnly: false
+                        },
+                        restore: {
+                            show: true
+                        },
+                        saveAsImage: {
+                            show: true
+                        }
+                    }
+                },
+                grid: {
+                    containLabel: true
+                },
+                legend: {
+                    data: ['入职人数', '离职人数', '净增长人数']
+                },
+                xAxis: [{
+                    type: 'category',
+                    axisTick: {
+                        alignWithLabel: true
+                    },
+                    axisLabel: {
+                        formatter: '{value}月'
+                    },
+                    data: time
+                }],
+                yAxis: [{
+                    type: 'value',
+                    name: '增长人数',
+                    interval: 1,
+                    position: 'right',
+                    axisLabel: {
+                        formatter: '{value} 人'
+                    }
+                }, {
+                    type: 'value',
+                    name: '变动人数',
+                    interval: 1,
+                    position: 'left',
+                    axisLabel: {
+                        formatter: '{value} 人'
+                    }
+                }],
+                series: [{
+                    name: '入职人数',
+                    type: 'line',
+                    smooth: true,
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top',
+                        }
+                    },
+                    yAxisIndex: 1,
+                    lineStyle: {
+                        normal: {
+                            width: 3,
+                            shadowColor: 'rgba(0,0,0,0.4)',
+                            shadowBlur: 10,
+                            shadowOffsetY: 10
+                        }
+                    },
+                    data: increaseData
+                }, {
+                    name: '离职人数',
+                    type: 'line',
+                    smooth: true,
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top',
+                        }
+                    },
+                    yAxisIndex: 1,
+                    lineStyle: {
+                        normal: {
+                            width: 3,
+                            color: '#74ff50',
+                            shadowColor: 'rgba(0,0,0,0.4)',
+                            shadowBlur: 10,
+                            shadowOffsetY: 10
+                        }
+                    },
+                    data: decreaseData
+                },
+                    {
+                        name: '净增长人数',
+                        type: 'bar',
+                        yAxisIndex: 0,
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'top'
+                            }
+                        },
+                        data: pureIncreaseData
+                    }]
+            };
+            employeeFlowChart.setOption(option);
         })
     }
 }

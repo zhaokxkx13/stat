@@ -209,4 +209,9 @@ public class UserController {
         modelMap.put("resultMap", resultMap);
         return "finance/dupont";
     }
+
+    @RequestMapping("/humanResource/kpi")
+    public String getHumanResourceKpi() {
+        return "humanResource/kpi";
+    }
 }
