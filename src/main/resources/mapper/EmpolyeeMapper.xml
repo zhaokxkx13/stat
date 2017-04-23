@@ -93,4 +93,36 @@
               AND now() >= hire_date
               AND now() >= leave_date
     </select>
+
+    <select id="selectByCompanyId" resultMap="RawResultMap" parameterType="Integer">
+        SELECT
+            e.id        AS employee_id,
+            e.name      AS employee_name,
+            e.sex       AS employee_sex,
+            e.birth     AS employee_birth,
+            e.rank      AS employee_rank,
+            e.education AS employee_education,
+            e.type      AS employee_type,
+            e.salery    AS employee_salery,
+            e.tel       AS employee_tel,
+            e.company_id,
+            e.department_id
+        FROM
+            employee e
+        WHERE
+            e.company_id = #{companyId}
+    </select>
+
+    <select id="selectSexBalance" resultType="java.util.HashMap" parameterType="map">
+        SELECT
+            sex,
+            count(id)
+        FROM employee
+        WHERE type = 'contract'
+              AND hire_date >= #{startDate}
+              AND leave_date >= #{startDate}
+              AND now() >= hire_date
+              AND now() >= leave_date
+        GROUP BY sex
+    </select>
 </mapper>

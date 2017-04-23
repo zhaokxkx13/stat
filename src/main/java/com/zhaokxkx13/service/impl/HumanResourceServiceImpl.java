@@ -1,12 +1,15 @@
 package com.zhaokxkx13.service.impl;
 
+import com.zhaokxkx13.Bean.CompanyAreaDetails;
 import com.zhaokxkx13.Bean.EmployeeFlow;
+import com.zhaokxkx13.dao.entity.Employee;
 import com.zhaokxkx13.dao.inf.CompanyMapper;
 import com.zhaokxkx13.dao.inf.EmployeeMapper;
 import com.zhaokxkx13.service.HumanResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 /**
@@ -67,5 +70,59 @@ public class HumanResourceServiceImpl implements HumanResourceService {
         result.setIncrease(increase);
         result.setPureIncrease(pureIncrease);
         return result;
+    }
+
+    @Override
+    public List<CompanyAreaDetails> getCompanyAreaDetails() {
+        List<Map> cIdValues = employeeMapper.selectCompanyEmployeeCount();
+        List<CompanyAreaDetails> resultList = new ArrayList<>();
+        for (Map item : cIdValues) {
+            Integer companyId = Integer.parseInt(String.valueOf(item.get("company_id")));
+            Integer value = Integer.parseInt(String.valueOf(item.get("count(id)")));
+            List<Employee> employeeList = employeeMapper.selectByCompanyId(companyId);
+            String companyName = companyMapper.selectById(companyId).getName();
+            Double sumSalery = 0.0;
+            for (Employee employee : employeeList) {
+                sumSalery += employee.getSalery();
+            }
+            sumSalery /= employeeList.size() == 0 ? 1 : employeeList.size();
+            DecimalFormat decimalFormat = new DecimalFormat("#0.00");
+            CompanyAreaDetails companyAreaDetails = new CompanyAreaDetails();
+            companyAreaDetails.setCity(companyName);
+            companyAreaDetails.setAverageSalery(decimalFormat.format(sumSalery));
+            companyAreaDetails.setCount(value);
+            resultList.add(companyAreaDetails);
+        }
+        return resultList;
+    }
+
+    @Override
+    public Map<String, Integer> getSexBalance() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_YEAR, 1);
+        Date startDate = calendar.getTime();
+        Map<String, Date> parameterMap = new HashMap<>();
+        parameterMap.put("startDate", startDate);
+        List<Map> sexMap = employeeMapper.selectSexBalance(parameterMap);
+        Map<String, Integer> resultMap = new HashMap<>();
+        for (Map item : sexMap) {
+            resultMap.put(item.get("sex").toString(), Integer.parseInt(item.get("count(id)").toString()));
+        }
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Integer> getEducationBalance() {
+        return null;
+    }
+
+    @Override
+    public Map<String, Integer> getClassBalance() {
+        return null;
+    }
+
+    @Override
+    public Map<String, Integer> getAgeBalance() {
+        return null;
     }
 }

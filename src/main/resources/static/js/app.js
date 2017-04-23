@@ -1695,7 +1695,6 @@ var pageData = {
 
             var option = {
                 title: {
-                    text: '全年人员变动趋势分析'
                 },
                 tooltip: {
                     trigger: 'axis'

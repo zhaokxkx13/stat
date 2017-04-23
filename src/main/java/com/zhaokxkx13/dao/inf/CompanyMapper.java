@@ -13,4 +13,6 @@ public interface CompanyMapper {
     List<Company> selectByName(String name);
 
     Company selectById(Integer id);
+
+    List<Company> selectAll();
 }

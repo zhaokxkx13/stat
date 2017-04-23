@@ -31,4 +31,14 @@
         WHERE
             c.name = #{name}
     </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT
+            c.id   AS company_id,
+            c.name AS company_name,
+            c.area AS company_area,
+            c.city AS company_city
+        FROM
+            company c
+    </select>
 </mapper>

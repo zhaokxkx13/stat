@@ -171,4 +171,21 @@ public class DataController {
         String jsonStr = gson.toJson(result);
         return jsonStr;
     }
+
+    @RequestMapping("/humanResource/kpi/companyAreaDetails")
+    public String getCompanyAreaDetails() {
+        List<CompanyAreaDetails> companyAreaDetailsList = humanResourceService.getCompanyAreaDetails();
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(companyAreaDetailsList);
+        jsonStr = "{ \"data\":" + jsonStr + "}";
+        return jsonStr;
+    }
+
+    @RequestMapping("/humanResource/base/sexBalance")
+    public String getSexBalance() {
+        Map<String, Integer> sexBalance = humanResourceService.getSexBalance();
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(sexBalance);
+        return jsonStr;
+    }
 }

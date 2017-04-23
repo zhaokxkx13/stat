@@ -17,4 +17,8 @@ public interface EmployeeMapper {
     List<Map> selectCompanyEmployeeCount();
 
     List<Map<String, Integer>> selectEmployeeFlow(Map<String, Date> map);
+
+    List<Employee> selectByCompanyId(Integer companyId);
+
+    List<Map> selectSexBalance(Map<String, Date> map);
 }
