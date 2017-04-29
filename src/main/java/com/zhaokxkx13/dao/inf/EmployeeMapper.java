@@ -21,4 +21,12 @@ public interface EmployeeMapper {
     List<Employee> selectByCompanyId(Integer companyId);
 
     List<Map> selectSexBalance(Map<String, Date> map);
+
+    List<Map> selectEducationBalance(Map<String, Date> map);
+
+    List<Map> selectEmployeeRank(Map<String, Date> map);
+
+    List<Map> selectAgeBalance(Map<String, Date> map);
+
+    List<Employee> selectAll();
 }

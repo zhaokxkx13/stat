@@ -15,4 +15,6 @@ public interface OrderMapper {
     List<Order> selectByCustomerId(List<Integer> customerIdList);
 
     List<Order> selectByDate(Map<String, Date> map);
+
+    List<Order> selectAll();
 }

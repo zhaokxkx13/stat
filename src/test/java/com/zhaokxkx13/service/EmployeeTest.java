@@ -51,4 +51,36 @@ public class EmployeeTest {
             System.out.println(entry.getKey() + " " + entry.getValue());
         }
     }
+
+    @Test
+    public void test5() {
+        Map<String, Integer> resultMap = humanResourceService.getEducationBalance();
+        for (Map.Entry<String, Integer> entry : resultMap.entrySet()) {
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
+    }
+
+    @Test
+    public void test6() {
+        Map<String, Integer> resultMap = humanResourceService.getEducationBalance();
+        for (Map.Entry<String, Integer> entry : resultMap.entrySet()) {
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
+    }
+
+    @Test
+    public void test7() {
+        Map<String, Integer> resultMap = humanResourceService.getClassBalance();
+        for (Map.Entry<String, Integer> entry : resultMap.entrySet()) {
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
+    }
+
+    @Test
+    public void test8() {
+        Map<String, Integer> resultMap = humanResourceService.getAgeBalance();
+        for (Map.Entry<String, Integer> entry : resultMap.entrySet()) {
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
+    }
 }

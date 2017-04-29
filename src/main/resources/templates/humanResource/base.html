@@ -97,7 +97,7 @@
         <ul class="sidebar-nav">
             <li class="sidebar-nav-heading">Components <span class="sidebar-nav-heading-info"> 附加组件</span></li>
             <li class="sidebar-nav-link">
-                <a th:href="@{/index}" class="active">
+                <a th:href="@{/index}">
                     <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
                 </a>
             </li>
@@ -165,20 +165,20 @@
             </li>
 
             <li class="sidebar-nav-link">
-                <a href="javascript:;" class="sidebar-nav-sub-title">
-                    <i class="am-icon-bank sidebar-nav-link-logo"></i> 人力资源分析
-                    <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                <a href="javascript:;" class="sidebar-nav-sub-title active">
+                    <i class="am-icon-universal-access sidebar-nav-link-logo"></i> 人力资源分析
+                    <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
                 </a>
-                <ul class="sidebar-nav sidebar-nav-sub">
+                <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
                     <li class="sidebar-nav-link">
                         <a th:href="@{/humanResource/kpi}">
-                            <span class="am-icon-sellsy sidebar-nav-link-logo"></span> kpi分析
+                            <span class="am-icon-child sidebar-nav-link-logo"></span> kpi分析
                         </a>
                     </li>
 
                     <li class="sidebar-nav-link">
-                        <a th:href="@{/humanResource/base}">
-                            <span class="am-icon-coffee sidebar-nav-link-logo"></span> 人力资源基本情况
+                        <a th:href="@{/humanResource/base}" class="sub-active">
+                            <span class="am-icon-comments sidebar-nav-link-logo"></span> 人力资源基本情况
                         </a>
                     </li>
                 </ul>
@@ -191,76 +191,65 @@
     <div class="tpl-content-wrapper">
         <div class="row-content am-cf">
             <div class="row am-cf">
-                <div class="am-u-sm-12 am-u-md-12">
+                <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
                     <div class="widget am-cf">
                         <div class="widget-head am-cf">
-                            <div class="widget-title am-fl">各公司员工人数</div>
+                            <div class="widget-title am-fl">性别结构</div>
                             <div class="widget-function am-fr">
                                 <a href="javascript:;" class="am-icon-cog"></a>
                             </div>
                         </div>
-                        <div class="widget-body-lg " id="employeeNums-chart">
+                        <div class="widget-body-lg " id="sexBalance">
 
                         </div>
                     </div>
                 </div>
 
-            </div>
-        </div>
+                <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
+                    <div class="widget am-cf">
+                        <div class="widget-head am-cf">
+                            <div class="widget-title am-fl">年龄结构</div>
+                            <div class="widget-function am-fr">
+                                <a href="javascript:;" class="am-icon-cog"></a>
+                            </div>
+                        </div>
+                        <div class="widget-body-lg " id="ageBalance">
 
-        <div class="row-content am-cf">
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row am-cf">
-                <div class="am-u-sm-12 am-u-md-12 am-u-lg-7">
+                <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
                     <div class="widget am-cf">
                         <div class="widget-head am-cf">
-                            <div class="widget-title am-fl">全年人员变动趋势分析</div>
+                            <div class="widget-title am-fl">学历结构</div>
                             <div class="widget-function am-fr">
                                 <a href="javascript:;" class="am-icon-cog"></a>
                             </div>
                         </div>
-                        <div class="widget-body-lg " id="employeeFlow-chart">
+                        <div class="widget-body-lg " id="eduBalance">
 
                         </div>
                     </div>
                 </div>
 
-
-                <div class="am-u-sm-12 am-u-md-12 am-u-lg-5">
+                <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
                     <div class="widget am-cf">
                         <div class="widget-head am-cf">
-                            <div class="widget-title am-fl">地域人员收入分析</div>
+                            <div class="widget-title am-fl">职称结构</div>
                             <div class="widget-function am-fr">
                                 <a href="javascript:;" class="am-icon-cog"></a>
                             </div>
                         </div>
-                        <div class="widget-body-lg ">
-                            <table width="100%"
-                                   class="am-table am-table-compact am-table-bordered am-table-radius am-table-striped tpl-table-black "
-                                   id="companyAreaDetails">
-                                <thead>
-                                <tr>
-                                    <td>城市</td>
-                                    <td>人数</td>
-                                    <td>工资水平</td>
-                                </tr>
-                                </thead>
-                                <tfoot>
-                                <tr>
-                                    <td>城市</td>
-                                    <td>人数</td>
-                                    <td>工资水平</td>
-                                </tr>
+                        <div class="widget-body-lg " id="rankBalance">
 
-                                </tfoot>
-                                <tbody>
-
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
 
     </div>
 </div>
@@ -268,7 +257,6 @@
 <script th:src="@{/js/amazeui.datatables.min.js}"></script>
 <script th:src="@{/js/dataTables.responsive.min.js}"></script>
 <script th:src="@{/js/app.js?v=sdfsfs}"></script>
-<script th:src="@{/js/dataTables/companyAreaDetails.js}"></script>
 </body>
 
 </html>

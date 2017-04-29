@@ -62,7 +62,7 @@ public class HumanResourceServiceImpl implements HumanResourceService {
                 increase.put(hire_month, increase.get(hire_month) + 1);
             }
         }
-        for (int i = 1; i < month; i++) {
+        for (int i = 1; i <= month; i++) {
             pureIncrease.put(i, increase.get(i) - decrease.get(i));
         }
         EmployeeFlow result = new EmployeeFlow();
@@ -113,16 +113,47 @@ public class HumanResourceServiceImpl implements HumanResourceService {
 
     @Override
     public Map<String, Integer> getEducationBalance() {
-        return null;
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_YEAR, 1);
+        Date startDate = calendar.getTime();
+        Map<String, Date> parameterMap = new HashMap<>();
+        parameterMap.put("startDate", startDate);
+        List<Map> educationMap = employeeMapper.selectEducationBalance(parameterMap);
+        Map<String, Integer> resultMap = new HashMap<>();
+        for (Map item : educationMap) {
+            resultMap.put(item.get("education").toString(), Integer.parseInt(item.get("count(id)").toString()));
+        }
+        return resultMap;
     }
 
     @Override
     public Map<String, Integer> getClassBalance() {
-        return null;
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_YEAR, 1);
+        Date startDate = calendar.getTime();
+        Map<String, Date> parameterMap = new HashMap<>();
+        parameterMap.put("startDate", startDate);
+        List<Map> rankMap = employeeMapper.selectEmployeeRank(parameterMap);
+        Map<String, Integer> resultMap = new HashMap<>();
+        for (Map item : rankMap) {
+            resultMap.put(item.get("rank").toString(), Integer.parseInt(item.get("count(id)").toString()));
+        }
+        return resultMap;
     }
 
     @Override
     public Map<String, Integer> getAgeBalance() {
-        return null;
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_YEAR, 1);
+        Date startDate = calendar.getTime();
+        Map<String, Date> parameterMap = new HashMap<>();
+        parameterMap.put("startDate", startDate);
+        List<Map> rankMap = employeeMapper.selectAgeBalance(parameterMap);
+        Map<String, Integer> resultMap = new HashMap<>();
+        for (Map item : rankMap) {
+            resultMap.put(item.get("balance").toString(), Integer.parseInt(item.get("count(age)").toString()));
+        }
+        return resultMap;
+
     }
 }

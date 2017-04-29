@@ -103,7 +103,7 @@
         <ul class="sidebar-nav">
             <li class="sidebar-nav-heading">Components <span class="sidebar-nav-heading-info"> 附加组件</span></li>
             <li class="sidebar-nav-link">
-                <a th:href="@{/index}" class="active">
+                <a th:href="@{/index}">
                     <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
                 </a>
             </li>
@@ -151,11 +151,11 @@
             </li>
 
             <li class="sidebar-nav-link">
-                <a href="javascript:;" class="sidebar-nav-sub-title">
+                <a href="javascript:;" class="sidebar-nav-sub-title active">
                     <i class="am-icon-bank sidebar-nav-link-logo"></i> 财务分析
-                    <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                    <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
                 </a>
-                <ul class="sidebar-nav sidebar-nav-sub">
+                <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
                     <li class="sidebar-nav-link">
                         <a th:href="@{/finance/kpi}">
                             <span class="am-icon-sellsy sidebar-nav-link-logo"></span> kpi分析
@@ -163,8 +163,28 @@
                     </li>
 
                     <li class="sidebar-nav-link">
-                        <a th:href="@{/sell/order}">
+                        <a th:href="@{/finance/dupont}" class="sub-active">
                             <span class="am-icon-coffee sidebar-nav-link-logo"></span> 杜邦分析
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="sidebar-nav-link">
+                <a href="javascript:;" class="sidebar-nav-sub-title">
+                    <i class="am-icon-universal-access sidebar-nav-link-logo"></i> 人力资源分析
+                    <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                </a>
+                <ul class="sidebar-nav sidebar-nav-sub">
+                    <li class="sidebar-nav-link">
+                        <a th:href="@{/humanResource/kpi}">
+                            <span class="am-icon-child sidebar-nav-link-logo"></span> kpi分析
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-link">
+                        <a th:href="@{/humanResource/base}">
+                            <span class="am-icon-comments sidebar-nav-link-logo"></span> 人力资源基本情况
                         </a>
                     </li>
                 </ul>
@@ -1182,7 +1202,7 @@
 <script th:src="@{/js/dataTables.responsive.min.js}"></script>
 <script th:src="@{/js/app.js?v=sdfsfs}"></script>
 <script th:src="@{/js/dark.js}"></script>
-<script th:src="@{/js/jquery-ui-1.8.10.custom.min.js}"></script>
+<script th:src="@{/js/axure/jquery-ui-1.8.10.custom.min.js}"></script>
 <script th:src="@{/js/axure/prototypePre.js}"></script>
 <script th:src="@{/js/axure/document.js}"></script>
 <script th:src="@{/js/axure/prototypePost.js}"></script>

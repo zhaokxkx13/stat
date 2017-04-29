@@ -16,4 +16,13 @@
         department d
         WHERE d.id = #{id}
     </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT
+            d.id   AS department_id,
+            d.name AS department_name,
+            d.type AS department_type
+        FROM
+            department d
+    </select>
 </mapper>

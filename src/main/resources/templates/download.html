@@ -10,25 +10,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="renderer" content="webkit"/>
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
-    <link rel="icon" type="image/png" th:href="@{/i/favicon.png}"/>
-    <link rel="apple-touch-icon-precomposed" th:href="@{/i/app-icon72x72@2x.png}"/>
+    <link rel="icon" type="image/png" th:href="@{../../i/favicon.png}"/>
+    <link rel="apple-touch-icon-precomposed" th:href="@{../../i/app-icon72x72@2x.png}"/>
     <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
-    <script th:src="@{/js/echarts.min.js}"></script>
-    <link rel="stylesheet" th:href="@{/css/amazeui.min.css}"/>
-    <link rel="stylesheet" th:href="@{/css/amazeui.datatables.min.css}"/>
-    <link rel="stylesheet" th:href="@{/css/app.css}"/>
-    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{../../js/echarts.min.js}"></script>
+    <link rel="stylesheet" th:href="@{../../css/amazeui.min.css}"/>
+    <link rel="stylesheet" th:href="@{../../css/amazeui.datatables.min.css}"/>
+    <link rel="stylesheet" th:href="@{../../css/app.css}"/>
+    <link rel="stylesheet" th:href="@{../../css/amazeui.page.css}"/>
+    <script th:src="@{../../js/jquery.min.js}"></script>
 
 </head>
 
-<body data-type="product-details">
-<script th:src="@{/js/theme.js}"></script>
+<body data-type="download">
+<script th:src="@{../../js/theme.js}"></script>
 <div class="am-g tpl-g">
     <!-- 头部 -->
     <header>
         <!-- logo -->
         <div class="am-fl tpl-header-logo">
-            <a href="javascript:;"><img th:src="@{/img/logo.png}" alt=""/></a>
+            <a href="javascript:;"><img th:src="@{../../img/logo.png}" alt=""/></a>
         </div>
         <!-- 右侧内容 -->
         <div class="tpl-header-fluid">
@@ -50,12 +51,12 @@
                 <ul>
                     <!-- 欢迎语 -->
                     <li class="am-text-sm tpl-header-navbar-welcome">
-                        <a href="javascript:;">欢迎你, <span th:text="${session.username}"> </span> </a>
+                        <a href="javascript:;">欢迎你, <span th:text="${session.username}">Amaze UI</span> </a>
                     </li>
 
                     <!-- 退出 -->
                     <li class="am-text-sm">
-                        <a href="/logout">
+                        <a href="javascript:;">
                             <span class="am-icon-sign-out"></span> 退出
                         </a>
                     </li>
@@ -103,16 +104,16 @@
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a th:href="@{/tables/industrial?page=1}">
+                <a th:href="@{/tables/industrial?page=1}" class="active">
                     <i class="am-icon-table sidebar-nav-link-logo"></i> 收入数据查看
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="javascript:;" class="sidebar-nav-sub-title active">
+                <a href="javascript:;" class="sidebar-nav-sub-title">
                     <i class="am-icon-money sidebar-nav-link-logo"></i> 销售分析
-                    <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
+                    <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
                 </a>
-                <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
+                <ul class="sidebar-nav sidebar-nav-sub">
                     <li class="sidebar-nav-link">
                         <a th:href="@{/sell/kpi}">
                             <span class="am-icon-line-chart sidebar-nav-link-logo"></span> kpi分析
@@ -126,7 +127,7 @@
                     </li>
 
                     <li class="sidebar-nav-link">
-                        <a th:href="@{/sell/product}" class="sub-active">
+                        <a th:href="@{/sell/product}">
                             <span class="am-icon-cubes sidebar-nav-link-logo"></span> 产品分析
                         </a>
                     </li>
@@ -190,13 +191,11 @@
 
     <!-- 内容区域 -->
     <div class="tpl-content-wrapper">
-
-
         <div class="row-content am-cf">
-            <div class="row  am-cf">
+            <div class="row">
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
-                        <div class="widget-title am-fl">订单详情</div>
+                        <div class="widget-title am-fl">企业收入</div>
                         <div class="widget-function am-fr">
                             <a href="javascript:;" class="am-icon-cog"></a>
                         </div>
@@ -205,38 +204,32 @@
 
                         <table width="100%"
                                class="am-table am-table-compact am-table-bordered am-table-radius am-table-striped tpl-table-black "
-                               id="productdetails">
+                               id="example-r">
                             <thead>
                             <tr>
-                                <td>年份</td>
-                                <td>月份</td>
-                                <td>销售额</td>
-                                <td>同期值</td>
-                                <td>同期比</td>
-                                <td>前期值</td>
-                                <td>增速环比</td>
-                                <td>占比</td>
-                                <td>年累计</td>
-                                <td>年排名</td>
+                                <th>工业总产值</th>
+                                <th>工业销售产值</th>
+                                <th>总收入</th>
+                                <th>主营业务收入</th>
+                                <th>技术收入</th>
+                                <th>高新技术产品收入</th>
+                                <th>产品销售收入</th>
+                                <th>商品销售收入</th>
+                                <th>日期</th>
                             </tr>
                             </thead>
-                            <tfoot>
-                            <tr>
-                                <td>年份</td>
-                                <td>月份</td>
-                                <td>销售额</td>
-                                <td>同期值</td>
-                                <td>同期比</td>
-                                <td>前期值</td>
-                                <td>增速环比</td>
-                                <td>占比</td>
-                                <td>年累计</td>
-                                <td>年排名</td>
-                            </tr>
-
-                            </tfoot>
                             <tbody>
-                            
+                            <tr class="gradeX" th:each="item,iterator:${data}">
+                                <td th:text="${item.indusAll}">0</td>
+                                <td th:text="${item.indusSellAll}">0</td>
+                                <td th:text="${item.incomeAll}">0</td>
+                                <td th:text="${item.mainServiceIncome}">0</td>
+                                <td th:text="${item.techIncome}">0</td>
+                                <td th:text="${item.htProductSellIncome}">0</td>
+                                <td th:text="${item.productSellIncome}">0</td>
+                                <td th:text="${item.goodsSellIncome}">0</td>
+                                <td th:text="${#dates.format(item.date,'yyyy-MM-dd')}">0000-00-00</td>
+                            </tr>
                             </tbody>
                         </table>
                         <div class="am-pagination tpl-pagination am-u-sm-6 am-u-sm-centered" id="pagenation">
@@ -245,16 +238,42 @@
                 </div>
             </div>
 
+            <div class="widget am-cf">
+                <div class="widget-head am-cf">
+                    <div class="widget-title am-fl">折线柱图</div>
+                    <div class="widget-function am-fr">
+                        <a href="javascript:;" class="am-icon-cog"></a>
+                    </div>
+                </div>
+                <div class="widget-body am-fr">
+                    <div style="height: 400px" id="charts-income">
 
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<script th:src="@{/js/amazeui.min.js}"></script>
-<script th:src="@{/js/amazeui.datatables.min.js}"></script>
-<script th:src="@{/js/dataTables.responsive.min.js}"></script>
-<script th:src="@{/js/app.js?v=sdfsfs}"></script>
-<script th:src="@{/js/dark.js}"></script>
-<script th:src="@{/js/dataTables/productsDataTables.js}"></script>
+<script th:src="@{../../js/amazeui.min.js}"></script>
+<script th:src="@{../../js/amazeui.datatables.min.js}"></script>
+<script th:src="@{../../js/dataTables.responsive.min.js}"></script>
+<script th:src="@{../../js/app.js}"></script>
+<script th:src="@{../../js/amazeui.page.js}"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var page = window.location.search.match(/page=(\d+)/);
+    $("#pagenation").page({
+        pages: /*[[${pageTotal}]]*/ 10,
+        curr: page ? page[1] : 1,
+        jump: window.location.href.split('?')[0] + "?page=%page%",
+        first: "首页", //设置false则不显示,默认为false
+        last: "尾页", //设置false则不显示,默认为false
+        prev: "<", //若不显示,设置false即可,默认为上一页
+        next: ">", //若不显示,设置false即可,默认为下一页
+        groups: 3, //连续显示分页数
+    });
+    /*]]>*/
+</script>
 </body>
 
 </html>

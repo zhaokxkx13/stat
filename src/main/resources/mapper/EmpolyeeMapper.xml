@@ -27,6 +27,8 @@
         <result column="employee_type" property="type" jdbcType="VARCHAR"/>
         <result column="employee_salery" property="salery" jdbcType="DOUBLE"/>
         <result column="employee_tel" property="tel" jdbcType="VARCHAR"/>
+        <result column="employee_company_id" property="companyId" jdbcType="INTEGER"/>
+        <result column="employee_department_id" property="departmentId" jdbcType="INTEGER"/>
     </resultMap>
 
     <resultMap id="mapedResultMap" type="java.util.HashMap">
@@ -118,11 +120,52 @@
             sex,
             count(id)
         FROM employee
-        WHERE type = 'contract'
-              AND hire_date >= #{startDate}
-              AND leave_date >= #{startDate}
-              AND now() >= hire_date
-              AND now() >= leave_date
+        WHERE type = 'contract' AND leave_date IS NULL
         GROUP BY sex
+    </select>
+
+    <select id="selectEducationBalance" resultType="java.util.HashMap" parameterType="map">
+        SELECT
+            education,
+            count(id)
+        FROM employee
+        WHERE type = 'contract' AND leave_date IS NULL
+        GROUP BY education
+    </select>
+
+    <select id="selectEmployeeRank" resultType="java.util.HashMap" parameterType="map">
+        SELECT
+            rank,
+            count(id)
+        FROM employee
+        WHERE type = 'contract' AND leave_date IS NULL
+        GROUP BY rank
+    </select>
+
+    <select id="selectAgeBalance" resultType="java.util.HashMap" parameterType="map">
+        SELECT
+            concat(convert(age * 10, CHAR(10)), '--', convert((age + 1) * 10, CHAR(10))) AS balance,
+            count(age)
+        FROM (SELECT floor(datediff(now(), birth) / 3650) AS age
+              FROM employee
+              WHERE type = 'contract' AND leave_date IS NULL) AS em
+        GROUP BY age
+    </select>
+
+    <select id="selectAll" resultMap="RawResultMap">
+        SELECT
+            e.id            AS employee_id,
+            e.name          AS employee_name,
+            e.sex           AS employee_sex,
+            e.birth         AS employee_birth,
+            e.rank          AS employee_rank,
+            e.education     AS employee_education,
+            e.type          AS employee_type,
+            e.salery        AS employee_salery,
+            e.tel           AS employee_tel,
+            e.company_id    AS employee_company_id,
+            e.department_id AS employee_department_id
+        FROM
+            employee e
     </select>
 </mapper>

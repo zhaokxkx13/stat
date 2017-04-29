@@ -188,4 +188,28 @@ public class DataController {
         String jsonStr = gson.toJson(sexBalance);
         return jsonStr;
     }
+
+    @RequestMapping("/humanResource/base/ageBalance")
+    public String getAgeBalance() {
+        Map<String, Integer> ageBalance = humanResourceService.getAgeBalance();
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(ageBalance);
+        return jsonStr;
+    }
+
+    @RequestMapping("/humanResource/base/rankBalance")
+    public String getRankBalance() {
+        Map<String, Integer> rankBalance = humanResourceService.getClassBalance();
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(rankBalance);
+        return jsonStr;
+    }
+
+    @RequestMapping("/humanResource/base/educationBalance")
+    public String getEducationBalance() {
+        Map<String, Integer> educationBalance = humanResourceService.getEducationBalance();
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(educationBalance);
+        return jsonStr;
+    }
 }

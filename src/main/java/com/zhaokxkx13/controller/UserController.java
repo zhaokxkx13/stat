@@ -214,4 +214,14 @@ public class UserController {
     public String getHumanResourceKpi() {
         return "humanResource/kpi";
     }
+
+    @RequestMapping("/humanResource/base")
+    public String getHumanResourceBase() {
+        return "humanResource/base";
+    }
+
+    @RequestMapping("/download")
+    public String getDownload() {
+        return "download";
+    }
 }

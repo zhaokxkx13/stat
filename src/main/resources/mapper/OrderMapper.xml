@@ -8,6 +8,8 @@
         <result column="sender" property="sender" jdbcType="VARCHAR"/>
         <result column="address" property="address" jdbcType="VARCHAR"/>
         <result column="freight" property="freight" jdbcType="DOUBLE"/>
+        <result column="employee_id" property="employeeId" jdbcType="INTEGER"/>
+        <result column="customer_id" property="customerId" jdbcType="INTEGER"/>
     </resultMap>
     <resultMap id="BaseResultMap" type="com.zhaokxkx13.dao.entity.Order">
         <result column="order_id" property="id" jdbcType="INTEGER"/>
@@ -86,5 +88,18 @@
                 and #{endDate} >= o.date
             </if>
         </where>
+    </select>
+
+    <select id="selectAll" resultMap="BaseOrder">
+        SELECT
+            o.id   AS order_id,
+            o.date AS order_date,
+            o.sender,
+            o.receiver,
+            o.freight,
+            o.employee_id,
+            o.customer_id,
+            o.address
+        FROM orders o
     </select>
 </mapper>

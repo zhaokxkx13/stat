@@ -65,4 +65,18 @@
         WHERE
         p.name = #{productName}
     </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT
+            p.id         AS product_id,
+            p.name       AS product_name,
+            p.type_big   AS product_type_big,
+            p.type_small AS product_type_small,
+            p.cost       AS product_cost,
+            p.price      AS product_price,
+            p.stock      AS product_stock,
+            p.spec       AS product_spec
+        FROM
+            product p
+    </select>
 </mapper>

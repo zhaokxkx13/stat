@@ -13,6 +13,7 @@
         <result column="customer_id" property="id" jdbcType="INTEGER"/>
         <result column="customer_name" property="name" jdbcType="VARCHAR"/>
         <result column="customer_tel" property="tel" jdbcType="VARCHAR"/>
+        <result column="customer_company_id" property="companyId" jdbcType="INTEGER"/>
     </resultMap>
 
     <select id="selectById" resultMap="BaseResultMap" parameterType="Integer">
@@ -35,5 +36,15 @@
         FROM
         customer c
         WHERE c.company_id = #{companyId}
+    </select>
+
+    <select id="selectAll" resultMap="RawResultMap">
+        SELECT
+            c.id         AS customer_id,
+            c.name       AS customer_name,
+            c.tel        AS customer_tel,
+            c.company_id AS customer_company_id
+        FROM
+            customer c
     </select>
 </mapper>

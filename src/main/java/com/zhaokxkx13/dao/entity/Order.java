@@ -1,5 +1,7 @@
 package com.zhaokxkx13.dao.entity;
 
+import org.jeecgframework.poi.excel.annotation.Excel;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -8,15 +10,26 @@ import java.util.List;
  * Created by zhaokxkx13 on 2017/4/7.
  */
 public class Order implements Serializable {
+    @Excel(name = "id", orderNum = "1")
     private Integer id;
+    @Excel(name = "订单日期", orderNum = "2")
     private Date date;
+    @Excel(name = "送货员", orderNum = "3")
     private String sender;
+    @Excel(name = "签收人", orderNum = "4")
     private String receiver;
+    @Excel(name = "收货地址", orderNum = "5")
     private String address;
+    @Excel(name = "运费", orderNum = "6")
     private Double freight;
     private Employee employee;
     private Customer customer;
     private List<ProductOrder> productOrderList;
+
+    @Excel(name = "员工编号", orderNum = "7")
+    private Integer employeeId;
+    @Excel(name = "顾客编号", orderNum = "8")
+    private Integer customerId;
 
     @Override
     public String toString() {
@@ -105,5 +118,19 @@ public class Order implements Serializable {
         this.customer = customer;
     }
 
+    public Integer getEmployeeId() {
+        return employeeId;
+    }
 
+    public void setEmployeeId(Integer employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public Integer getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
+    }
 }

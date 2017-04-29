@@ -1694,8 +1694,7 @@ var pageData = {
             }
 
             var option = {
-                title: {
-                },
+                title: {},
                 tooltip: {
                     trigger: 'axis'
                 },
@@ -1802,6 +1801,241 @@ var pageData = {
                     }]
             };
             employeeFlowChart.setOption(option);
+        })
+    },
+    'humanresouce-base': function () {
+        var sexBalance = echarts.init(document.getElementById('sexBalance'));
+        var ageBalance = echarts.init(document.getElementById('ageBalance'));
+        var eduBalance = echarts.init(document.getElementById('eduBalance'));
+        var rankBalance = echarts.init(document.getElementById('rankBalance'));
+        sexBalance.showLoading();
+        $.get('/humanResource/base/sexBalance', function (data) {
+            sexBalance.hideLoading();
+            var json = JSON.parse(data);
+            var sexNames = Object.keys(json);
+            var values = [];
+            for (var item in json) {
+                values.push({name: item, value: json[item]})
+            }
+            var option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b}: {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    x: 'left',
+                    data: sexNames
+                },
+                series: [
+                    {
+                        name: '性别结构',
+                        type: 'pie',
+                        radius: ['50%', '70%'],
+                        avoidLabelOverlap: false,
+                        label: {
+                            normal: {
+                                show: false,
+                                position: 'center'
+                            },
+                            emphasis: {
+                                show: true,
+                                textStyle: {
+                                    fontSize: '30',
+                                    fontWeight: 'bold'
+                                }
+                            }
+                        },
+                        labelLine: {
+                            normal: {
+                                show: false
+                            }
+                        },
+                        data: values
+                    }
+                ]
+            };
+            sexBalance.setOption(option);
+        })
+        ageBalance.showLoading();
+        $.get('/humanResource/base/ageBalance', function (data) {
+            ageBalance.hideLoading();
+            var json = JSON.parse(data);
+            var names = Object.keys(json);
+            var values = [];
+            for (var item in json) {
+                values.push(json[item]);
+            }
+            var option = {
+                title: {},
+                itemStyle: {
+                    normal: {
+                        color: function (params) {
+                            // build a color map as your need.
+                            var colorList = [
+                                '#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B',
+                                '#FE8463', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD',
+                                '#D7504B', '#C6E579', '#F4E001', '#F0805A', '#26C0C0'
+                            ];
+                            return colorList[params.dataIndex]
+                        }
+                    }
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    },
+                    formatter: "{a} <br/>{b} : {c}人"
+                },
+                legend: {
+                    data: ['2016年']
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'value',
+                    boundaryGap: [0, 0.01],
+                    "axisLabel": {
+                        "interval": 0,
+                        formatter: '{value}人',
+                    }
+                },
+                yAxis: {
+                    type: 'category',
+                    data: names
+                },
+                series: [{
+                    name: '年龄构成',
+                    type: 'bar',
+                    data: values
+                }]
+            };
+            ageBalance.setOption(option);
+        })
+        eduBalance.showLoading();
+        $.get('/humanResource/base/educationBalance', function (data) {
+            eduBalance.hideLoading();
+            var json = JSON.parse(data);
+            var names = Object.keys(json);
+            var values = [];
+            for (var item in json) {
+                values.push(json[item]);
+            }
+            var option = {
+                title: {},
+                itemStyle: {
+                    normal: {
+                        color: function (params) {
+                            // build a color map as your need.
+                            var colorList = [
+                                '#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B',
+                                '#FE8463', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD',
+                                '#D7504B', '#C6E579', '#F4E001', '#F0805A', '#26C0C0'
+                            ];
+                            return colorList[params.dataIndex]
+                        }
+                    }
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    },
+                    formatter: "{a} <br/>{b} : {c}人"
+                },
+                legend: {
+                    data: ['2016年']
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'value',
+                    boundaryGap: [0, 0.01],
+                    "axisLabel": {
+                        "interval": 0,
+                        formatter: '{value}人',
+                    }
+                },
+                yAxis: {
+                    type: 'category',
+                    data: names
+                },
+                series: [{
+                    name: '学历构成',
+                    type: 'bar',
+                    data: values
+                }]
+            };
+            eduBalance.setOption(option);
+        })
+        rankBalance.showLoading();
+        $.get('/humanResource/base/rankBalance', function (data) {
+            rankBalance.hideLoading();
+            var json = JSON.parse(data);
+            var names = Object.keys(json);
+            var values = [];
+            for (var item in json) {
+                values.push(json[item]);
+            }
+            var option = {
+                title: {},
+                itemStyle: {
+                    normal: {
+                        color: function (params) {
+                            // build a color map as your need.
+                            var colorList = [
+                                '#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B',
+                                '#FE8463', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD',
+                                '#D7504B', '#C6E579', '#F4E001', '#F0805A', '#26C0C0'
+                            ];
+                            return colorList[params.dataIndex]
+                        }
+                    }
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    },
+                    formatter: "{a} <br/>{b} : {c}人"
+                },
+                legend: {
+                    data: ['2016年']
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'value',
+                    boundaryGap: [0, 0.01],
+                    "axisLabel": {
+                        "interval": 0,
+                        formatter: '{value}人',
+                    }
+                },
+                yAxis: {
+                    type: 'category',
+                    data: names
+                },
+                series: [{
+                    name: '职称构成',
+                    type: 'bar',
+                    data: values
+                }]
+            };
+            rankBalance.setOption(option);
         })
     }
 }

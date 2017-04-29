@@ -13,4 +13,7 @@ public interface ProductMapper {
     List<Product> selectByName(String name);
 
     List<Product> selectByNameRaw(String name);
+
+    List<Product> selectAll();
+
 }
