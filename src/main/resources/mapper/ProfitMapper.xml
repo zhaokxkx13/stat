@@ -29,4 +29,16 @@
             </if>
         </where>
     </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT *
+        FROM profit_sheet
+    </select>
+
+    <insert id="insertAll" useGeneratedKeys="true" parameterType="java.util.List">
+        INSERT INTO profit_sheet (income, cost, sells_tax, expenses, profit, income_tax, pure_profit, date) VALUES
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{item.income},#{item.cost},#{item.sellTax},#{item.expenses},#{item.profit},#{item.incomeTax},#{item.pureProfit},#{item.date})
+        </foreach>
+    </insert>
 </mapper>

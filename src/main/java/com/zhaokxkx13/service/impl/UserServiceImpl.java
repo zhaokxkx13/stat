@@ -8,13 +8,10 @@ import com.zhaokxkx13.dao.inf.RoleMapper;
 import com.zhaokxkx13.dao.inf.UserMapper;
 import com.zhaokxkx13.service.UserService;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
-import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -86,5 +83,10 @@ public class UserServiceImpl implements UserService {
         String encodedPassword = hash.toHex();
         user.setPassword(encodedPassword);
         userMapper.insert(user);
+    }
+
+    @Override
+    public List<User> selectAll() {
+        return userMapper.selectAll();
     }
 }

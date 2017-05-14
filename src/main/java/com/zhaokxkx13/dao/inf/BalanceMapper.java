@@ -13,4 +13,8 @@ import java.util.Map;
 @Mapper
 public interface BalanceMapper {
     List<Balance> selectByDate(Map<String, Date> map);
+
+    List<Balance> selectAll();
+
+    int insertAll(List<Balance> balanceList);
 }

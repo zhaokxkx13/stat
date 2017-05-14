@@ -126,5 +126,10 @@
         JOIN role r ON ur.roleid = r.id
         WHERE u.username = #{username}
     </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+    </select>
     <cache/>
 </mapper>

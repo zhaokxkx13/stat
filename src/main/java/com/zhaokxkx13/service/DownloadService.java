@@ -17,4 +17,10 @@ public interface DownloadService {
     List<Order> getAllOrder();
 
     List<Product> getAllProduct();
+
+    List<Balance> getAllBalance();
+
+    List<Profit> getAllProfit();
+
+    List<CashFlow> getAllCashFlow();
 }

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8"/>
@@ -21,7 +20,7 @@
     <script th:src="@{js/jquery.min.js}"></script>
 </head>
 
-<body data-type="index">
+<body data-type="decision">
 <script th:src="@{js/theme.js}"></script>
 <div class="am-g tpl-g">
     <!-- 头部 -->
@@ -189,16 +188,6 @@
                     <i class="am-icon-cloud-download sidebar-nav-link-logo"></i> 数据导出excel
                 </a>
             </li>
-            <li class="sidebar-nav-link">
-                <a th:href="@{/decision}">
-                    <i class="am-icon-tree sidebar-nav-link-logo"></i> 决策树辅助决策
-                </a>
-            </li>
-            <li shiro:hasRole="admisn" class="sidebar-nav-link">
-                <a th:href="@{/listUser}">
-                    <i class="am-icon-tree sidebar-nav-link-logo"></i> 权限管理
-                </a>
-            </li>
         </ul>
     </div>
 
@@ -206,119 +195,22 @@
     <!-- 内容区域 -->
     <div class="tpl-content-wrapper">
 
-        <div class="container-fluid am-cf">
-            <div class="row">
-                <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-                    <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 部件首页
-                        <small>Amaze UI</small>
-                    </div>
-                    <p class="page-header-description"> Amaze UI 含近 20 个 CSS 组件、20 余 JS 组件，更有多个包含不同主题的 Web 组件。</p>
-                </div>
-                <div class="am-u-lg-3 tpl-index-settings-button">
-                    <button type="button" class="page-header-button"><span class="am-icon-paint-brush"></span> 设置
-                    </button>
-                </div>
-            </div>
-
-        </div>
 
         <div class="row-content am-cf">
-            <div class="row  am-cf">
-                <div class="am-u-sm-12 am-u-md-12 am-u-lg-4">
-                    <div class="widget am-cf">
-                        <div class="widget-head am-cf">
-                            <div class="widget-title am-fl">历史工业总产值</div>
-                            <div class="widget-function am-fr">
-                                <a href="javascript:;" class="am-icon-cog"></a>
-                            </div>
-                        </div>
-                        <div class="widget-body am-fr">
-                            <div class="am-fl">
-                                <div class="widget-fluctuation-period-text" th:text="${incomeTotal.indusAll}">
-                                    ￥61746.45
-                                    <button class="widget-fluctuation-tpl-btn">
-                                        <i class="am-icon-calendar"></i>
-                                        更多月份
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="am-fr am-cf">
-                                <div class="widget-fluctuation-description-amount text-success"
-                                     th:text="'+￥'+${incomeMonthTotal.indusAll}">
-
-                                </div>
-                                <div class="widget-fluctuation-description-text am-text-right"
-                                     th:text="${month}+'月份收入'">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="am-u-sm-12 am-u-md-6 am-u-lg-4">
-                    <div class="widget widget-primary am-cf">
-                        <div class="widget-statistic-header">
-                            销售收入
-                        </div>
-                        <div class="widget-statistic-body">
-                            <div class="widget-statistic-value" th:text="${incomeMonthTotal.indusSellAll}">
-                                ￥27,294
-                            </div>
-                            <div class="widget-statistic-description">
-                                上年同期增长 <strong th:text="${comparedMonthTotal.indusSellAll}+'元'">2593元</strong> 人民币
-                            </div>
-                            <span class="widget-statistic-icon am-icon-credit-card-alt"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="am-u-sm-12 am-u-md-6 am-u-lg-4">
-                    <div class="widget widget-purple am-cf">
-                        <div class="widget-statistic-header">
-                            本季度利润
-                        </div>
-                        <div class="widget-statistic-body">
-                            <div class="widget-statistic-value">
-                                ￥27,294
-                            </div>
-                            <div class="widget-statistic-description">
-                                本季度比去年多收入 <strong>2593元</strong> 人民币
-                            </div>
-                            <span class="widget-statistic-icon am-icon-support"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row am-cf">
-                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                    <div class="widget am-cf">
-                        <div class="widget-head am-cf">
-                            <div class="widget-title am-fl">工业总产值</div>
-                            <div class="widget-function am-fr">
-                                <a href="javascript:;" class="am-icon-cog"></a>
-                            </div>
-                        </div>
-                        <div class="widget-body-md widget-body tpl-amendment-echarts am-fr" id="tpl-echarts">
-
-                        </div>
-                    </div>
-                </div>
-
-            </div>
 
 
             <div class="row am-cf">
                 <div class="am-u-sm-12 am-u-md-12 am-u-ld-12">
                     <div class="widget am-cf">
                         <div class="widget-head am-cf">
-                            <div class="widget-title am-fl">K线</div>
+                            <div class="widget-title am-fl">资产负债决策树(true为正常)</div>
                             <div class="widget-function am-fr">
                                 <a href="javascript:;" class="am-icon-cog"></a>
                             </div>
                         </div>
                         <div class="widget-body am-fr">
-                            <div style="height: 400px" id="charts-kline">
-
+                            <div style="height: 800px">
+                                <img th:src="@{/img/tree.png}" class="am-img-responsive"/>
                             </div>
                         </div>
                     </div>

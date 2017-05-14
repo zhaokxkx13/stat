@@ -1,5 +1,7 @@
 package com.zhaokxkx13.dao.entity;
 
+import org.jeecgframework.poi.excel.annotation.Excel;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -7,12 +9,19 @@ import java.util.Date;
  * Created by zhaokxkx13 on 2017/4/15.
  */
 public class CashFlow implements Serializable {
+    @Excel(name = "id", orderNum = "1")
     private Integer id;
+    @Excel(name = "经营活动产生的现金流量", orderNum = "2")
     private Double operateCash;
+    @Excel(name = "投资活动产生的现金流量", orderNum = "3")
     private Double investmentCash;
+    @Excel(name = "筹资活动产生的现金流量", orderNum = "4")
     private Double financeCash;
+    @Excel(name = "汇率变动产生的现金流量", orderNum = "5")
     private Double exchangeCash;
+    @Excel(name = "现金及现金等价物净增加额", orderNum = "6")
     private Double cashIncrease;
+    @Excel(name = "日期", orderNum = "7")
     private Date date;
 
     @Override

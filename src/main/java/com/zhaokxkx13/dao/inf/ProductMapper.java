@@ -16,4 +16,5 @@ public interface ProductMapper {
 
     List<Product> selectAll();
 
+    int insertAll(List<Product> productList);
 }

@@ -28,6 +28,15 @@ public class DownloadServiceImpl implements DownloadService {
     @Autowired
     ProductMapper productMapper;
 
+    @Autowired
+    BalanceMapper balanceMapper;
+
+    @Autowired
+    ProfitMapper profitMaper;
+
+    @Autowired
+    CashFlowMapper cashFlowMapper;
+
     @Override
     public List<Employee> getAllEmployee() {
         List<Employee> employeeList = employeeMapper.selectAll();
@@ -56,5 +65,23 @@ public class DownloadServiceImpl implements DownloadService {
     public List<Product> getAllProduct() {
         List<Product> productList = productMapper.selectAll();
         return productList;
+    }
+
+    @Override
+    public List<Balance> getAllBalance() {
+        List<Balance> balanceList = balanceMapper.selectAll();
+        return balanceList;
+    }
+
+    @Override
+    public List<Profit> getAllProfit() {
+        List<Profit> profitList = profitMaper.selectAll();
+        return profitList;
+    }
+
+    @Override
+    public List<CashFlow> getAllCashFlow() {
+        List<CashFlow> cashFlowList = cashFlowMapper.selectAll();
+        return cashFlowList;
     }
 }

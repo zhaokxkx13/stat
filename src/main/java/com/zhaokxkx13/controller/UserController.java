@@ -8,10 +8,12 @@ import com.zhaokxkx13.service.CustomerService;
 import com.zhaokxkx13.service.FinanceService;
 import com.zhaokxkx13.service.IncomeService;
 import com.zhaokxkx13.service.UserService;
+import com.zhaokxkx13.utils.VisualizeJ48;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -63,6 +65,7 @@ public class UserController {
             redirect.addFlashAttribute("errorText", "您的账号或密码输入错误!");
             return "redirect:/login";
         }
+        System.out.println(SecurityUtils.getSubject().getPrincipal());
         return "redirect:/index";
     }
 
@@ -223,5 +226,25 @@ public class UserController {
     @RequestMapping("/download")
     public String getDownload() {
         return "download";
+    }
+
+    @RequestMapping("/decision")
+    public String getDecistion(ModelMap modelMap) {
+        try {
+            String balanceTree = VisualizeJ48.drawBalanceTree();
+            modelMap.put("balanceTree", balanceTree);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "decision";
+    }
+
+    @RequestMapping("/listUser")
+    @RequiresPermissions("listUser")
+    @RequiresRoles("admin")
+    public String listUser(ModelMap modelMap) {
+        List<User> userList = userService.selectAll();
+        modelMap.put("userList", userList);
+        return "userlist";
     }
 }

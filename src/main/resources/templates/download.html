@@ -194,61 +194,166 @@
         <div class="row-content am-cf">
             <div class="row">
                 <div class="widget am-cf">
-                    <div class="widget-head am-cf">
-                        <div class="widget-title am-fl">企业收入</div>
-                        <div class="widget-function am-fr">
-                            <a href="javascript:;" class="am-icon-cog"></a>
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget-head am-cf">
+                            <div class="widget-title am-fl">数据导出excel</div>
+                            <div class="widget-function am-fr">
+                                <a href="javascript:;" class="am-icon-cog"></a>
+                            </div>
+                        </div>
+                        <div class="widget-body  widget-body-lg am-fr">
+
+                            <table width="100%"
+                                   class="am-table am-table-compact am-table-bordered am-table-radius am-table-striped tpl-table-black "
+                                   id="example-r">
+                                <thead>
+                                <tr>
+                                    <th>数据类型</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="gradeX">
+                                    <td>员工数据</td>
+                                    <td>
+                                        <div class="tpl-table-black-operation">
+                                            <a th:href="@{/download/employees}">
+                                                <i class="am-icon-pencil"></i> 下载
+                                            </a>
+                                            <form action="/upload/employee" enctype="multipart/form-data"
+                                                  th:method="POST">
+                                                <p>文件：<input type="file" name="file"/></p>
+                                                <p><input type="submit" value="上传"/></p>
+                                            </form>
+                                            <div class="page-header-description" th:text="${employeeStatus}"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr class="gradeX">
+                                    <td>产品数据</td>
+                                    <td>
+                                        <div class="tpl-table-black-operation">
+                                            <a th:href="@{/download/products}">
+                                                <i class="am-icon-pencil"></i> 下载
+                                            </a>
+                                            <form action="/upload/product" enctype="multipart/form-data"
+                                                  th:method="POST">
+                                                <p>文件：<input type="file" name="file"/></p>
+                                                <p><input type="submit" value="上传"/></p>
+                                            </form>
+                                            <div class="page-header-description" th:text="${productStatus}"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr class="gradeX">
+                                    <td>顾客数据</td>
+                                    <td>
+                                        <div class="tpl-table-black-operation">
+                                            <a th:href="@{/download/customers}">
+                                                <i class="am-icon-pencil"></i> 下载
+                                            </a>
+                                            <form action="/upload/customer" enctype="multipart/form-data"
+                                                  th:method="POST">
+                                                <p>文件：<input type="file" name="file"/></p>
+                                                <p><input type="submit" value="上传"/></p>
+                                            </form>
+                                            <div class="page-header-description" th:text="${customerStatus}"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr class="gradeX">
+                                    <td>订单数据</td>
+                                    <td>
+                                        <div class="tpl-table-black-operation">
+                                            <a th:href="@{/download/orders}">
+                                                <i class="am-icon-pencil"></i> 下载
+                                            </a>
+                                            <form action="/upload/order" enctype="multipart/form-data" th:method="POST">
+                                                <p>文件：<input type="file" name="file"/></p>
+                                                <p><input type="submit" value="上传"/></p>
+                                            </form>
+                                            <div class="page-header-description" th:text="${orderStatus}"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr class="gradeX">
+                                    <td>部门数据</td>
+                                    <td>
+                                        <div class="tpl-table-black-operation">
+                                            <a th:href="@{/download/departments}">
+                                                <i class="am-icon-pencil"></i> 下载
+                                            </a>
+                                            <form action="/upload/department" enctype="multipart/form-data"
+                                                  th:method="POST">
+                                                <p>文件：<input type="file" name="file"/></p>
+                                                <p><input type="submit" value="上传"/></p>
+                                            </form>
+                                            <div class="page-header-description" th:text="${departmentStatus}"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr class="gradeX">
+                                    <td>资产负债总表</td>
+                                    <td>
+                                        <div class="tpl-table-black-operation">
+                                            <a th:href="@{/download/balance}">
+                                                <i class="am-icon-pencil"></i> 下载
+                                            </a>
+                                            <form action="/upload/balance" enctype="multipart/form-data"
+                                                  th:method="POST">
+                                                <p>文件：<input type="file" name="file"/></p>
+                                                <p><input type="submit" value="上传"/></p>
+                                            </form>
+                                            <div class="page-header-description" th:text="${balanceStatus}"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr class="gradeX">
+                                    <td>现金流量总表</td>
+                                    <td>
+                                        <div class="tpl-table-black-operation">
+                                            <a th:href="@{/download/cashflow}">
+                                                <i class="am-icon-pencil"></i> 下载
+                                            </a>
+                                            <form action="/upload/cashflow" enctype="multipart/form-data"
+                                                  th:method="POST">
+                                                <p>文件：<input type="file" name="file"/></p>
+                                                <p><input type="submit" value="上传"/></p>
+                                            </form>
+                                            <div class="page-header-description" th:text="${cashflowStatus}"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr class="gradeX">
+                                    <td>利润总表</td>
+                                    <td>
+                                        <div class="tpl-table-black-operation">
+                                            <a th:href="@{/download/profit}">
+                                                <i class="am-icon-pencil"></i> 下载
+                                            </a>
+                                            <form action="/upload/profit" enctype="multipart/form-data"
+                                                  th:method="POST">
+                                                <p>文件：<input type="file" name="file"/></p>
+                                                <p><input type="submit" value="上传"/></p>
+                                            </form>
+                                            <div class="page-header-description" th:text="${profitStatus}"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    <div class="widget-body  widget-body-lg am-fr">
 
-                        <table width="100%"
-                               class="am-table am-table-compact am-table-bordered am-table-radius am-table-striped tpl-table-black "
-                               id="example-r">
-                            <thead>
-                            <tr>
-                                <th>工业总产值</th>
-                                <th>工业销售产值</th>
-                                <th>总收入</th>
-                                <th>主营业务收入</th>
-                                <th>技术收入</th>
-                                <th>高新技术产品收入</th>
-                                <th>产品销售收入</th>
-                                <th>商品销售收入</th>
-                                <th>日期</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr class="gradeX" th:each="item,iterator:${data}">
-                                <td th:text="${item.indusAll}">0</td>
-                                <td th:text="${item.indusSellAll}">0</td>
-                                <td th:text="${item.incomeAll}">0</td>
-                                <td th:text="${item.mainServiceIncome}">0</td>
-                                <td th:text="${item.techIncome}">0</td>
-                                <td th:text="${item.htProductSellIncome}">0</td>
-                                <td th:text="${item.productSellIncome}">0</td>
-                                <td th:text="${item.goodsSellIncome}">0</td>
-                                <td th:text="${#dates.format(item.date,'yyyy-MM-dd')}">0000-00-00</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <div class="am-pagination tpl-pagination am-u-sm-6 am-u-sm-centered" id="pagenation">
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="widget am-cf">
-                <div class="widget-head am-cf">
-                    <div class="widget-title am-fl">折线柱图</div>
-                    <div class="widget-function am-fr">
-                        <a href="javascript:;" class="am-icon-cog"></a>
-                    </div>
-                </div>
-                <div class="widget-body am-fr">
-                    <div style="height: 400px" id="charts-income">
-
-                    </div>
                 </div>
             </div>
         </div>
@@ -259,21 +364,6 @@
 <script th:src="@{../../js/dataTables.responsive.min.js}"></script>
 <script th:src="@{../../js/app.js}"></script>
 <script th:src="@{../../js/amazeui.page.js}"></script>
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    var page = window.location.search.match(/page=(\d+)/);
-    $("#pagenation").page({
-        pages: /*[[${pageTotal}]]*/ 10,
-        curr: page ? page[1] : 1,
-        jump: window.location.href.split('?')[0] + "?page=%page%",
-        first: "首页", //设置false则不显示,默认为false
-        last: "尾页", //设置false则不显示,默认为false
-        prev: "<", //若不显示,设置false即可,默认为上一页
-        next: ">", //若不显示,设置false即可,默认为下一页
-        groups: 3, //连续显示分页数
-    });
-    /*]]>*/
-</script>
 </body>
 
 </html>

@@ -17,4 +17,6 @@ public interface OrderMapper {
     List<Order> selectByDate(Map<String, Date> map);
 
     List<Order> selectAll();
+
+    int insertAll(List<Order> orderList);
 }

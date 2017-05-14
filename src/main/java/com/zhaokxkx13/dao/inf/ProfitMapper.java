@@ -13,4 +13,8 @@ import java.util.Map;
 @Mapper
 public interface ProfitMapper {
     List<Profit> selectByDate(Map<String, Date> map);
+
+    List<Profit> selectAll();
+
+    int insertAll(List<Profit> profitList);
 }

@@ -29,6 +29,8 @@
         <result column="employee_tel" property="tel" jdbcType="VARCHAR"/>
         <result column="employee_company_id" property="companyId" jdbcType="INTEGER"/>
         <result column="employee_department_id" property="departmentId" jdbcType="INTEGER"/>
+        <result column="employee_hire_date" property="hireDate" jdbcType="DATE"/>
+        <result column="employee_leave_date" property="leaveDate" jdbcType="DATE"/>
     </resultMap>
 
     <resultMap id="mapedResultMap" type="java.util.HashMap">
@@ -164,8 +166,24 @@
             e.salery        AS employee_salery,
             e.tel           AS employee_tel,
             e.company_id    AS employee_company_id,
-            e.department_id AS employee_department_id
+        e.department_id AS employee_department_id,
+        e.hire_date AS employee_hire_date,
+        e.leave_date AS employee_leave_date
         FROM
             employee e
     </select>
+
+    <insert id="insertAll" useGeneratedKeys="true" parameterType="java.util.List">
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            SELECT
+            LAST_INSERT_ID()
+        </selectKey>
+        insert into employee
+        (name,sex,birth,rank,education,type,salery,tel,department_id,company_id,hire_date,leave_date)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.name},#{item.sex},#{item.birth},#{item.rank},#{item.education},#{item.type},#{item.salery},#{item.tel},#{item.departmentId},
+            #{item.companyId},#{item.hireDate},#{item.leaveDate})
+        </foreach>
+    </insert>
 </mapper>

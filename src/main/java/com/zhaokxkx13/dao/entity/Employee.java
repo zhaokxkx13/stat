@@ -15,7 +15,7 @@ public class Employee implements Serializable {
     private String name;
     @Excel(name = "性别", orderNum = "3")
     private String sex;
-    @Excel(name = "出生日期", orderNum = "4")
+    @Excel(name = "出生日期", orderNum = "4", exportFormat = "yyyy-MM-dd")
     private Date birth;
     @Excel(name = "职称", orderNum = "5")
     private String rank;
@@ -36,6 +36,12 @@ public class Employee implements Serializable {
     @Excel(name = "公司编号", orderNum = "11")
     private Integer companyId;
 
+    @Excel(name = "入职时间", orderNum = "12", exportFormat = "yyyy-MM-dd")
+    private Date hireDate;
+
+    @Excel(name = "离职时间", orderNum = "13", exportFormat = "yyyy-MM-dd")
+    private Date leaveDate;
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -52,6 +58,8 @@ public class Employee implements Serializable {
                 ", company=" + company +
                 ", departmentId=" + departmentId +
                 ", companyId=" + companyId +
+                ", hireDate=" + hireDate +
+                ", leaveDate=" + leaveDate +
                 '}';
     }
 
@@ -159,4 +167,19 @@ public class Employee implements Serializable {
         this.company = company;
     }
 
+    public Date getHireDate() {
+        return hireDate;
+    }
+
+    public void setHireDate(Date hireDate) {
+        this.hireDate = hireDate;
+    }
+
+    public Date getLeaveDate() {
+        return leaveDate;
+    }
+
+    public void setLeaveDate(Date leaveDate) {
+        this.leaveDate = leaveDate;
+    }
 }

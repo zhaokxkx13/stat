@@ -38,6 +38,7 @@ public class DownloadController {
         response.setHeader("content-Type", "application/vnd.ms-excel");
         // 下载文件的默认名称
         response.setHeader("Content-Disposition", "attachment;filename=product.xls");
+        response.setContentType("application/msexcel;charset=UTF-8");
         List<Product> productList = downloadService.getAllProduct();
         Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams(), Product.class, productList);
         workbook.write(response.getOutputStream());
@@ -72,4 +73,35 @@ public class DownloadController {
         Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams(), Department.class, departmentList);
         workbook.write(response.getOutputStream());
     }
+
+    @RequestMapping("/download/balance")
+    public void downloadBalance(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setHeader("content-Type", "application/vnd.ms-excel");
+        // 下载文件的默认名称
+        response.setHeader("Content-Disposition", "attachment;filename=balance.xls");
+        List<Balance> balanceList = downloadService.getAllBalance();
+        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams(), Balance.class, balanceList);
+        workbook.write(response.getOutputStream());
+    }
+
+    @RequestMapping("/download/cashflow")
+    public void downloadCashFlow(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setHeader("content-Type", "application/vnd.ms-excel");
+        // 下载文件的默认名称
+        response.setHeader("Content-Disposition", "attachment;filename=cashflow.xls");
+        List<CashFlow> cashFlowList = downloadService.getAllCashFlow();
+        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams(), CashFlow.class, cashFlowList);
+        workbook.write(response.getOutputStream());
+    }
+
+    @RequestMapping("/download/profit")
+    public void downloadProfit(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setHeader("content-Type", "application/vnd.ms-excel");
+        // 下载文件的默认名称
+        response.setHeader("Content-Disposition", "attachment;filename=profit.xls");
+        List<Profit> profitList = downloadService.getAllProfit();
+        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams(), Profit.class, profitList);
+        workbook.write(response.getOutputStream());
+    }
+
 }

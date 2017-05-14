@@ -102,4 +102,15 @@
             o.address
         FROM orders o
     </select>
+
+    <insert id="insertAll" useGeneratedKeys="true" parameterType="java.util.List">
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            SELECT
+            LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO orders (date, employee_id, customer_id, sender, receiver, freight, address) VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.date},#{item.employeeId},#{item.customerId},#{item.sender},#{item.receiver},#{item.freight},#{item.address})
+        </foreach>
+    </insert>
 </mapper>

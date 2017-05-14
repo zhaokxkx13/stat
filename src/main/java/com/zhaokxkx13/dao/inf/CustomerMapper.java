@@ -15,4 +15,6 @@ public interface CustomerMapper {
     List<Customer> selectByCompanyId(Integer companyId);
 
     List<Customer> selectAll();
+
+    int insertAll(List<Customer> customerList);
 }

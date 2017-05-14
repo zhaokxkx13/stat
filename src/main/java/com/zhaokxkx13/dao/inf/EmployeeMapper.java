@@ -29,4 +29,6 @@ public interface EmployeeMapper {
     List<Map> selectAgeBalance(Map<String, Date> map);
 
     List<Employee> selectAll();
+
+    int insertAll(List<Employee> employeeList);
 }

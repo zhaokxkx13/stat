@@ -1,5 +1,6 @@
 package com.zhaokxkx13.Configration;
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.google.common.collect.Maps;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
@@ -23,6 +24,11 @@ import java.util.Map;
 
 @Configuration
 public class ShiroConfigration {
+    @Bean
+    public ShiroDialect shiroDialect() {
+        return new ShiroDialect();
+    }
+
     @Bean
     public FilterRegistrationBean filterRegistrationBean() {
         FilterRegistrationBean filterRegistration = new FilterRegistrationBean();

@@ -13,4 +13,8 @@ import java.util.Map;
 @Mapper
 public interface CashFlowMapper {
     List<CashFlow> selectByDate(Map<String, Date> map);
+
+    List<CashFlow> selectAll();
+
+    int insertAll(List<CashFlow> cashFlowList);
 }

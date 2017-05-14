@@ -79,4 +79,11 @@
         FROM
             product p
     </select>
+
+    <insert id="insertAll" parameterType="java.util.List">
+        INSERT INTO product (name, type_big, type_small, cost, price, stock, spec) VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.name},#{item.typeBig},#{item.typeSmall},#{item.cost},#{item.price},#{item.stock},#{item.spec})
+        </foreach>
+    </insert>
 </mapper>
