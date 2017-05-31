@@ -98,8 +98,8 @@ public class DataController {
     }
 
     @RequestMapping("/order/details")
-    public String getOrderDetails() {
-        List<OrderDetails> detailsList = customerService.getOrderDetails("beef");
+    public String getOrderDetails(@RequestParam String name) {
+        List<OrderDetails> detailsList = customerService.getOrderDetails(name == null ? "beef" : name);
         Gson gson = new Gson();
         String jsonStr = gson.toJson(detailsList);
         jsonStr = "{ \"data\":" + jsonStr + "}";
@@ -107,8 +107,8 @@ public class DataController {
     }
 
     @RequestMapping("/product/details")
-    public String getProductDetails() {
-        List<ProductDetails> detailsList = customerService.getProductDetails("beef");
+    public String getProductDetails(@RequestParam String name) {
+        List<ProductDetails> detailsList = customerService.getProductDetails(name == null ? "beef" : name);
         Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
         String jsonStr = gson.toJson(detailsList);
         jsonStr = "{ \"data\":" + jsonStr + "}";

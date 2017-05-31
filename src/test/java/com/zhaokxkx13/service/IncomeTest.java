@@ -48,4 +48,10 @@ public class IncomeTest {
         Income income = incomeService.getCurSumMonthIncome(8, 3);
         System.out.println(income);
     }
+
+    @Test
+    public void testSeason() {
+        Double result = incomeService.getSeason(2, 2017);
+        System.out.println(result);
+    }
 }

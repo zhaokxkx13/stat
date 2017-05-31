@@ -86,4 +86,9 @@
             (#{item.name},#{item.typeBig},#{item.typeSmall},#{item.cost},#{item.price},#{item.stock},#{item.spec})
         </foreach>
     </insert>
+
+    <select id="selectProductName" resultType="String">
+        SELECT DISTINCT name
+        FROM product
+    </select>
 </mapper>

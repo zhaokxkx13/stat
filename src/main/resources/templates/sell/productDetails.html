@@ -196,9 +196,12 @@
             <div class="row  am-cf">
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
-                        <div class="widget-title am-fl">订单详情</div>
+                        <div class="widget-title am-fl">产品分析</div>
                         <div class="widget-function am-fr">
-                            <a href="javascript:;" class="am-icon-cog"></a>
+                            <select name="select" id="select_k2" class="xla_k" onchange="repaint()">
+                                <option th:value="${item}" th:text="${item}" th:each="item,iterator:${productName}">选择品牌
+                                </option>
+                            </select>
                         </div>
                     </div>
                     <div class="widget-body  widget-body-lg am-fr">

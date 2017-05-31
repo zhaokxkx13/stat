@@ -27,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -112,7 +113,11 @@ public class UserController {
         int month = calendar.get(Calendar.MONTH) + 1;
         calendar.add(Calendar.MONTH, -1);
         int lastMonth = calendar.get(Calendar.MONTH) + 1;
-
+        double seasonIncome = incomeService.getSeason(month, year);
+        double seasonIncomeLastYear = incomeService.getSeason(month, year - 1);
+        DecimalFormat decimalFormat = new DecimalFormat(",###.00");
+        String seansonIncomeStr = decimalFormat.format(seasonIncome);
+        String seasonIncomeLastYearStr = decimalFormat.format(seasonIncomeLastYear);
 
         Income incomeMonthTotal = incomeService.getCurSumMonthIncome(month, year);
         List<Income> incomeList = incomeService.getCurMonthIncome(month, year);
@@ -126,6 +131,8 @@ public class UserController {
         modelMap.addAttribute("year", year);
         modelMap.addAttribute("month", month);
         modelMap.addAttribute("username", user.getUsername());
+        modelMap.addAttribute("seasonIncome", seansonIncomeStr);
+        modelMap.addAttribute("seasonIncomeLastYear", seasonIncomeLastYearStr);
         return "index";
     }
 
@@ -165,12 +172,16 @@ public class UserController {
     }
 
     @RequestMapping("/sell/order")
-    public String getOrderDetails() {
+    public String getOrderDetails(ModelMap modelMap) {
+        List<String> productNames = incomeService.getProductName();
+        modelMap.put("productName", productNames);
         return "sell/orderDetails";
     }
 
     @RequestMapping("/sell/product")
-    public String getProductDetails() {
+    public String getProductDetails(ModelMap modelMap) {
+        List<String> productNames = incomeService.getProductName();
+        modelMap.put("productName", productNames);
         return "sell/productDetails";
     }
 

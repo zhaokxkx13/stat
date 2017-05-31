@@ -113,4 +113,5 @@
             (#{item.date},#{item.employeeId},#{item.customerId},#{item.sender},#{item.receiver},#{item.freight},#{item.address})
         </foreach>
     </insert>
+
 </mapper>

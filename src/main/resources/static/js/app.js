@@ -28,7 +28,6 @@ $(function () {
     //     }
 })
 
-
 // 页面数据
 var pageData = {
     // ===============================================
@@ -668,8 +667,8 @@ var pageData = {
         })
     },
     'sell-kpi': function charData() {
-        var consumerTop = echarts.init(document.getElementById('consumerSort'), "dark");
-        var departmentSellKpi = echarts.init(document.getElementById('departmentSellKpi'), "dark");
+        var consumerTop = echarts.init(document.getElementById('consumerSort'));
+        var departmentSellKpi = echarts.init(document.getElementById('departmentSellKpi'));
         consumerTop.showLoading();
         $.get('/top/consumers', function (data) {
             consumerTop.hideLoading();
@@ -796,9 +795,9 @@ var pageData = {
 
     },
     'customer-details': function charData() {
-        var bigTypeChart = echarts.init(document.getElementById('charts-customer-big-type'), "dark");
-        var smallTypeChart = echarts.init(document.getElementById('charts-customer-small-type'), "dark");
-        var payTypeChart = echarts.init(document.getElementById('charts-customer-pay-type'), "dark");
+        var bigTypeChart = echarts.init(document.getElementById('charts-customer-big-type'));
+        var smallTypeChart = echarts.init(document.getElementById('charts-customer-small-type'));
+        var payTypeChart = echarts.init(document.getElementById('charts-customer-pay-type'));
         bigTypeChart.showLoading();
         smallTypeChart.showLoading();
         $.get("/customer/details", function (str) {
@@ -886,128 +885,154 @@ var pageData = {
             bigTypeChart.setOption(bigOption);
 
             var smallOption = {
-                backgroundColor: '#2c343c',
-
-                title: {
-                    left: 'center',
-                    top: 20,
-                    textStyle: {
-                        color: '#ccc'
-                    }
+                grid: {
+                    left: '5%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
                 },
-
                 tooltip: {
-                    trigger: 'item',
+                    trigger: "item",
                     formatter: "{a} <br/>{b} : {c} ({d}%)"
                 },
-
-                visualMap: {
-                    show: false,
-                    min: 80,
-                    max: 600,
-                    inRange: {
-                        colorLightness: [0, 1]
+                legend: {
+                    x: "left",
+                    data: smallKeys
+                },
+                label: {
+                    normal: {
+                        formatter: "{b} ({d}%)",
+                        position: "insideTopRight"
                     }
                 },
-                series: [
-                    {
-                        name: '销售额',
-                        type: 'pie',
-                        radius: '55%',
-                        center: ['50%', '50%'],
-                        data: smallTypeData.sort(function (a, b) {
-                            return a.value - b.value
-                        }),
-                        roseType: 'angle',
-                        label: {
-                            normal: {
-                                textStyle: {
-                                    color: 'rgba(255, 255, 255, 0.3)'
-                                }
-                            }
+                labelLine: {
+                    normal: {
+                        smooth: .6
+                    }
+                },
+                toolbox: {
+                    show: !0,
+                    feature: {
+                        mark: {
+                            show: !0
                         },
-                        labelLine: {
-                            normal: {
-                                lineStyle: {
-                                    color: 'rgba(255, 255, 255, 0.3)'
-                                },
-                                smooth: 0.2,
-                                length: 10,
-                                length2: 20
-                            }
+                        dataView: {
+                            show: !0,
+                            readOnly: !1
                         },
-                        itemStyle: {
-                            normal: {
-                                color: '#992531',
-                                shadowBlur: 200,
-                                shadowColor: 'rgba(0, 0, 0, 0.5)'
-                            }
+                        magicType: {
+                            show: !0,
+                            type: ["pie", "funnel"]
+                        },
+                        restore: {
+                            show: !0
+                        },
+                        saveAsImage: {
+                            show: !0
                         }
                     }
-                ]
+                },
+                calculable: !0,
+                series: [{
+                    name: "商品小分类",
+                    type: "pie",
+                    roseType: "area",
+                    label: {
+                        normal: {
+                            show: !0
+                        },
+                        emphasis: {
+                            show: !0
+                        }
+                    },
+                    lableLine: {
+                        normal: {
+                            show: !0
+                        },
+                        emphasis: {
+                            show: !0
+                        }
+                    },
+                    data: smallTypeData.sort(function (a, b) {
+                        return a.value - b.value
+                    })
+                }]
             };
             smallTypeChart.setOption(smallOption);
 
             var typeOption = {
-                backgroundColor: '#2c343c',
-
-                title: {
-                    left: 'center',
-                    top: 20,
-                    textStyle: {
-                        color: '#ccc'
-                    }
+                grid: {
+                    left: '5%',
+                    right: '5%',
+                    bottom: '5%',
+                    containLabel: true
                 },
-
                 tooltip: {
-                    trigger: 'item',
+                    trigger: "item",
                     formatter: "{a} <br/>{b} : {c} ({d}%)"
                 },
-
-                visualMap: {
-                    show: false,
-                    min: 80,
-                    max: 600,
-                    inRange: {
-                        colorLightness: [0, 1]
+                legend: {
+                    x: "left",
+                    data: typeKeys
+                },
+                label: {
+                    normal: {
+                        formatter: "{b} ({d}%)",
+                        position: "insideTopRight"
                     }
                 },
-                series: [
-                    {
-                        name: '占比',
-                        type: 'pie',
-                        radius: '55%',
-                        center: ['50%', '50%'],
-                        data: payTypeData.sort(function (a, b) {
-                            return a.value - b.value
-                        }),
-                        roseType: 'angle',
-                        label: {
-                            normal: {
-                                textStyle: {
-                                    color: 'rgba(255, 255, 255, 0.3)'
-                                }
-                            }
+                labelLine: {
+                    normal: {
+                        smooth: .6
+                    }
+                },
+                toolbox: {
+                    show: !0,
+                    feature: {
+                        mark: {
+                            show: !0
                         },
-                        labelLine: {
-                            normal: {
-                                lineStyle: {
-                                    color: 'rgba(255, 255, 255, 0.3)'
-                                },
-                                smooth: 0.2,
-                                length: 10,
-                                length2: 20
-                            }
+                        dataView: {
+                            show: !0,
+                            readOnly: !1
                         },
-                        itemStyle: {
-                            normal: {
-                                color: '#994d6d',
-                                shadowBlur: 200,
-                                shadowColor: 'rgba(0, 0, 0, 0.5)'
-                            }
+                        magicType: {
+                            show: !0,
+                            type: ["pie", "funnel"]
+                        },
+                        restore: {
+                            show: !0
+                        },
+                        saveAsImage: {
+                            show: !0
                         }
                     }
-                ]
+                },
+                calculable: !0,
+                series: [{
+                    name: "应收账款",
+                    type: "pie",
+                    roseType: "area",
+                    label: {
+                        normal: {
+                            show: !0
+                        },
+                        emphasis: {
+                            show: !0
+                        }
+                    },
+                    lableLine: {
+                        normal: {
+                            show: !0
+                        },
+                        emphasis: {
+                            show: !0
+                        }
+                    },
+                    data: payTypeData.sort(function (a, b) {
+                        return a.value - b.value
+                    })
+                }]
             };
             payTypeChart.setOption(typeOption);
         })
@@ -1242,7 +1267,7 @@ var pageData = {
 
 
             var geoOption = {
-                backgroundColor: '#404a59',
+                backgroundColor: '#ecf8ff',
                 animation: true,
                 animationDuration: 1000,
                 animationEasing: 'cubicInOut',
@@ -1253,7 +1278,7 @@ var pageData = {
                         text: '地区销售分布',
                         left: 'center',
                         textStyle: {
-                            color: '#fff'
+                            color: '#0e0e0e'
                         }
                     },
                     {
@@ -1262,7 +1287,7 @@ var pageData = {
                         top: 40,
                         width: 100,
                         textStyle: {
-                            color: '#fff',
+                            color: '#0e0e0e',
                             fontSize: 8
                         }
                     }
@@ -1270,7 +1295,7 @@ var pageData = {
                 toolbox: {
                     iconStyle: {
                         normal: {
-                            borderColor: '#fff'
+                            borderColor: '#0e0e0e'
                         },
                         emphasis: {
                             borderColor: '#b1e4ff'
@@ -1279,7 +1304,7 @@ var pageData = {
                 },
                 brush: {
                     outOfBrush: {
-                        color: '#abc'
+                        color: '#ecf8ff'
                     },
                     brushStyle: {
                         borderWidth: 2,
@@ -1305,8 +1330,8 @@ var pageData = {
                     roam: true,
                     itemStyle: {
                         normal: {
-                            areaColor: '#323c48',
-                            borderColor: '#111'
+                            areaColor: '#52bbc7',
+                            borderColor: '#0e0e0e'
                         },
                         emphasis: {
                             areaColor: '#2a333d'
@@ -1330,15 +1355,15 @@ var pageData = {
                     splitLine: {show: false},
                     axisLine: {show: false},
                     axisTick: {show: false},
-                    axisLabel: {margin: 2, textStyle: {color: '#aaa'}},
+                    axisLabel: {margin: 2, textStyle: {color: '#9980da'}},
                 },
                 yAxis: {
                     type: 'category',
                     name: 'TOP 20',
                     nameGap: 16,
-                    axisLine: {show: false, lineStyle: {color: '#ddd'}},
-                    axisTick: {show: false, lineStyle: {color: '#ddd'}},
-                    axisLabel: {interval: 0, textStyle: {color: '#ddd'}},
+                    axisLine: {show: false, lineStyle: {color: '#414141'}},
+                    axisTick: {show: false, lineStyle: {color: '#373737'}},
+                    axisLabel: {interval: 0, textStyle: {color: '#0e0e0e'}},
                     data: []
                 },
                 series: [
@@ -1360,7 +1385,7 @@ var pageData = {
                         },
                         itemStyle: {
                             normal: {
-                                color: '#ddb926'
+                                color: '#a82e2d'
                             }
                         }
                     },
@@ -1384,7 +1409,7 @@ var pageData = {
                         },
                         itemStyle: {
                             normal: {
-                                color: '#f4e925',
+                                color: '#a82e2d',
                                 shadowBlur: 10,
                                 shadowColor: '#333'
                             }
@@ -1398,7 +1423,7 @@ var pageData = {
                         symbol: 'none',
                         itemStyle: {
                             normal: {
-                                color: '#ddb926'
+                                color: '#a82e2d'
                             }
                         },
                         data: []

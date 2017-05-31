@@ -3,6 +3,7 @@ package com.zhaokxkx13.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.zhaokxkx13.dao.entity.Income;
 import com.zhaokxkx13.dao.inf.IncomeMapper;
+import com.zhaokxkx13.dao.inf.ProductMapper;
 import com.zhaokxkx13.service.IncomeService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ import java.util.*;
 public class IncomeServiceImpl implements IncomeService, InitializingBean {
     @Autowired
     IncomeMapper incomeMapper;
+
+    @Autowired
+    ProductMapper productMapper;
 
     private Double indusAll;
     private Double indusSellAll;
@@ -103,10 +107,34 @@ public class IncomeServiceImpl implements IncomeService, InitializingBean {
     }
 
     @Override
-    public List<Income> getYearIncome(Date date,int pageNum,int pageSize) {
-        PageHelper.startPage(pageNum,pageSize);
+    public List<Income> getYearIncome(Date date, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         List<Income> incomeList = incomeMapper.selectByYear(date);
         return incomeList;
+    }
+
+    @Override
+    public Double getSeason(int month, int year) {
+        int seasonNum = (int) (Math.ceil(month / 4.0));
+        List<Income> incomeList = incomeMapper.selectAllIncome();
+        List<Income> added = new ArrayList<>();
+        Double result = 0.0;
+        for (Income income : incomeList) {
+            Date date = income.getDate();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            int itemSeason = (int) Math.ceil((calendar.get(Calendar.MONTH) + 1) / 4.0);
+            if (itemSeason == seasonNum && year == calendar.get(Calendar.YEAR)) {
+                result += income.getIncomeAll();
+                added.add(income);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<String> getProductName() {
+        return productMapper.selectProductName();
     }
 
     private Income getSum(List<Income> incomeList) {

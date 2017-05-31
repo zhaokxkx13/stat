@@ -19,5 +19,9 @@ public interface IncomeService {
 
     List<Income> getCurYearIncome(int year);
 
-    List<Income> getYearIncome(Date date,int pageNum,int pageSize);
+    List<Income> getYearIncome(Date date, int pageNum, int pageSize);
+
+    Double getSeason(int month, int year);
+
+    List<String> getProductName();
 }
