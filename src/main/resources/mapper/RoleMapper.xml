@@ -106,5 +106,9 @@
         JOIN permission p ON p.roleid = r.id
         WHERE r.name = #{name}
     </select>
-    <cache/>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT *
+        FROM role
+    </select>
 </mapper>

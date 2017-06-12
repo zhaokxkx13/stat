@@ -1,5 +1,6 @@
 package com.zhaokxkx13.service;
 
+import com.zhaokxkx13.dao.entity.Role;
 import com.zhaokxkx13.dao.entity.User;
 
 import java.util.List;
@@ -18,4 +19,14 @@ public interface UserService {
     void register(User user);
 
     List<User> selectAll();
+
+    void deleteUserRole(Integer userId, Integer roleId);
+
+    void clearAuthorizationInfo(String username);
+
+    User getById(Integer id);
+
+    List<Role> getUnauthRole(String username);
+
+    void addUserRole(Integer userId, Integer roleId);
 }

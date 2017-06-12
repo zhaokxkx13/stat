@@ -5,13 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Role implements Serializable {
-    private Integer id;
-
-    private String name;
-
-    private String description;
-
+    private static final long serialVersionUID = 1L;
     List<Permission> permissionList = new ArrayList<>();
+    private Integer id;
+    private String name;
+    private String description;
 
     public List<Permission> getPermissionList() {
         return permissionList;
@@ -20,8 +18,6 @@ public class Role implements Serializable {
     public void setPermissionList(List<Permission> permissionList) {
         this.permissionList = permissionList;
     }
-
-    private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;
@@ -60,4 +56,5 @@ public class Role implements Serializable {
         sb.append("]");
         return sb.toString();
     }
+
 }

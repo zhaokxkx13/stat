@@ -5,6 +5,8 @@ import com.google.gson.GsonBuilder;
 import com.zhaokxkx13.Bean.*;
 import com.zhaokxkx13.dao.entity.Income;
 import com.zhaokxkx13.dao.entity.Kline;
+import com.zhaokxkx13.dao.entity.Role;
+import com.zhaokxkx13.dao.entity.User;
 import com.zhaokxkx13.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
@@ -22,6 +24,9 @@ import java.util.Map;
  */
 @RestController
 public class DataController {
+
+    @Autowired
+    UserService userService;
     @Autowired
     IncomeService incomeService;
 
@@ -210,6 +215,28 @@ public class DataController {
         Map<String, Integer> educationBalance = humanResourceService.getEducationBalance();
         Gson gson = new Gson();
         String jsonStr = gson.toJson(educationBalance);
+        return jsonStr;
+    }
+
+    @RequestMapping("/permission/userRoleInfo")
+    public String getUserRoleInfo(@RequestParam String username) {
+        User user = userService.getUserByName(username);
+        List<Role> roleList = user.getRoleList();
+        Integer id = user.getId();
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(roleList);
+        jsonStr = "{\"userId\":" + id + ", \"roleList\":" + jsonStr + "}";
+        return jsonStr;
+    }
+
+    @RequestMapping("/permission/userRoleUnauthInfo")
+    public String getUserRoleUnauthInfo(@RequestParam String username) {
+        User user = userService.getUserByName(username);
+        List<Role> roleList = userService.getUnauthRole(username);
+        Integer id = user.getId();
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(roleList);
+        jsonStr = "{\"userId\":" + id + ", \"roleList\":" + jsonStr + "}";
         return jsonStr;
     }
 }

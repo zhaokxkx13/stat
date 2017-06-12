@@ -1,25 +1,17 @@
 package com.zhaokxkx13.dao.entity;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
-
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 public class User implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Integer id;
-
     private String uid;
-
     private String username;
-
     private String password;
-
     private String salt;
-
     private Date createDate;
-
     private List<Role> roleList;
 
     public List<Role> getRoleList() {
@@ -29,8 +21,6 @@ public class User implements Serializable {
     public void setRoleList(List<Role> roleList) {
         this.roleList = roleList;
     }
-
-    private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;

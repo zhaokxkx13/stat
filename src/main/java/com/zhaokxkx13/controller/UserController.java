@@ -2,6 +2,7 @@ package com.zhaokxkx13.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.zhaokxkx13.Bean.CustomerConsume;
+import com.zhaokxkx13.Configration.UserRealm;
 import com.zhaokxkx13.dao.entity.Income;
 import com.zhaokxkx13.dao.entity.User;
 import com.zhaokxkx13.service.CustomerService;
@@ -12,8 +13,6 @@ import com.zhaokxkx13.utils.VisualizeJ48;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,6 +50,9 @@ public class UserController {
 
     @Autowired
     FinanceService financeService;
+
+    @Autowired
+    UserRealm userRealm;
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public String login(HttpServletRequest request, RedirectAttributes redirect, HttpSession session) throws Exception {
@@ -101,7 +103,7 @@ public class UserController {
     }
 
     @RequestMapping(path = "index")
-    @RequiresPermissions("/index")
+//    @RequiresPermissions("/index")
     public String index(ModelMap modelMap) {
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getPrincipal();
@@ -133,7 +135,10 @@ public class UserController {
         modelMap.addAttribute("username", user.getUsername());
         modelMap.addAttribute("seasonIncome", seansonIncomeStr);
         modelMap.addAttribute("seasonIncomeLastYear", seasonIncomeLastYearStr);
-        return "index";
+        if (subject.hasRole("admin"))
+            return "/download";
+        else
+            return "index";
     }
 
     @RequestMapping(path = "/chart", method = RequestMethod.GET)
@@ -250,12 +255,26 @@ public class UserController {
         return "decision";
     }
 
-    @RequestMapping("/listUser")
-    @RequiresPermissions("listUser")
-    @RequiresRoles("admin")
-    public String listUser(ModelMap modelMap) {
+
+    @RequestMapping("/permission/userRole")
+    public String getUserRole(ModelMap modelMap) {
         List<User> userList = userService.selectAll();
-        modelMap.put("userList", userList);
-        return "userlist";
+        modelMap.put("users", userList);
+        return "permission/userRole";
     }
+
+    @RequestMapping("/permission/userRole/delete")
+    public String deleteUserRole(@RequestParam Integer userId, @RequestParam Integer roleId) {
+        userService.deleteUserRole(userId, roleId);
+        String username = userService.getById(userId).getUsername();
+        userService.clearAuthorizationInfo(username);
+        return "redirect:/permission/userRole";
+    }
+
+    @RequestMapping("/permission/userRole/add")
+    public String addUserRole(@RequestParam Integer userId, @RequestParam Integer roleId) {
+        userService.addUserRole(userId, roleId);
+        return "redirect:/permission/userRole";
+    }
+
 }

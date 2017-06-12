@@ -65,7 +65,11 @@ var pageData = {
                 data: sourceDate
             }],
             yAxis: [{
-                type: 'value'
+                type: 'value',
+                name: '金额',
+                axisLabel: {
+                    formatter: '{value} 元'
+                }
             }],
             textStyle: {
                 color: '#838FA1'
@@ -570,14 +574,14 @@ var pageData = {
                     type: 'value',
                     name: '金额',
                     axisLabel: {
-                        formatter: '{value} 万元'
+                        formatter: '{value} 元'
                     }
                 },
                 {
                     type: 'value',
                     name: '工业总产值',
                     axisLabel: {
-                        formatter: '{value} 万元'
+                        formatter: '{value} 元'
                     }
                 }
             ],
@@ -868,7 +872,10 @@ var pageData = {
                 },
                 xAxis: {
                     type: 'value',
-                    boundaryGap: [0, 0.01]
+                    boundaryGap: [0, 0.01],
+                    axisLabel: {
+                        formatter: '{value} 元'
+                    }
                 },
                 yAxis: {
                     type: 'category',

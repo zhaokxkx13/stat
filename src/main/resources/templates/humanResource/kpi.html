@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 
 <head>
     <meta charset="utf-8"/>
@@ -96,17 +97,17 @@
         <!-- 菜单 -->
         <ul class="sidebar-nav">
             <li class="sidebar-nav-heading">Components <span class="sidebar-nav-heading-info"> 附加组件</span></li>
-            <li class="sidebar-nav-link">
+            <li shiro:hasRole="user" class="sidebar-nav-link">
                 <a th:href="@{/index}">
                     <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
                 </a>
             </li>
-            <li class="sidebar-nav-link">
+            <li shiro:hasRole="user" class="sidebar-nav-link">
                 <a th:href="@{/tables/industrial?page=1}">
                     <i class="am-icon-table sidebar-nav-link-logo"></i> 收入数据查看
                 </a>
             </li>
-            <li class="sidebar-nav-link">
+            <li shiro:hasRole="user" class="sidebar-nav-link">
                 <a href="javascript:;" class="sidebar-nav-sub-title">
                     <i class="am-icon-money sidebar-nav-link-logo"></i> 销售分析
                     <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
@@ -144,7 +145,7 @@
                 </ul>
             </li>
 
-            <li class="sidebar-nav-link">
+            <li shiro:hasRole="user" class="sidebar-nav-link">
                 <a href="javascript:;" class="sidebar-nav-sub-title">
                     <i class="am-icon-bank sidebar-nav-link-logo"></i> 财务分析
                     <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
@@ -164,7 +165,7 @@
                 </ul>
             </li>
 
-            <li class="sidebar-nav-link">
+            <li shiro:hasRole="user" class="sidebar-nav-link">
                 <a href="javascript:;" class="sidebar-nav-sub-title active">
                     <i class="am-icon-universal-access sidebar-nav-link-logo"></i> 人力资源分析
                     <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
@@ -179,6 +180,29 @@
                     <li class="sidebar-nav-link">
                         <a th:href="@{/humanResource/base}">
                             <span class="am-icon-comments sidebar-nav-link-logo"></span> 人力资源基本情况
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li shiro:hasRole="admin" class="sidebar-nav-link">
+                <a th:href="@{/download}">
+                    <i class="am-icon-cloud-download sidebar-nav-link-logo"></i> 数据导出excel
+                </a>
+            </li>
+            <li shiro:hasRole="user" class="sidebar-nav-link">
+                <a th:href="@{/decision}">
+                    <i class="am-icon-tree sidebar-nav-link-logo"></i> 决策树辅助决策
+                </a>
+            </li>
+            <li shiro:hasRole="admin" class="sidebar-nav-link">
+                <a href="javascript:;" class="sidebar-nav-sub-title">
+                    <i class="am-icon-key sidebar-nav-link-logo"></i> 角色管理
+                    <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                </a>
+                <ul class="sidebar-nav sidebar-nav-sub">
+                    <li class="sidebar-nav-link">
+                        <a th:href="@{/permission/userRole}">
+                            <span class="am-icon-male sidebar-nav-link-logo"></span> 权限管理
                         </a>
                     </li>
                 </ul>

@@ -6,7 +6,10 @@ import com.zhaokxkx13.dao.entity.Role;
 import com.zhaokxkx13.dao.entity.User;
 import com.zhaokxkx13.dao.inf.RoleMapper;
 import com.zhaokxkx13.dao.inf.UserMapper;
+import com.zhaokxkx13.dao.inf.UserRoleMapper;
 import com.zhaokxkx13.service.UserService;
+import org.apache.shiro.cache.Cache;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private RoleMapper roleMapper;
+
+    @Autowired
+    private UserRoleMapper userRoleMapper;
+
+    @Autowired
+    private EhCacheManager shiroCacheManager;
 
     @Override
     public User getUserByName(String userName) {
@@ -88,5 +97,56 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> selectAll() {
         return userMapper.selectAll();
+    }
+
+    @Override
+    public void deleteUserRole(Integer userId, Integer roleId) {
+        Map<String, Integer> param = new HashMap<>();
+        param.put("userId", userId);
+        param.put("roleId", roleId);
+        userRoleMapper.deleteById(param);
+    }
+
+    @Override
+    public void clearAuthorizationInfo(String username) {
+        Cache<Object, Object> cache = shiroCacheManager.getCache("com.zhaokxkx13.Configration.UserRealm.authorizationCache");
+        User user = userMapper.selectRoleByUserName(username);
+        Set<Object> set = cache.keys();
+        User user1 = (User) cache.get(user);
+        cache.remove(user);
+    }
+
+    @Override
+    public User getById(Integer id) {
+        return userMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Role> getUnauthRole(String username) {
+        User user = getUserByName(username);
+        List<Role> roleList = user.getRoleList();
+        List<Role> allRole = roleMapper.selectAll();
+        List<Role> result = new ArrayList<>();
+        for (Role temp : allRole) {
+            boolean find = false;
+            for (Role all : roleList) {
+                if (all.getId() == temp.getId()) {
+                    find = true;
+                    break;
+                }
+            }
+            if (!find) {
+                result.add(temp);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public void addUserRole(Integer userId, Integer roleId) {
+        Map<String, Integer> param = new HashMap<>();
+        param.put("userId", userId);
+        param.put("roleId", roleId);
+        userRoleMapper.insertUserRole(param);
     }
 }

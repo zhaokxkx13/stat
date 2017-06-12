@@ -11,8 +11,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="renderer" content="webkit"/>
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
-    <link rel="icon" type="image/png" th:href="@{i/favicon.png}"/>
-    <link rel="apple-touch-icon-precomposed" th:href="@{i/app-icon72x72@2x.png}"/>
+    <link rel="icon" type="image/png" th:href="@{/i/favicon.png}"/>
+    <link rel="apple-touch-icon-precomposed" th:href="@{/i/app-icon72x72@2x.png}"/>
     <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
     <script th:src="@{/js/echarts.min.js}"></script>
     <link rel="stylesheet" th:href="@{/css/amazeui.min.css}"/>
@@ -21,7 +21,7 @@
     <script th:src="@{/js/jquery.min.js}"></script>
 </head>
 
-<body data-type="humanresouce-base">
+<body data-type="permission-userRole">
 <script th:src="@{/js/theme.js}"></script>
 <div class="am-g tpl-g">
     <!-- 头部 -->
@@ -166,11 +166,11 @@
             </li>
 
             <li shiro:hasRole="user" class="sidebar-nav-link">
-                <a href="javascript:;" class="sidebar-nav-sub-title active">
+                <a href="javascript:;" class="sidebar-nav-sub-title">
                     <i class="am-icon-universal-access sidebar-nav-link-logo"></i> 人力资源分析
-                    <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
+                    <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
                 </a>
-                <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
+                <ul class="sidebar-nav sidebar-nav-sub">
                     <li class="sidebar-nav-link">
                         <a th:href="@{/humanResource/kpi}">
                             <span class="am-icon-child sidebar-nav-link-logo"></span> kpi分析
@@ -178,7 +178,7 @@
                     </li>
 
                     <li class="sidebar-nav-link">
-                        <a th:href="@{/humanResource/base}" class="sub-active">
+                        <a th:href="@{/humanResource/base}">
                             <span class="am-icon-comments sidebar-nav-link-logo"></span> 人力资源基本情况
                         </a>
                     </li>
@@ -195,13 +195,13 @@
                 </a>
             </li>
             <li shiro:hasRole="admin" class="sidebar-nav-link">
-                <a href="javascript:;" class="sidebar-nav-sub-title">
+                <a href="javascript:;" class="sidebar-nav-sub-title active">
                     <i class="am-icon-key sidebar-nav-link-logo"></i> 角色管理
-                    <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                    <span class="am-icon-chevron-down  am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
                 </a>
-                <ul class="sidebar-nav sidebar-nav-sub">
+                <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
                     <li class="sidebar-nav-link">
-                        <a th:href="@{/permission/userRole}">
+                        <a th:href="@{/permission/userRole}" class="sub-active">
                             <span class="am-icon-male sidebar-nav-link-logo"></span> 权限管理
                         </a>
                     </li>
@@ -214,73 +214,99 @@
     <!-- 内容区域 -->
     <div class="tpl-content-wrapper">
         <div class="row-content am-cf">
-            <div class="row am-cf">
-                <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
-                    <div class="widget am-cf">
-                        <div class="widget-head am-cf">
-                            <div class="widget-title am-fl">性别结构</div>
-                            <div class="widget-function am-fr">
-                                <a href="javascript:;" class="am-icon-cog"></a>
-                            </div>
-                        </div>
-                        <div class="widget-body-lg " id="sexBalance">
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
-                    <div class="widget am-cf">
-                        <div class="widget-head am-cf">
-                            <div class="widget-title am-fl">年龄结构</div>
-                            <div class="widget-function am-fr">
-                                <a href="javascript:;" class="am-icon-cog"></a>
-                            </div>
-                        </div>
-                        <div class="widget-body-lg " id="ageBalance">
-
+            <div class="row  am-cf">
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title am-fl">用戶角色</div>
+                        <div class="widget-function am-fr">
+                            <select name="select" id="select_k3" class="xla_k" onchange="repaint()">
+                                <option th:value="${item.username}" th:text="${item.username}"
+                                        th:each="item,iterator:${users}">
+                                </option>
+                            </select>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row am-cf">
-                <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
-                    <div class="widget am-cf">
-                        <div class="widget-head am-cf">
-                            <div class="widget-title am-fl">学历结构</div>
-                            <div class="widget-function am-fr">
-                                <a href="javascript:;" class="am-icon-cog"></a>
-                            </div>
-                        </div>
-                        <div class="widget-body-lg " id="eduBalance">
+                    <div class="widget-body  widget-body-lg am-fr">
 
-                        </div>
-                    </div>
-                </div>
+                        <table width="100%"
+                               class="am-table am-table-compact am-table-bordered am-table-radius am-table-striped tpl-table-black "
+                               id="userRoles">
+                            <thead>
+                            <tr>
+                                <td>角色名称</td>
+                                <td>角色描述</td>
+                                <td>操作</td>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <td>角色名称</td>
+                                <td>角色描述</td>
+                                <td>操作</td>
+                            </tr>
 
-                <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
-                    <div class="widget am-cf">
-                        <div class="widget-head am-cf">
-                            <div class="widget-title am-fl">职称结构</div>
-                            <div class="widget-function am-fr">
-                                <a href="javascript:;" class="am-icon-cog"></a>
-                            </div>
-                        </div>
-                        <div class="widget-body-lg " id="rankBalance">
+                            </tfoot>
+                            <tbody>
 
+                            </tbody>
+                        </table>
+                        <div class="am-pagination tpl-pagination am-u-sm-6 am-u-sm-centered" id="pagenation">
                         </div>
                     </div>
                 </div>
             </div>
+
+
         </div>
 
 
+        <div class="row-content am-cf">
+            <div class="row  am-cf">
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title am-fl">添加角色</div>
+                        <div class="widget-function am-fr">
+                        </div>
+                    </div>
+                    <div class="widget-body  widget-body-lg am-fr">
+
+                        <table width="100%"
+                               class="am-table am-table-compact am-table-bordered am-table-radius am-table-striped tpl-table-black "
+                               id="userRolesAdd">
+                            <thead>
+                            <tr>
+                                <td>角色名称</td>
+                                <td>角色描述</td>
+                                <td>操作</td>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <td>角色名称</td>
+                                <td>角色描述</td>
+                                <td>操作</td>
+                            </tr>
+
+                            </tfoot>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                        <div class="am-pagination tpl-pagination am-u-sm-6 am-u-sm-centered" id="pagenation">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
     </div>
 </div>
 <script th:src="@{/js/amazeui.min.js}"></script>
 <script th:src="@{/js/amazeui.datatables.min.js}"></script>
 <script th:src="@{/js/dataTables.responsive.min.js}"></script>
 <script th:src="@{/js/app.js?v=sdfsfs}"></script>
+<script th:src="@{/js/dataTables/userRole.js}"></script>
 </body>
 
 </html>

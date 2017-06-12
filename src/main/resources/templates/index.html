@@ -97,17 +97,17 @@
         <!-- 菜单 -->
         <ul class="sidebar-nav">
             <li class="sidebar-nav-heading">Components <span class="sidebar-nav-heading-info"> 附加组件</span></li>
-            <li class="sidebar-nav-link">
+            <li shiro:hasRole="user" class="sidebar-nav-link">
                 <a th:href="@{/index}" class="active">
                     <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
                 </a>
             </li>
-            <li class="sidebar-nav-link">
+            <li shiro:hasRole="user" class="sidebar-nav-link">
                 <a th:href="@{/tables/industrial?page=1}">
                     <i class="am-icon-table sidebar-nav-link-logo"></i> 收入数据查看
                 </a>
             </li>
-            <li class="sidebar-nav-link">
+            <li shiro:hasRole="user" class="sidebar-nav-link">
                 <a href="javascript:;" class="sidebar-nav-sub-title">
                     <i class="am-icon-money sidebar-nav-link-logo"></i> 销售分析
                     <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
@@ -145,7 +145,7 @@
                 </ul>
             </li>
 
-            <li class="sidebar-nav-link">
+            <li shiro:hasRole="user" class="sidebar-nav-link">
                 <a href="javascript:;" class="sidebar-nav-sub-title">
                     <i class="am-icon-bank sidebar-nav-link-logo"></i> 财务分析
                     <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
@@ -165,7 +165,7 @@
                 </ul>
             </li>
 
-            <li class="sidebar-nav-link">
+            <li shiro:hasRole="user" class="sidebar-nav-link">
                 <a href="javascript:;" class="sidebar-nav-sub-title">
                     <i class="am-icon-universal-access sidebar-nav-link-logo"></i> 人力资源分析
                     <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
@@ -184,20 +184,28 @@
                     </li>
                 </ul>
             </li>
-            <li class="sidebar-nav-link">
+            <li shiro:hasRole="admin" class="sidebar-nav-link">
                 <a th:href="@{/download}">
                     <i class="am-icon-cloud-download sidebar-nav-link-logo"></i> 数据导出excel
                 </a>
             </li>
-            <li class="sidebar-nav-link">
+            <li shiro:hasRole="user" class="sidebar-nav-link">
                 <a th:href="@{/decision}">
                     <i class="am-icon-tree sidebar-nav-link-logo"></i> 决策树辅助决策
                 </a>
             </li>
-            <li shiro:hasRole="admisn" class="sidebar-nav-link">
-                <a th:href="@{/listUser}">
-                    <i class="am-icon-tree sidebar-nav-link-logo"></i> 权限管理
+            <li shiro:hasRole="admin" class="sidebar-nav-link">
+                <a href="javascript:;" class="sidebar-nav-sub-title">
+                    <i class="am-icon-key sidebar-nav-link-logo"></i> 角色管理
+                    <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
                 </a>
+                <ul class="sidebar-nav sidebar-nav-sub">
+                    <li class="sidebar-nav-link">
+                        <a th:href="@{/permission/userRole}">
+                            <span class="am-icon-male sidebar-nav-link-logo"></span> 权限管理
+                        </a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>
@@ -219,7 +227,7 @@
                         </div>
                         <div class="widget-body am-fr">
                             <div class="am-fl">
-                                <div class="widget-fluctuation-period-text" th:text="${incomeTotal.indusAll}">
+                                <div class="widget-fluctuation-period-text" th:text="${incomeTotal.indusAll}+'元'">
                                     ￥61746.45
                                     <button class="widget-fluctuation-tpl-btn">
                                         <i class="am-icon-calendar"></i>
@@ -246,7 +254,7 @@
                             销售收入
                         </div>
                         <div class="widget-statistic-body">
-                            <div class="widget-statistic-value" th:text="${incomeMonthTotal.indusSellAll}">
+                            <div class="widget-statistic-value" th:text="${incomeMonthTotal.indusSellAll}+'元'">
                                 ￥27,294
                             </div>
                             <div class="widget-statistic-description">
@@ -282,7 +290,7 @@
                                 <a href="javascript:;" class="am-icon-cog"></a>
                             </div>
                         </div>
-                        <div class="widget-body-md widget-body tpl-amendment-echarts am-fr" id="tpl-echarts">
+                        <div style="height: 300px" id="tpl-echarts">
 
                         </div>
                     </div>

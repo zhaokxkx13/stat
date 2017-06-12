@@ -3,6 +3,8 @@ package com.zhaokxkx13.dao.inf;
 import com.zhaokxkx13.dao.entity.Role;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface RoleMapper {
     int deleteByPrimaryKey(Integer id);
@@ -20,4 +22,6 @@ public interface RoleMapper {
     Role selectRolePermissionByName(String name);
 
     Role selectRolePermissionById(Integer id);
+
+    List<Role> selectAll();
 }
